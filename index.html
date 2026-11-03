@@ -3,524 +3,450 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Cabaran Anak Alpha — Misi Salji</title>
+<title>KP2027 - Cabaran Anak Alpha</title>
+
 <style>
-:root{--ice:#dff8ff;--deep:#123d66;--gold:#ffd84d}
 *{box-sizing:border-box}
-body{margin:0;font-family:system-ui,Arial,sans-serif;background:#071d38;color:#fff;overflow:hidden}
-button{font:inherit;cursor:pointer;border:0;border-radius:14px;padding:10px 16px;font-weight:800}
-#app{min-height:100dvh;position:relative;background:linear-gradient(#5bc5ed 0%,#d9f7ff 55%,#8bcbe8 100%);color:#103455;overflow:hidden}
-.snow{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(#fff 1.5px,transparent 2px),radial-gradient(#fff 2px,transparent 3px);background-size:43px 43px,77px 77px;background-position:0 0,22px 17px;opacity:.75;animation:snowfall 9s linear infinite}
-@keyframes snowfall{to{background-position:0 300px,22px 317px}}
-header{position:relative;z-index:2;text-align:center;padding:10px 8px 4px}
-h1{margin:0;font-size:clamp(20px,5vw,32px);text-shadow:0 2px #fff}
-.sub{font-weight:700;font-size:13px}
-.panel{position:relative;z-index:2;background:#ffffffdf;border:3px solid #fff;border-radius:22px;box-shadow:0 8px 22px #17466b33;padding:18px;max-width:900px;margin:12px auto;width:calc(100% - 24px);text-align:center}
-#intro{margin-top:5vh}
-#intro p{font-size:clamp(16px,3vw,21px);line-height:1.55;font-weight:700}
-.primary{background:linear-gradient(135deg,#ffdc4d,#ff9f32);color:#563500;box-shadow:0 4px 0 #c77b1e}
-.secondary{background:#d7f3ff;color:#12466b;border:2px solid #7bc8e9}
-#select{display:none}
-#characters{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:14px}
-.charCard{background:#e9f9ff;border:3px solid #b6e7f8;border-radius:17px;padding:8px;color:#164466;transition:.15s}
-.charCard.selected{border-color:#ffb92e;transform:translateY(-4px);box-shadow:0 5px 0 #eaa22a}
-.charCard svg{width:100%;height:112px;display:block}
-.charCard b{display:block;font-size:14px}
-#game{display:none;position:relative;z-index:2;max-width:900px;margin:auto;padding:0 10px}
-.hud{display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap;margin:7px 0}
-.badge{background:#fff;border:2px solid #b5e9fb;border-radius:12px;padding:6px 10px;font-weight:900;font-size:13px;color:#164466}
-#track{height:min(66vh,570px);min-height:390px;position:relative;overflow:hidden;border:5px solid #fff;border-radius:20px;background:linear-gradient(90deg,#d5f5ff,#effcff 50%,#d5f5ff);box-shadow:inset 0 0 25px #4b9dc555}
-#track:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 calc(20% - 2px),#75b9d6 calc(20% - 2px) calc(20% + 2px));opacity:.75}
-#track:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 70px,#ffffff66 71px 74px);animation:road 1.5s linear infinite}
-@keyframes road{to{background-position:0 144px}}
-.laneGlow{position:absolute;inset:0;display:grid;grid-template-columns:repeat(5,1fr);pointer-events:none}
-.laneGlow span{border-right:1px dashed #5da6c755}
-.actor,.rock{position:absolute;z-index:3;transform:translateX(-50%);width:62px;height:82px;display:grid;place-items:center;filter:drop-shadow(0 4px 2px #24536a55)}
-.actor svg,.rock svg{width:100%;height:100%;overflow:visible}
-.rock{width:48px;height:54px}
-.rainbow{filter:drop-shadow(0 0 8px #ffcf35)}
-#player{bottom:13px;left:50%;transition:left .12s}
-.controls{display:flex;justify-content:center;gap:12px;margin:8px auto}
-.controls button{min-width:68px;background:#fff;color:#145078;border:2px solid #9ed9ee;font-size:20px}
-.hint{text-align:center;font-size:12px;font-weight:800;color:#164466;margin:3px}
-#quiz,#missionWin{display:none;position:fixed;z-index:10;inset:0;background:#06213bcc;align-items:center;justify-content:center;padding:16px}
-#quiz .panel,#missionWin .panel{max-width:520px}
-#answers{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}
-#replayQuestion{margin-top:12px;background:#d7f3ff;color:#12466b;border:2px solid #7bc8e9}
-#answers button{background:#e5f7ff;color:#123e61;border:2px solid #a5dff2}
-#feedback{font-weight:900;min-height:28px;margin-top:10px}
-#toast{position:absolute;z-index:6;top:44%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:20px;padding:12px 18px;font-weight:1000;color:#164466;display:none;box-shadow:0 4px 15px #1238}
-#sound{position:absolute;right:12px;top:12px;z-index:5;background:#fff;color:#164466;border:2px solid #a5dff2}
-@media(max-width:480px){
-#track{height:58vh;min-height:360px}
-.actor{width:55px;height:75px}
-.panel{padding:13px}
-#characters{grid-template-columns:repeat(2,1fr)}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:linear-gradient(#b9eaff,#f4fbff);
+ color:#123;
+ overflow:hidden;
+}
+#rotate{
+ display:none;
+ position:fixed;
+ inset:0;
+ z-index:9999;
+ background:#123;
+ color:white;
+ align-items:center;
+ justify-content:center;
+ text-align:center;
+ font-size:25px;
+ padding:30px;
+}
+@media(orientation:portrait){
+ #rotate{display:flex}
+}
+#game{
+ width:100vw;
+ height:100vh;
+ display:flex;
+ flex-direction:column;
+ position:relative;
+ overflow:hidden;
+}
+header{
+ text-align:center;
+ padding:5px;
+ background:#075985;
+ color:white;
+ font-weight:bold;
+ font-size:clamp(16px,2.5vw,25px);
+}
+#hud{
+ display:flex;
+ justify-content:space-around;
+ align-items:center;
+ padding:5px;
+ background:#dff5ff;
+ font-weight:bold;
+ font-size:clamp(12px,2vw,18px);
+}
+#road{
+ flex:1;
+ position:relative;
+ overflow:hidden;
+ margin:3px auto;
+ width:94%;
+ max-width:1000px;
+ border:5px solid white;
+ border-radius:18px;
+ background:
+ repeating-linear-gradient(90deg,
+ #d8f3ff 0%,#d8f3ff 19.5%,
+ #fff 19.5%,#fff 20%);
+ box-shadow:0 0 15px #5aa;
+}
+.laneLine{
+ position:absolute;
+ top:0;
+ bottom:0;
+ width:3px;
+ background:rgba(70,130,160,.35);
+}
+.player{
+ position:absolute;
+ bottom:12px;
+ width:12%;
+ height:65px;
+ max-width:85px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:clamp(35px,6vw,60px);
+ z-index:5;
+ transition:left .12s;
+}
+.rock{
+ position:absolute;
+ top:-65px;
+ font-size:clamp(30px,5vw,50px);
+ z-index:4;
+}
+#controls{
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ gap:35px;
+ padding:6px;
+ background:#075985;
+}
+.roundBtn{
+ width:65px;
+ height:65px;
+ border-radius:50%;
+ border:4px solid white;
+ background:linear-gradient(#38bdf8,#0369a1);
+ color:white;
+ font-size:15px;
+ font-weight:bold;
+ box-shadow:0 4px 0 #023e63;
+ cursor:pointer;
+ touch-action:manipulation;
+}
+.roundBtn:active{
+ transform:scale(.92);
+}
+#menu,#quiz{
+ position:absolute;
+ inset:0;
+ z-index:20;
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+ align-items:center;
+ text-align:center;
+ padding:15px;
+ background:rgba(220,245,255,.97);
+ overflow:auto;
+}
+#menu h1{color:#075985}
+.characters{
+ display:flex;
+ flex-wrap:wrap;
+ justify-content:center;
+ gap:10px;
+}
+.charBtn{
+ border:3px solid #38bdf8;
+ border-radius:15px;
+ padding:10px;
+ background:white;
+ font-size:16px;
+ min-width:110px;
+ cursor:pointer;
+}
+.charBtn span{
+ display:block;
+ font-size:35px;
+}
+.mainBtn{
+ border:0;
+ border-radius:25px;
+ background:#16a34a;
+ color:white;
+ font-size:18px;
+ font-weight:bold;
+ padding:12px 28px;
+ margin:8px;
+ cursor:pointer;
+}
+#quiz{
+ display:none;
+ z-index:30;
+}
+#quizBox{
+ background:white;
+ border:4px solid #38bdf8;
+ border-radius:20px;
+ padding:20px;
+ width:min(90%,550px);
+ box-shadow:0 5px 20px #789;
+}
+.answer{
+ display:block;
+ width:100%;
+ padding:12px;
+ margin:8px 0;
+ border:0;
+ border-radius:12px;
+ background:#dbeafe;
+ font-size:17px;
+ font-weight:bold;
+}
+#message{
+ position:absolute;
+ top:40%;
+ left:50%;
+ transform:translate(-50%,-50%);
+ z-index:10;
+ color:#075985;
+ font-size:25px;
+ font-weight:bold;
+ text-align:center;
+ pointer-events:none;
 }
 </style>
 </head>
+
 <body>
 
-<div id="app">
-<div class="snow"></div>
-
-<button id="sound" onclick="toggleSound()">🔊 Bunyi</button>
-
-<header>
-<h1>❄️ CABARAN ANAK ALPHA ❄️</h1>
-<div class="sub">MISI 1 • LEMBAH SALJI PURBA • KP2027</div>
-</header>
-
-<section id="intro" class="panel">
-<h2>🌟 Selamat Datang, Anak Pintar! 🌟</h2>
-<p>
-Assalamualaikum!<br>
-Selamat menempuh alam budak pintar. Jangan terleka dengan alam maya.
-Ambil pengajaran daripada apa yang kamu lalui.<br>
-<b>Selamat menyahut cabaran, anak-anak Alpha!</b>
-</p>
-<p id="voiceStatus" style="font-size:12px;color:#47718a">
-Dengar pesanan sebelum memulakan misi…
-</p>
-<button class="primary" onclick="playIntroAndContinue()">🔊 DENGAR UCAPAN & MULA ➜</button>
-<button class="secondary" style="margin-left:6px" onclick="startSelection()">Langkau ucapan</button>
-</section>
-
-<section id="select" class="panel">
-<h2>🦕 Pilih Watak Pengembara</h2>
-<p>Pilih satu daripada 5 watak purba. Gerakkan watak ke kiri dan kanan untuk mengelak batu!</p>
-<div id="characters"></div>
-<button class="primary" onclick="beginGame()">MULA MISI 1 🚀</button>
-</section>
-
-<section id="game">
-<div class="hud">
-<div class="badge" id="who">Watak: —</div>
-<div class="badge">💎 Permata: <span id="gems">0</span></div>
-<div class="badge">⭐ Markah: <span id="score">0</span></div>
-<div class="badge">🏁 Misi: <span id="mission">1</span></div>
+<div id="rotate">
+ <div>📱<br><br>Sila pusing telefon anda ke posisi LANDSKAP untuk bermain.</div>
 </div>
 
-<div id="track">
-<div class="laneGlow"><span></span><span></span><span></span><span></span><span></span></div>
-<div id="player" class="actor"></div>
-<div id="toast"></div>
+<div id="game">
+
+<header>❄️ KP2027 - CABARAN ANAK ALPHA ❄️</header>
+
+<div id="hud">
+ <span>💎 Permata: <b id="gems">0</b></span>
+ <span>⭐ Markah: <b id="score">0</b></span>
+ <span>🏆 Misi: <b id="mission">1</b></span>
 </div>
 
-<div class="controls">
-<button onclick="move(-1)">⬅️</button>
-<button onclick="move(1)">➡️</button>
+<div id="road">
+ <div class="laneLine" style="left:20%"></div>
+ <div class="laneLine" style="left:40%"></div>
+ <div class="laneLine" style="left:60%"></div>
+ <div class="laneLine" style="left:80%"></div>
+ <div id="player" class="player">🐢</div>
+ <div id="message"></div>
 </div>
 
-<div class="hint">
-KAWALAN: tekan ← → / butang / leret skrin • Elak 🪨 batu hitam • Langgar 🌈 batu pelangi untuk soalan
+<div id="controls">
+ <button class="roundBtn" id="leftBtn">KIRI</button>
+ <button class="roundBtn" id="rightBtn">KANAN</button>
 </div>
-</section>
+
+<div id="menu">
+ <h1>❄️ CABARAN ANAK ALPHA ❄️</h1>
+ <h3>Assalamualaikum! Selamat datang ke KP2027.</h3>
+ <p id="introText">
+ Selamat menempuh alam budak pintar, jangan terleka dengan alam maya.
+ Ambil pengajaran dari apa yang kamu lalui.
+ Selamat menyahut cabaran anak-anak Alpha.
+ </p>
+ <button class="mainBtn" onclick="playIntro()">🔊 Dengar Pengenalan</button>
+ <h3>Pilih Watak Anda</h3>
+ <div class="characters">
+  <button class="charBtn" onclick="choose('🐢','Kura-kura Purba')"><span>🐢</span>Kura-kura Purba</button>
+  <button class="charBtn" onclick="choose('🦣','Arbab Purba')"><span>🦣</span>Arbab Purba</button>
+  <button class="charBtn" onclick="choose('🦅','Helang Purba')"><span>🦅</span>Helang Purba</button>
+  <button class="charBtn" onclick="choose('🦄','Kuda Terbang Purba')"><span>🦄</span>Kuda Terbang Purba</button>
+  <button class="charBtn" onclick="choose('🐅','Harimau Purba')"><span>🐅</span>Harimau Purba</button>
+ </div>
+ <button class="mainBtn" onclick="startGame()">MULA BERMAIN ▶</button>
+</div>
 
 <div id="quiz">
-<div class="panel">
-<h2>🌈 Batu Pelangi — Soalan Pintar!</h2>
-<p id="question"></p>
-<button id="replayQuestion" onclick="readCurrentQuestion()">🔊 Dengar soalan dan pilihan jawapan</button>
-<div id="answers"></div>
-<div id="feedback"></div>
-</div>
-</div>
-
-<div id="missionWin">
-<div class="panel">
-<h2>🏆 Misi 1 Berjaya!</h2>
-<p>Hebat! Kamu berjaya mengumpul sekurang-kurangnya 500 permata.</p>
-<p>🎁 Misi 2 telah dibuka!</p>
-<button class="primary" onclick="nextMission()">TERUSKAN KE MISI 2 ➜</button>
-<button class="secondary" onclick="backToSelect()">PILIH WATAK LAIN</button>
-</div>
+ <div id="quizBox">
+  <h2>🌈 SOALAN CABARAN</h2>
+  <p id="question"></p>
+  <div id="answers"></div>
+ </div>
 </div>
 
 </div>
 
 <script>
-const characters=[
-{name:'Kura-kura Purba',emoji:'🐢',body:'#48a86c',kind:'turtle'},
-{name:'Arbab Purba',emoji:'🦖',body:'#d58a48',kind:'dino'},
-{name:'Helang Purba',emoji:'🦅',body:'#a66b42',kind:'eagle'},
-{name:'Kuda Terbang Purba',emoji:'🦄',body:'#c18be8',kind:'horse'},
-{name:'Harimau Purba',emoji:'🐅',body:'#e58b35',kind:'tiger'}
-];
-
-function svgChar(c){
-let common=`<ellipse cx="50" cy="91" rx="29" ry="5" fill="#315c70" opacity=".25"/>`;
-let art='';
-
-if(c.kind==='turtle')
-art=`<ellipse cx="50" cy="59" rx="29" ry="22" fill="${c.body}" stroke="#245d46" stroke-width="3"/><path d="M27 55Q50 20 73 55M50 37V79M28 59H72" fill="none" stroke="#245d46" stroke-width="3"/><circle cx="79" cy="49" r="14" fill="#77c98c" stroke="#245d46" stroke-width="3"/><circle cx="84" cy="45" r="2.5" fill="#172b32"/><path d="M34 75l-5 13m35-13 5 13" stroke="#245d46" stroke-width="8" stroke-linecap="round"/>`;
-
-if(c.kind==='dino')
-art=`<path d="M23 70Q12 48 29 38L40 19 51 38 62 18 72 43Q88 45 83 66L72 77H35Z" fill="${c.body}" stroke="#87532e" stroke-width="3"/><path d="M30 69l-13 17m49-13 10 14" stroke="#87532e" stroke-width="8" stroke-linecap="round"/><circle cx="68" cy="48" r="3" fill="#182b34"/><path d="M24 63L9 76" stroke="#87532e" stroke-width="6" stroke-linecap="round"/>`;
-
-if(c.kind==='eagle')
-art=`<path d="M49 47Q17 11 5 35Q24 65 47 65Q23 80 13 69Q27 100 51 75Q76 100 89 69Q77 80 54 65Q77 65 95 35Q80 11 53 47Z" fill="${c.body}" stroke="#68442f" stroke-width="3"/><circle cx="53" cy="43" r="15" fill="#e9d2a1"/><path d="M66 44l17 7-17 5" fill="#f5b832" stroke="#a76c17" stroke-width="2"/><circle cx="58" cy="40" r="2.5" fill="#172b32"/>`;
-
-if(c.kind==='horse')
-art=`<ellipse cx="49" cy="60" rx="25" ry="19" fill="${c.body}" stroke="#704b91" stroke-width="3"/><path d="M64 53Q66 30 78 29L89 43 78 58" fill="${c.body}" stroke="#704b91" stroke-width="3"/><path d="M29 53Q5 24 16 21Q39 24 48 48M56 49Q81 14 91 25Q87 48 69 57" fill="#fff" stroke="#a77ec5" stroke-width="3"/><path d="M34 74l-4 14m31-14 5 14" stroke="#704b91" stroke-width="6" stroke-linecap="round"/><path d="M82 26l3-10 5 9" fill="#f3b3d6"/><circle cx="81" cy="42" r="2.5" fill="#172b32"/>`;
-
-if(c.kind==='tiger')
-art=`<ellipse cx="49" cy="60" rx="29" ry="21" fill="${c.body}" stroke="#9a5422" stroke-width="3"/><circle cx="77" cy="49" r="16" fill="#f2a64e" stroke="#9a5422" stroke-width="3"/><path d="M64 39l-3-13 13 7m8 1 11-8-1 17M30 48l8 7-8 7m15-18 7 9-8 8m12-17 6 9-8 8" stroke="#392c26" stroke-width="5" fill="none"/><path d="M31 75l-5 13m38-13 5 13" stroke="#9a5422" stroke-width="7" stroke-linecap="round"/><circle cx="82" cy="46" r="2.5" fill="#172b32"/>`;
-
-return `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">${common}${art}</svg>`;
-}
-
-let selected=0,lane=2,gems=0,score=0,mission=1,running=false,paused=false,items=[],last=0,spawn=0,raf=0,soundOn=true,audio=null;
-const $=id=>document.getElementById(id);
-
-function speakIntro(onDone){
-if(!('speechSynthesis' in window)){
-$('voiceStatus').textContent='Suara automatik tidak disokong pelayar ini.';
-if(onDone)setTimeout(onDone,900);
-return;
-}
-
-const msg=new SpeechSynthesisUtterance(
-'Assalamualaikum. Selamat datang, anak-anak pintar! Selamat menempuh alam budak pintar. Jangan terleka dengan alam maya. Ambil pengajaran daripada apa yang kamu lalui. Selamat menyahut cabaran anak-anak Alpha!'
-);
-
-const setVoice=()=>{
-const voices=speechSynthesis.getVoices();
-
-const local=voices.filter(v=>
-/^ms(-|_)/i.test(v.lang) || /^id(-|_)/i.test(v.lang)
-);
-
-const maleHint=/(male|man|lelaki|pria|adam|david|daniel|alex|guy|james|rio|andika|dimas)/i;
-
-const maleLocal=local.find(v=>maleHint.test(v.name));
-const maleAny=voices.find(v=>maleHint.test(v.name));
-
-const preferred=maleLocal || maleAny || local[0] || voices[0];
-
-if(preferred){
-msg.voice=preferred;
-msg.lang=preferred.lang;
-}else{
-msg.lang='ms-MY';
-}
-
-msg.rate=.88;
-msg.pitch=.82;
-msg.volume=1;
-
-msg.onstart=()=>{
-$('voiceStatus').textContent='Ucapan sedang dimainkan…';
-};
-
-msg.onend=()=>{
-$('voiceStatus').textContent='Pesanan selesai. Jom pilih watak!';
-if(onDone)onDone();
-};
-
-msg.onerror=()=>{
-$('voiceStatus').textContent='Suara peranti tidak dapat dimainkan. Cuba buka dalam Google Chrome.';
-};
-
-speechSynthesis.cancel();
-setTimeout(()=>speechSynthesis.speak(msg),180);
-};
-
-if(speechSynthesis.getVoices().length){
-setVoice();
-}else{
-let done=false;
-const ready=()=>{
-if(done)return;
-done=true;
-speechSynthesis.removeEventListener?.('voiceschanged',ready);
-setVoice();
-};
-speechSynthesis.addEventListener?.('voiceschanged',ready);
-setTimeout(ready,900);
-}
-}
-
-function playIntroAndContinue(){
-if('speechSynthesis'in window){
-speakIntro(()=>startSelection());
-}else{
-startSelection();
-}
-}
-
-function startSelection(){
-if('speechSynthesis'in window)speechSynthesis.cancel();
-$('intro').style.display='none';
-$('select').style.display='block';
-}
-
-function buildCards(){
-$('characters').innerHTML=characters.map((c,i)=>
-`<button class="charCard ${i===selected?'selected':''}" onclick="choose(${i})">${svgChar(c)}<b>${c.name}</b></button>`
-).join('');
-}
-
-function choose(i){
-selected=i;
-buildCards();
-}
-
-buildCards();
-
-function tone(freq=600,duration=.16,wave='sine',volume=.09){
-if(!soundOn)return;
-try{
-audio=audio||new (window.AudioContext||window.webkitAudioContext)();
-if(audio.state==='suspended')audio.resume();
-const o=audio.createOscillator(),g=audio.createGain();
-o.type=wave;
-o.frequency.setValueAtTime(freq,audio.currentTime);
-g.gain.setValueAtTime(.0001,audio.currentTime);
-g.gain.exponentialRampToValueAtTime(volume,audio.currentTime+.02);
-g.gain.exponentialRampToValueAtTime(.0001,audio.currentTime+duration);
-o.connect(g);
-g.connect(audio.destination);
-o.start();
-o.stop(audio.currentTime+duration+.02);
-}catch(e){}
-}
-
-function startAudio(){
-if(!soundOn)return;
-try{
-audio=audio||new (window.AudioContext||window.webkitAudioContext)();
-if(audio.state==='suspended')audio.resume();
-if(window.musicTimer)clearInterval(window.musicTimer);
-let notes=[523,659,784,659,587,698,880,698],n=0;
-window.musicTimer=setInterval(()=>{
-if(!audio||!soundOn)return;
-tone(notes[n++%notes.length],.24,'triangle',.045);
-},360);
-}catch(e){}
-}
-
-function toggleSound(){
-soundOn=!soundOn;
-$('sound').textContent=soundOn?'🔊 Bunyi':'🔇 Senyap';
-if(!soundOn){
-clearInterval(window.musicTimer);
-if(audio)audio.suspend();
-}else{
-startAudio();
-}
-}
-
-function beginGame(){
-$('select').style.display='none';
-$('game').style.display='block';
-$('who').textContent='Watak: '+characters[selected].name;
-$('player').innerHTML=svgChar(characters[selected]);
-lane=2;
-gems=0;
-score=0;
-items=[];
-updateHud();
-startAudio();
-running=true;
-paused=false;
-last=performance.now();
-spawn=0;
-cancelAnimationFrame(raf);
-raf=requestAnimationFrame(loop);
-}
-
-function updateHud(){
-$('gems').textContent=gems;
-$('score').textContent=score;
-$('mission').textContent=mission;
-$('player').style.left=(lane*20+10)+'%';
-}
-
-function move(d){
-if(!running||paused)return;
-lane=Math.max(0,Math.min(4,lane+d));
-updateHud();
-}
-
-document.addEventListener('keydown',e=>{
-if(e.key==='ArrowLeft'||e.key==='a')move(-1);
-if(e.key==='ArrowRight'||e.key==='d')move(1);
-});
-
-let touchX=null;
-
-$('track').addEventListener('touchstart',e=>{
-touchX=e.touches[0].clientX;
-},{passive:true});
-
-$('track').addEventListener('touchend',e=>{
-if(touchX===null)return;
-let dx=e.changedTouches[0].clientX-touchX;
-if(Math.abs(dx)>18)move(dx>0?1:-1);
-touchX=null;
-},{passive:true});
-
-function rockSvg(rainbow){
-return rainbow?
-`<svg viewBox="0 0 60 60"><path d="M8 48Q-2 28 16 19Q13 0 31 8Q48-2 50 20Q68 33 48 49Z" fill="#fff" stroke="#b7dbe8" stroke-width="3"/><path d="M13 40Q27 28 48 39" fill="none" stroke="#ff4242" stroke-width="6"/><path d="M13 33Q28 21 49 32" fill="none" stroke="#ffb52e" stroke-width="6"/><path d="M16 26Q30 14 46 25" fill="none" stroke="#36c66b" stroke-width="6"/><path d="M21 19Q32 12 42 20" fill="none" stroke="#4d8cff" stroke-width="5"/></svg>`
-:
-`<svg viewBox="0 0 60 60"><path d="M5 48L10 23 24 8 39 14 54 34 48 52Z" fill="#242a32" stroke="#080d16" stroke-width="4"/><path d="M17 26l12-10 9 12-10 15Z" fill="#4a525b"/></svg>`;
-}
-
-function spawnRock(){
-let l=Math.floor(Math.random()*5);
-let rain=Math.random()<.28;
-let el=document.createElement('div');
-el.className='rock '+(rain?'rainbow':'');
-el.innerHTML=rockSvg(rain);
-$('track').appendChild(el);
-let item={el,l,y:-65,rain,hit:false,speed:mission===1?2.5:3.1};
-items.push(item);
-}
+let lane=2;
+let gems=0;
+let score=0;
+let mission=1;
+let playing=false;
+let selectedCharacter="🐢";
+let obstacles=[];
+let spawnTimer;
+let gameTimer;
 
 const questions=[
-{q:'Apakah amalan yang baik sebelum memulakan sesuatu pekerjaan?',a:['Membaca doa','Mengejek kawan','Bergaduh','Membuang masa'],c:0},
-{q:'Apakah yang perlu kita lakukan apabila ternampak sampah?',a:['Biarkan sahaja','Buang ke tempat sampah','Tendang','Sorok di bawah meja'],c:1},
-{q:'Jika kawan terjatuh, apakah tindakan terbaik?',a:['Ketawakan','Tinggalkan','Bantu dan panggil guru','Rakam video'],c:2},
-{q:'Apakah sikap yang menunjukkan kita amanah?',a:['Menipu','Mengambil barang orang','Menepati janji','Menyalahkan orang'],c:2},
-{q:'Apabila menggunakan internet, kita hendaklah…',a:['Berhemah dan berhati-hati','Kongsi kata laluan','Percaya semua perkara','Leka sepanjang hari'],c:0},
-{q:'Apakah cara menjaga alam sekitar?',a:['Membazir air','Menanam pokok','Membuang sampah ke sungai','Merosakkan tumbuhan'],c:1},
-{q:'Apakah tindakan apabila tidak faham pelajaran?',a:['Putus asa','Bertanya dengan sopan','Mengganggu rakan','Meniru sahaja'],c:1}
+ {q:"Apakah rukun Islam yang pertama?",a:["Solat","Mengucap dua kalimah syahadah","Puasa"],c:1},
+ {q:"Berapakah jumlah rukun iman?",a:["Enam","Lima","Tujuh"],c:0},
+ {q:"Apakah nama kitab suci umat Islam?",a:["Injil","Al-Quran","Taurat"],c:1},
+ {q:"Berapakah bilangan solat fardu sehari semalam?",a:["Tiga","Empat","Lima"],c:2},
+ {q:"Apakah ibu negara Malaysia?",a:["Kuala Lumpur","Johor Bahru","Kuching"],c:0},
+ {q:"Apakah adab ketika bercakap dengan ibu bapa?",a:["Meninggikan suara","Bercakap sopan","Tidak mendengar"],c:1},
+ {q:"Apakah bulan umat Islam berpuasa?",a:["Syawal","Ramadan","Muharam"],c:1},
+ {q:"Apakah arah umat Islam menghadap ketika solat?",a:["Kaabah","Madinah","Masjid Nabawi"],c:0}
 ];
 
-let currentQ=null;
-
-function showQuiz(){
-paused=true;
-currentQ=questions[Math.floor(Math.random()*questions.length)];
-$('question').textContent=currentQ.q;
-$('feedback').textContent='';
-$('answers').innerHTML=currentQ.a.map((a,i)=>
-`<button onclick="answer(${i})">${String.fromCharCode(65+i)}. ${a}</button>`
-).join('');
-$('quiz').style.display='flex';
-readCurrentQuestion();
+function speak(text){
+ if(!('speechSynthesis' in window))return;
+ speechSynthesis.cancel();
+ let msg=new SpeechSynthesisUtterance(text);
+ msg.lang="ms-MY";
+ msg.rate=.88;
+ msg.pitch=.85;
+ let voices=speechSynthesis.getVoices();
+ let v=voices.find(x=>/male|lelaki/i.test(x.name));
+ if(v)msg.voice=v;
+ speechSynthesis.speak(msg);
 }
 
-function readCurrentQuestion(){
-if(!('speechSynthesis'in window)||!currentQ)return;
-speechSynthesis.cancel();
-let text=currentQ.q+'. ';
-currentQ.a.forEach((a,i)=>{
-text+=String.fromCharCode(65+i)+'. '+a+'. ';
-});
-const msg=new SpeechSynthesisUtterance(text);
-msg.lang='ms-MY';
-msg.rate=.9;
-msg.pitch=.9;
-speechSynthesis.speak(msg);
+function playIntro(){
+ speak("Assalamualaikum. Selamat menempuh alam budak pintar. Jangan terleka dengan alam maya. Ambil pengajaran dari apa yang kamu lalui. Selamat menyahut cabaran anak-anak Alpha.");
 }
 
-function answer(i){
-if(i===currentQ.c){
-tone(880,.18,'sine',.12);
-setTimeout(()=>tone(1175,.22,'sine',.1),130);
-gems+=100;
-score+=100;
-$('feedback').textContent='✅ Betul! +100 permata dan +100 markah. Teruskan!';
-$('feedback').style.color='#18864c';
-updateHud();
-
-setTimeout(()=>{
-$('quiz').style.display='none';
-paused=false;
-if(gems>=500&&mission===1){
-running=false;
-$('missionWin').style.display='flex';
-}
-},950);
-
-}else{
-tone(180,.25,'sawtooth',.07);
-$('feedback').textContent='Belum tepat. Cuba lagi!';
-$('feedback').style.color='#c34b35';
-}
+function choose(emoji,name){
+ selectedCharacter=emoji;
+ document.getElementById("player").textContent=emoji;
+ speak("Anda memilih "+name);
 }
 
-function hit(item){
-if(item.rain){
-showQuiz();
-}else{
-tone(130,.22,'square',.08);
-score=Math.max(0,score-5);
-$('score').textContent=score;
-toast('🪨 Aduh! -5 markah');
-}
+function startGame(){
+ document.getElementById("menu").style.display="none";
+ playing=true;
+ lane=2;
+ updatePlayer();
+ spawnTimer=setInterval(spawnObstacle,1000);
+ gameTimer=setInterval(moveObstacles,40);
 }
 
-function toast(t){
-$('toast').textContent=t;
-$('toast').style.display='block';
-setTimeout(()=>$('toast').style.display='none',650);
+function updatePlayer(){
+ let p=document.getElementById("player");
+ p.style.left=(lane*20+4)+"%";
 }
 
-function loop(now){
-if(!running)return;
-let dt=Math.min(2,(now-last)/16.67);
-last=now;
-
-if(!paused){
-spawn+=dt;
-if(spawn>48){
-spawn=0;
-spawnRock();
+function left(){
+ if(!playing)return;
+ lane=Math.max(0,lane-1);
+ updatePlayer();
 }
 
-items.forEach(it=>{
-it.y+=it.speed*dt;
-it.el.style.left=(it.l*20+10)+'%';
-it.el.style.top=it.y+'px';
-
-if(!it.hit&&it.l===lane&&it.y>($('track').clientHeight-150)&&it.y<($('track').clientHeight-55)){
-it.hit=true;
-hit(it);
-}
-});
-
-items=items.filter(it=>{
-if(it.y>$('track').clientHeight+60){
-it.el.remove();
-return false;
-}
-return true;
-});
+function right(){
+ if(!playing)return;
+ lane=Math.min(4,lane+1);
+ updatePlayer();
 }
 
-raf=requestAnimationFrame(loop);
+document.getElementById("leftBtn").addEventListener("pointerdown",left);
+document.getElementById("rightBtn").addEventListener("pointerdown",right);
+
+let touchStart=0;
+document.getElementById("road").addEventListener("touchstart",e=>{
+ touchStart=e.touches[0].clientX;
+},{passive:true});
+
+document.getElementById("road").addEventListener("touchend",e=>{
+ let diff=e.changedTouches[0].clientX-touchStart;
+ if(diff>35)right();
+ if(diff< -35)left();
+},{passive:true});
+
+function spawnObstacle(){
+ if(!playing)return;
+ let rock=document.createElement("div");
+ rock.className="rock";
+ let rainbow=Math.random()<.35;
+ rock.textContent=rainbow?"🌈":"🪨";
+ rock.dataset.type=rainbow?"rainbow":"black";
+ rock.dataset.lane=Math.floor(Math.random()*5);
+ rock.style.left=(rock.dataset.lane*20+6)+"%";
+ document.getElementById("road").appendChild(rock);
+ obstacles.push(rock);
 }
 
-function nextMission(){
-if('speechSynthesis'in window)speechSynthesis.cancel();
-$('missionWin').style.display='none';
-mission=2;
-gems=0;
-score=0;
-items.forEach(x=>x.el.remove());
-items=[];
-updateHud();
-running=true;
-paused=false;
-toast('🚀 MISI 2 DIMULAKAN!');
-last=performance.now();
-raf=requestAnimationFrame(loop);
+function moveObstacles(){
+ let road=document.getElementById("road");
+ let player=document.getElementById("player");
+ let pTop=player.offsetTop;
+ let pBottom=pTop+player.offsetHeight;
+
+ obstacles.forEach((rock,index)=>{
+  let top=rock.offsetTop+7;
+  rock.style.top=top+"px";
+
+  if(top>pTop-25 && top<pBottom+10 &&
+     Number(rock.dataset.lane)===lane){
+    if(rock.dataset.type==="black"){
+     score-=5;
+     document.getElementById("score").textContent=score;
+     showMessage("🪨 -5 MARKAH!");
+    }else{
+     openQuiz();
+    }
+    rock.remove();
+    obstacles.splice(index,1);
+    return;
+  }
+
+  if(top>road.clientHeight){
+   rock.remove();
+   obstacles.splice(index,1);
+  }
+ });
 }
 
-function backToSelect(){
-$('missionWin').style.display='none';
-$('game').style.display='none';
-$('select').style.display='block';
-running=false;
-mission=1;
-gems=0;
-score=0;
-buildCards();
+function showMessage(t){
+ let m=document.getElementById("message");
+ m.textContent=t;
+ setTimeout(()=>m.textContent="",900);
 }
+
+function openQuiz(){
+ playing=false;
+ clearInterval(spawnTimer);
+ clearInterval(gameTimer);
+
+ let q=questions[Math.floor(Math.random()*questions.length)];
+ document.getElementById("question").textContent=q.q;
+ speak(q.q+". Pilihan jawapan: "+q.a.join(". "));
+ let box=document.getElementById("answers");
+ box.innerHTML="";
+
+ q.a.forEach((answer,i)=>{
+  let b=document.createElement("button");
+  b.className="answer";
+  b.textContent=String.fromCharCode(65+i)+". "+answer;
+  b.onclick=()=>answerQuestion(i,q.c);
+  box.appendChild(b);
+ });
+
+ document.getElementById("quiz").style.display="flex";
+}
+
+function answerQuestion(choice,correct){
+ if(choice===correct){
+  gems+=100;
+  score+=100;
+  showMessage("BETUL! +100 PERMATA 💎");
+  speak("Tahniah! Jawapan anda betul. Anda mendapat seratus permata.");
+ }else{
+  score-=10;
+  showMessage("Jawapan kurang tepat!");
+  speak("Maaf, jawapan kurang tepat. Teruskan usaha.");
+ }
+
+ document.getElementById("gems").textContent=gems;
+ document.getElementById("score").textContent=score;
+
+ if(gems>=500 && mission===1){
+  mission=2;
+  document.getElementById("mission").textContent="2";
+  alert("TAHNIAH! MISI 2 TELAH DIBUKA!");
+  speak("Tahniah! Misi dua telah dibuka.");
+ }
+
+ document.getElementById("quiz").style.display="none";
+ playing=true;
+ spawnTimer=setInterval(spawnObstacle,1000);
+ gameTimer=setInterval(moveObstacles,40);
+}
+
 </script>
 </body>
 </html>
