@@ -111,7 +111,6 @@ h1{margin:0;font-size:clamp(20px,5vw,32px);text-shadow:0 2px #fff}
 .rainbow{filter:drop-shadow(0 0 8px #ffcf35)}
 #player{bottom:13px;left:50%;transition:left .12s}
 
-/* KAWALAN BULAT: KIRI DI HUJUNG KIRI, KANAN DI HUJUNG KANAN */
 .controls{
  position:absolute;z-index:8;
  left:0;right:0;bottom:8px;
@@ -168,7 +167,6 @@ h1{margin:0;font-size:clamp(20px,5vw,32px);text-shadow:0 2px #fff}
  body:has(#game[style*="display: block"]) #rotateNotice{display:flex}
 }
 
-/* PAPARAN LANDSKAP */
 @media(orientation:landscape){
  #app{height:100dvh;min-height:100dvh;overflow:hidden}
  header{padding:3px 8px 0}
@@ -291,6 +289,8 @@ h1{margin:0;font-size:clamp(20px,5vw,32px);text-shadow:0 2px #fff}
 </div>
 
 <script>
+const GEM_KEY='kp2027Gems';
+
 const characters=[
  {name:'Kura-kura Purba',emoji:'🐢',body:'#48a86c',kind:'turtle'},
  {name:'Arbab Purba',emoji:'🦖',body:'#d58a48',kind:'dino'},
@@ -310,7 +310,9 @@ function svgChar(c){
  return `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">${common}${art}</svg>`;
 }
 
-let selected=0,lane=2,gems=0,score=0,mission=1;
+let selected=0,lane=2;
+let gems=Number(localStorage.getItem(GEM_KEY)||0);
+let score=0,mission=1;
 let running=false,paused=false,items=[],last=0,spawn=0,raf=0;
 let soundOn=true,audio=null;
 const $=id=>document.getElementById(id);
@@ -404,19 +406,35 @@ function toggleSound(){
 function beginGame(){
  $('select').style.display='none';
  $('game').style.display='block';
+
  try{
   if(document.documentElement.requestFullscreen&&!document.fullscreenElement)
    document.documentElement.requestFullscreen().catch(()=>{});
  }catch(e){}
+
  try{
   if(screen.orientation&&screen.orientation.lock)
    screen.orientation.lock('landscape').catch(()=>{});
  }catch(e){}
+
  $('who').textContent='Watak: '+characters[selected].name;
  $('player').innerHTML=svgChar(characters[selected]);
- lane=2;gems=0;score=0;items=[];
- updateHud();startAudio();
- running=true;paused=false;last=performance.now();spawn=0;
+
+ // Baca semula permata yang telah disimpan.
+ gems=Number(localStorage.getItem(GEM_KEY)||0);
+
+ lane=2;
+ score=0;
+ items=[];
+
+ updateHud();
+ startAudio();
+
+ running=true;
+ paused=false;
+ last=performance.now();
+ spawn=0;
+
  cancelAnimationFrame(raf);
  raf=requestAnimationFrame(loop);
 }
@@ -427,6 +445,7 @@ function updateHud(){
  $('mission').textContent=mission;
  $('player').style.left=(lane*20+10)+'%';
 }
+
 function move(d){
  if(!running||paused)return;
  lane=Math.max(0,Math.min(4,lane+d));
@@ -480,6 +499,7 @@ const questions=[
 ];
 
 let currentQ=null;
+
 function showQuiz(){
  paused=true;
  currentQ=questions[Math.floor(Math.random()*questions.length)];
@@ -499,7 +519,9 @@ function readCurrentQuestion(){
   String.fromCharCode(65+i)+', '+a
  ).join('. ');
  let msg=new SpeechSynthesisUtterance(text);
- msg.lang='ms-MY';msg.rate=.9;msg.pitch=.85;
+ msg.lang='ms-MY';
+ msg.rate=.9;
+ msg.pitch=.85;
  speechSynthesis.speak(msg);
 }
 
@@ -507,18 +529,31 @@ function answer(i){
  if(i===currentQ.c){
   tone(880,.18,'sine',.12);
   setTimeout(()=>tone(1175,.22,'sine',.1),130);
-  gems+=100;score+=100;
+
+  gems+=100;
+  score+=100;
+
+  // Simpan permata untuk dikongsi dengan Misi 2.
+  localStorage.setItem(GEM_KEY,String(gems));
+
   $('feedback').textContent='✅ Betul! +100 permata dan +100 markah. Teruskan!';
   $('feedback').style.color='#18864c';
+
   updateHud();
+
+  // Elakkan jawapan diklik berkali-kali.
+  document.querySelectorAll('#answers button').forEach(b=>b.disabled=true);
+
   setTimeout(()=>{
    $('quiz').style.display='none';
    paused=false;
+
    if(gems>=500&&mission===1){
     running=false;
     $('missionWin').style.display='flex';
    }
   },950);
+
  }else{
   tone(180,.25,'sawtooth',.07);
   $('feedback').textContent='Belum tepat. Cuba lagi!';
@@ -536,6 +571,7 @@ function hit(item){
   toast('🪨 Aduh! -5 markah');
  }
 }
+
 function toast(t){
  $('toast').textContent=t;
  $('toast').style.display='block';
@@ -544,15 +580,23 @@ function toast(t){
 
 function loop(now){
  if(!running)return;
+
  let dt=Math.min(2,(now-last)/16.67);
  last=now;
+
  if(!paused){
   spawn+=dt;
-  if(spawn>48){spawn=0;spawnRock();}
+
+  if(spawn>48){
+   spawn=0;
+   spawnRock();
+  }
+
   items.forEach(it=>{
    it.y+=it.speed*dt;
    it.el.style.left=(it.l*20+10)+'%';
    it.el.style.top=it.y+'px';
+
    if(!it.hit&&it.l===lane&&
       it.y>($('track').clientHeight-150)&&
       it.y<($('track').clientHeight-55)){
@@ -560,6 +604,7 @@ function loop(now){
     hit(it);
    }
   });
+
   items=items.filter(it=>{
    if(it.y>$('track').clientHeight+60){
     it.el.remove();
@@ -568,26 +613,38 @@ function loop(now){
    return true;
   });
  }
+
  raf=requestAnimationFrame(loop);
 }
 
+// Buka fail Misi 2 yang berasingan.
 function nextMission(){
  if('speechSynthesis'in window)speechSynthesis.cancel();
- $('missionWin').style.display='none';
- mission=2;gems=0;score=0;
- items.forEach(x=>x.el.remove());
- items=[];updateHud();
- running=true;paused=false;
- toast('🚀 MISI 2 DIMULAKAN!');
- last=performance.now();
- raf=requestAnimationFrame(loop);
+
+ // Pastikan jumlah permata disimpan sebelum berpindah halaman.
+ localStorage.setItem(GEM_KEY,String(gems));
+
+ running=false;
+ cancelAnimationFrame(raf);
+
+ window.location.href='misi2.html';
 }
+
+// Kembali memilih watak tanpa memadam permata.
 function backToSelect(){
  $('missionWin').style.display='none';
  $('game').style.display='none';
  $('select').style.display='block';
- running=false;mission=1;gems=0;score=0;
+
+ running=false;
+ cancelAnimationFrame(raf);
+
+ mission=1;
+ score=0;
+ gems=Number(localStorage.getItem(GEM_KEY)||0);
+
  buildCards();
+ updateHud();
 }
 </script>
 </body>
