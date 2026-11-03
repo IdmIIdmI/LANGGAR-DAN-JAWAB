@@ -84,6 +84,82 @@ h2{margin:8px 0}
  #track{height:calc(100dvh - 145px);min-height:110px}
  .controls button{width:48px;height:48px}
 }
+
+/* ===== KP2027 VISUAL UPGRADE ===== */
+:root{--cyan:#63edff;--gold:#ffd75a;--navy:#07152e}
+body{background:#050d20}
+#app{background:radial-gradient(ellipse at 50% 0%,#183d68 0%,#07152e 58%,#030916 100%)}
+#world{filter:saturate(1.12)}
+header{padding:10px 8px 4px}
+header h1{font-size:clamp(21px,4.2vw,34px);letter-spacing:1px;text-shadow:0 3px 0 #09213d,0 0 18px #51dfff99}
+#subtitle{font-size:clamp(10px,1.5vw,13px);letter-spacing:1.4px;color:#e7fbff}
+#sound{background:linear-gradient(145deg,#fff,#d8f7ff);border:2px solid #55dcff;box-shadow:0 4px 15px #00152c88;font-size:12px}
+.panel{background:linear-gradient(145deg,#fffffffa,#e1f6fffa);border:2px solid #fff;box-shadow:0 14px 38px #00132688,0 0 0 5px #68ddff22;border-radius:24px}
+.panel h2{font-size:clamp(20px,3vw,28px);color:#103a62}
+.primary{background:linear-gradient(135deg,#fff07a,#ffad36 70%);border:2px solid #fff4b0;box-shadow:0 5px 0 #bd6d16,0 9px 18px #102b4b44;color:#4a2c00}
+.secondary{box-shadow:0 3px 0 #73b9d7}
+.missionCards{gap:12px}
+.missionCard{position:relative;overflow:hidden;background:linear-gradient(150deg,#fff,#d8f5ff);border:2px solid #8be4ff;box-shadow:0 5px 0 #83c6e2,0 9px 16px #16446a20;transition:transform .15s}
+.missionCard:active,.character:active,.ship-choice:active{transform:scale(.97)}
+.missionCard span{display:block;font-size:clamp(38px,7vw,55px);filter:drop-shadow(0 4px 3px #17476b44)}
+.missionCard b{font-size:15px;color:#10395d}
+.missionCard small{font-weight:800;letter-spacing:.5px}
+#characterList{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.character{background:linear-gradient(145deg,#fff,#d9f4ff);border:2px solid #8ed8f3;box-shadow:0 4px 0 #a2d5e9;padding:10px 5px;min-height:118px}
+.character.selected{border:3px solid #ffb72f;background:linear-gradient(145deg,#fff9d7,#ffe9a5);box-shadow:0 4px 0 #d68a16,0 0 15px #ffc84b88}
+.character svg{height:82px;max-width:105px;filter:drop-shadow(0 4px 3px #163a5944)}
+.character span{display:inline-grid;place-items:center;height:82px;font-size:60px;filter:drop-shadow(0 5px 3px #123b5c55)}
+.character b{font-size:12px;line-height:1.2}
+.ship-choice{background:linear-gradient(145deg,#182f66,#08152f);box-shadow:0 4px 0 #050b1b}
+.ship-choice svg{height:86px;filter:drop-shadow(0 0 9px #64eaff88)}
+#game{height:calc(100dvh - 72px);display:none;flex-direction:column;padding:0 10px 5px}
+.hud{width:100%;gap:6px;margin:4px auto 7px;flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;padding:2px 1px 6px;scrollbar-width:none}
+.hud::-webkit-scrollbar{display:none}
+.badge{flex:0 0 auto;font-size:clamp(10px,1.4vw,13px);padding:6px 9px;border-radius:12px;box-shadow:0 3px 8px #001a3340}
+#track{flex:1 1 auto;height:auto;min-height:160px;max-height:none;width:100%;border:4px solid #f4fdff;border-radius:20px;box-shadow:0 8px 25px #00152e88,inset 0 0 28px #001a3b55}
+#track:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent 19.7%,#ffffff36 20%,transparent 20.3%,transparent 39.7%,#ffffff36 40%,transparent 40.3%,transparent 59.7%,#ffffff36 60%,transparent 60.3%,transparent 79.7%,#ffffff36 80%,transparent 80.3%);z-index:1}
+#track:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#ffffff12,transparent 18%,transparent 82%,#ffffff12);z-index:1}
+#player{width:clamp(58px,8vw,82px);height:clamp(68px,10vw,92px);bottom:8px;filter:drop-shadow(0 0 10px #fff) drop-shadow(0 4px 5px #001a3a)}
+#player svg{overflow:visible}
+.object{z-index:3;width:clamp(62px,8vw,78px);height:clamp(62px,8vw,78px);border-radius:18px;background:linear-gradient(145deg,#fff,#dcefff);border:3px solid #fff;box-shadow:0 5px 0 #153d5a88,0 0 18px #ffffff66;display:flex;flex-direction:column;gap:0;transform:translateX(-50%);color:#102f4b}
+.object.good{background:linear-gradient(145deg,#fff6a7,#ffb52e);border-color:#fff7c8;box-shadow:0 5px 0 #9d5d13,0 0 18px #ffe35c99}
+.object.bad{background:linear-gradient(145deg,#fff,#ffb8b8);border-color:#ffe0e0;box-shadow:0 5px 0 #8d2222,0 0 18px #ff555599}
+.object-icon{font-size:clamp(34px,5vw,47px);line-height:1.05;filter:drop-shadow(0 3px 2px #0003)}
+.object-label{font-size:9px;line-height:1;font-weight:1000;letter-spacing:.6px;text-transform:uppercase}
+.controls{position:relative;bottom:auto;flex:0 0 auto;margin:7px auto 0;max-width:540px;width:100%;padding:0 4px}
+.controls button{width:clamp(105px,22vw,170px);height:48px;border-radius:15px;border:2px solid #a5f4ff;background:linear-gradient(145deg,#1c5c91,#09254a);font-size:13px;box-shadow:0 4px 0 #04162e,0 0 13px #31cfff66}
+.hint{flex:0 0 auto;font-size:11px;margin:5px 0 0;color:#fff;text-shadow:0 2px 4px #00152e}
+#quiz{backdrop-filter:blur(7px)}
+#quizPanel{width:min(680px,95vw);max-height:88dvh;overflow:auto}
+#question{font-size:clamp(18px,2.6vw,23px);font-weight:800;line-height:1.4;color:#123c60}
+#answers{grid-template-columns:1fr 1fr;gap:10px}
+.answer{font-size:clamp(14px,1.8vw,17px);min-height:58px;text-align:left;line-height:1.3;box-shadow:0 3px 0 #9cc9dc}
+.answer:disabled{opacity:.8}
+#feedback{font-size:17px}
+#replay{font-weight:900}
+#missionWin,#finalWin{backdrop-filter:blur(8px)}
+@media(max-width:650px){
+ #characterList{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .panel{width:95vw}
+ #answers{grid-template-columns:1fr}
+ #game{height:calc(100dvh - 65px)}
+ .hud{justify-content:flex-start}
+ #track{min-height:145px}
+ .controls button{height:46px}
+}
+@media(max-height:500px){
+ header{padding:4px}
+ header h1{font-size:19px}
+ #game{height:calc(100dvh - 55px)}
+ .hud{margin:2px auto 4px}
+ #track{min-height:100px}
+ .controls{margin-top:4px}
+ .controls button{height:40px}
+ .hint{font-size:10px;margin-top:2px}
+ .character{min-height:90px}
+ .character svg,.character span{height:60px}
+}
+
 </style>
 </head>
 <body>
@@ -128,7 +204,7 @@ h2{margin:8px 0}
  <div id="quiz">
   <div class="panel" id="quizPanel">
    <h2 id="quizTitle">🌈 SOALAN PINTAR</h2><p id="question"></p>
-   <button class="secondary" id="replay" onclick="readQuestion()">🔊 Dengar soalan</button>
+   <button class="secondary" id="replay" onclick="readQuestion()">🔊 Dengar soalan & jawapan</button>
    <div id="answers"></div><div id="feedback"></div>
   </div>
  </div>
@@ -276,9 +352,14 @@ function selectMission(n){
  buildChoices();
 }
 function svgChar(c){
- let common=`<ellipse cx="50" cy="91" rx="29" ry="5" fill="#315c70" opacity=".25"/>`;
- let art=`<circle cx="50" cy="50" r="30" fill="${c.body||"#48a86c"}"/>`;
- return `<svg viewBox="0 0 100 100">${common}${art}</svg>`;
+ const art={
+ turtle:`<ellipse cx="50" cy="79" rx="28" ry="9" fill="#285d4a"/><path d="M23 57Q20 27 50 25Q80 27 77 57L69 70H31Z" fill="#3a9b68" stroke="#14583f" stroke-width="3"/><path d="M32 40L50 30L68 40L65 60L50 68L35 60Z" fill="#74c987" stroke="#216b4b" stroke-width="2"/><circle cx="18" cy="65" r="10" fill="#63bd7b"/><circle cx="82" cy="65" r="10" fill="#63bd7b"/><circle cx="38" cy="24" r="5" fill="#fff"/><circle cx="62" cy="24" r="5" fill="#fff"/><circle cx="39" cy="24" r="2.5"/><circle cx="63" cy="24" r="2.5"/><path d="M43 39Q50 45 57 39" fill="none" stroke="#164b38" stroke-width="3" stroke-linecap="round"/>`,
+ dino:`<path d="M22 73L28 48L20 35L34 38L39 22L51 34L63 20L67 39Q83 39 83 60L74 78H35Z" fill="#e29a52" stroke="#8a4c25" stroke-width="3"/><path d="M31 57L20 70L34 69M66 61L81 69L70 73" fill="none" stroke="#8a4c25" stroke-width="5" stroke-linecap="round"/><circle cx="62" cy="47" r="7" fill="#fff"/><circle cx="64" cy="47" r="3" fill="#17283a"/><path d="M68 62Q75 66 80 60" fill="none" stroke="#713b24" stroke-width="3"/>`,
+ eagle:`<path d="M50 20Q63 8 70 29L88 45L69 48L76 76L50 65L24 76L31 48L12 45L30 29Q37 8 50 20Z" fill="#9b633e" stroke="#56351f" stroke-width="3"/><path d="M50 24L62 43L50 58L38 43Z" fill="#f6e4b5"/><path d="M48 43L64 45L52 56Z" fill="#f2b52e"/><circle cx="43" cy="38" r="4" fill="#fff"/><circle cx="57" cy="38" r="4" fill="#fff"/><circle cx="43" cy="38" r="2"/><circle cx="57" cy="38" r="2"/>`,
+ horse:`<path d="M28 77L32 45L22 23L42 30L55 18L74 27L68 48L78 77L64 77L59 55L45 57L41 78Z" fill="#c38be8" stroke="#70459b" stroke-width="3"/><path d="M33 31L24 13L42 25M55 23L63 8L68 29" fill="#f2d8ff" stroke="#70459b" stroke-width="3"/><path d="M35 30Q50 42 68 30" fill="none" stroke="#fff" stroke-width="5"/><circle cx="57" cy="38" r="5" fill="#fff"/><circle cx="58" cy="38" r="2.5"/><path d="M57 51Q64 56 70 50" fill="none" stroke="#70459b" stroke-width="2"/>`,
+ tiger:`<path d="M26 76L28 43Q31 19 51 20Q76 20 76 47L72 77H58L55 60H43L40 77Z" fill="#f19a37" stroke="#874719" stroke-width="3"/><path d="M31 33L43 41L34 50M51 22L49 39L57 46M70 32L61 42L73 50M30 59L43 55M61 59L74 56" stroke="#442b1c" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="43" cy="43" r="5" fill="#fff"/><circle cx="62" cy="43" r="5" fill="#fff"/><circle cx="44" cy="43" r="2.5"/><circle cx="62" cy="43" r="2.5"/><path d="M48 54L54 54L51 59Z" fill="#713c2a"/><path d="M44 64Q51 70 59 64" fill="none" stroke="#713c2a" stroke-width="2"/>`
+ };
+ return `<svg viewBox="0 0 100 100" role="img" aria-label="${c.name}">${art[c.kind]||`<circle cx="50" cy="50" r="30" fill="${c.body||"#48a86c"}"/>`}</svg>`;
 }
 function buildChoices(){
  let list=missions[mission].characters;
@@ -288,7 +369,7 @@ function buildChoices(){
   ).join("");
  }else{
   $("characterList").innerHTML=list.map((c,i)=>
-   `<button class="character ${i===selected?"selected":""}" onclick="chooseCharacter(${i})">${c.kind?svgChar(c):'<span style="font-size:42px">'+c.emoji+'</span>'}<b>${c.name}</b></button>`
+   `<button class="character ${i===selected?"selected":""}" onclick="chooseCharacter(${i})">${c.kind?svgChar(c):'<span class="character-emoji">'+c.emoji+'</span>'}<b>${c.name}</b></button>`
   ).join("");
  }
 }
@@ -301,7 +382,7 @@ function playerArt(){
 }
 function startGame(){
  stopGame();hideAll();
- $("game").style.display="block";$("sound").style.display="block";
+ $("game").style.display="flex";$("sound").style.display="block";
  setWorld();
  score=0;correctCount=0;lane=2;objects=[];spawn=0;quizOpening=false;
  gems=Number(localStorage.getItem(GEM_KEY)||0);
@@ -330,8 +411,9 @@ document.addEventListener("keydown",e=>{
 function spawnObject(){
  let good=Math.random()<0.35;
  let el=document.createElement("div");
- el.className="object";
- el.textContent=good?missions[mission].objectGood:missions[mission].objectBad;
+ el.className="object "+(good?"good":"bad");
+ let symbol=good?missions[mission].objectGood:missions[mission].objectBad;
+ el.innerHTML='<span class="object-icon">'+symbol+'</span><small class="object-label">'+(good?'SOALAN':'BAHAYA')+'</small>';
  let l=Math.floor(Math.random()*5);
  el.style.left=(l*20+10)+"%";el.style.top="-65px";
  $("track").appendChild(el);
@@ -347,7 +429,7 @@ function loop(now){
    if(paused)break;
    o.y+=missions[mission].speed*dt;
    o.el.style.top=o.y+"px";
-   if(!o.hit&&o.l===lane&&o.y>$("track").clientHeight-145&&o.y<$("track").clientHeight-50){
+   if(!o.hit&&o.l===lane&&o.y>$("track").clientHeight-140&&o.y<$("track").clientHeight-12){
     o.hit=true;o.el.remove();
     if(o.good){openQuiz();break}
     score=Math.max(0,score-50);updateHUD();tone(130,.2,"square");
@@ -373,8 +455,23 @@ function openQuiz(){
 function readQuestion(){
  if(!currentQ||!("speechSynthesis" in window))return;
  speechSynthesis.cancel();
- let msg=new SpeechSynthesisUtterance(currentQ.q);
- msg.lang="ms-MY";msg.rate=.9;speechSynthesis.speak(msg);
+ const voices=speechSynthesis.getVoices();
+ const voice=voices.find(v=>/^ms(-|_)?my/i.test(v.lang))||
+             voices.find(v=>/^ms/i.test(v.lang))||
+             voices.find(v=>/^id(-|_)?id/i.test(v.lang))||
+             voices.find(v=>/^id/i.test(v.lang));
+ const lines=["Soalan. "+currentQ.q,"Pilihan jawapan."];
+ currentQ.a.forEach((a,i)=>lines.push("Pilihan "+String.fromCharCode(65+i)+". "+a));
+ lines.push("Sila pilih jawapan yang betul.");
+ lines.forEach((line,index)=>{
+  const msg=new SpeechSynthesisUtterance(line);
+  msg.lang=voice?voice.lang:"ms-MY";
+  if(voice)msg.voice=voice;
+  msg.rate=0.82;msg.pitch=1.0;msg.volume=1;
+  if(index===0)msg.onstart=()=>{$("replay").textContent="🔊 Sedang membaca…"};
+  if(index===lines.length-1)msg.onend=()=>{$("replay").textContent="🔊 Dengar soalan & jawapan"};
+  speechSynthesis.speak(msg);
+ });
 }
 function answerQuestion(i){
  if(answered||!currentQ)return;
@@ -425,24 +522,34 @@ function stopGame(){
  quizOpening=false;
  if("speechSynthesis" in window)speechSynthesis.cancel();
 }
-function tone(freq=600,duration=.16,wave="sine"){
+function tone(freq=600,duration=.22,wave="sine",volume=.12){
  if(!soundOn)return;
  try{
   audio=audio||(new(window.AudioContext||window.webkitAudioContext)());
   if(audio.state==="suspended")audio.resume();
-  let o=audio.createOscillator(),g=audio.createGain();
-  o.type=wave;o.frequency.value=freq;g.gain.value=.06;
+  const o=audio.createOscillator(),g=audio.createGain();
+  o.type=wave;o.frequency.setValueAtTime(freq,audio.currentTime);
+  g.gain.setValueAtTime(.0001,audio.currentTime);
+  g.gain.exponentialRampToValueAtTime(volume,audio.currentTime+.025);
+  g.gain.exponentialRampToValueAtTime(.0001,audio.currentTime+duration);
   o.connect(g);g.connect(audio.destination);
-  o.start();o.stop(audio.currentTime+duration);
+  o.start();o.stop(audio.currentTime+duration+.03);
  }catch(e){}
 }
 function startMusic(){
  if(!soundOn||!running||paused)return;
  stopMusic();
- let notes=[523,659,784,659,587,698,880,698],n=0;
+ const melody=[523.25,659.25,783.99,659.25,587.33,698.46,880,783.99,
+               659.25,783.99,987.77,880,698.46,783.99,880,659.25];
+ const bass=[130.81,164.81,196,164.81];
+ let n=0;
  musicTimer=setInterval(()=>{
-  if(running&&!paused)tone(notes[n++%notes.length],.16,"triangle");
- },650);
+  if(!running||paused||!soundOn)return;
+  tone(melody[n%melody.length],.28,"triangle",.075);
+  if(n%4===0)tone(bass[Math.floor(n/4)%bass.length],.42,"sine",.045);
+  if(n%2===1)tone(melody[n%melody.length]*2,.12,"sine",.018);
+  n++;
+ },360);
 }
 function stopMusic(){
  if(musicTimer){clearInterval(musicTimer);musicTimer=null}
@@ -453,6 +560,7 @@ function toggleSound(){
  if(!soundOn)stopMusic();
  else if(running&&!paused)startMusic();
 }
+if("speechSynthesis" in window){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices();}
 updateMenu();
 </script>
 </body>
