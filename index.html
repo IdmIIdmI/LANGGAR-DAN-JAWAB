@@ -1,83 +1,182 @@
+
 <!DOCTYPE html>
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>LANGGAR DAN JAWAB - KP2027</title>
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#071d38;color:#fff;overflow:hidden}
-button{font:inherit;cursor:pointer;border:0;border-radius:14px;padding:10px 16px;font-weight:800}
-
-#app{
- min-height:100dvh;
- position:relative;
- background:linear-gradient(#5bc5ed,#d9f7ff 55%,#8bcbe8);
- color:#103455;
- overflow:hidden;
+body{
+ margin:0;font-family:Arial,sans-serif;
+ color:white;overflow:hidden;background:#071d38;
 }
-.snow{
+button{font:inherit;cursor:pointer;font-weight:bold}
+#app{
+ width:100vw;height:100dvh;position:relative;
+ overflow:hidden;background:#071d38;
+}
+#world{
+ position:absolute;inset:0;overflow:hidden;
+ transition:background .4s;
+}
+#world.m1{
+ background:linear-gradient(#5bc5ed,#d9f7ff 55%,#8bcbe8);
+}
+#world.m2{
+ background:radial-gradient(ellipse at 50% 100%,#263c83 0%,#10143e 40%,#020515 100%);
+}
+#world.m3{
+ background:linear-gradient(#087fa4,#005477 60%,#00334f);
+}
+#decoration{
  position:absolute;inset:0;pointer-events:none;
- background-image:radial-gradient(#fff 1.5px,transparent 2px),radial-gradient(#fff 2px,transparent 3px);
+}
+.m1decor{
+ background-image:
+ radial-gradient(#fff 1.5px,transparent 2px),
+ radial-gradient(#fff 2px,transparent 3px);
  background-size:43px 43px,77px 77px;
  background-position:0 0,22px 17px;
- opacity:.75;animation:snowfall 9s linear infinite;
+ opacity:.7;animation:snowfall 9s linear infinite;
+}
+.m2decor{
+ background-image:
+ radial-gradient(2px 2px at 20px 30px,#fff,transparent),
+ radial-gradient(2px 2px at 100px 120px,#8beaff,transparent),
+ radial-gradient(1px 1px at 200px 70px,#fff,transparent),
+ radial-gradient(2px 2px at 300px 200px,#fff,transparent);
+ background-size:450px 300px;
+ animation:stars 12s linear infinite;
+}
+.m3decor{
+ background-image:
+ radial-gradient(ellipse at 20% 30%,#ffffff22 0 2px,transparent 4px),
+ radial-gradient(ellipse at 70% 60%,#ffffff22 0 3px,transparent 5px);
+ background-size:100px 130px;
+ animation:bubbles 8s linear infinite;
 }
 @keyframes snowfall{to{background-position:0 300px,22px 317px}}
+@keyframes stars{to{transform:translateY(300px)}}
+@keyframes bubbles{to{background-position:0 -300px}}
 
-header{position:relative;z-index:2;text-align:center;padding:8px}
-h1{margin:0;font-size:clamp(20px,5vw,32px);text-shadow:0 2px #fff}
-.sub{font-weight:700;font-size:13px}
+header{
+ position:relative;z-index:2;text-align:center;
+ padding:8px 5px 2px;color:#fff;
+ text-shadow:0 2px 5px #0005;
+}
+header h1{margin:0;font-size:clamp(18px,4vw,30px)}
+#subtitle{font-weight:bold;font-size:12px;margin-top:3px}
 
+#sound{
+ position:absolute;right:10px;top:10px;z-index:15;
+ border:2px solid #fff;border-radius:12px;
+ padding:7px 10px;background:#ffffffdd;color:#123;
+}
 .panel{
- position:relative;z-index:2;background:#ffffffed;
- border:3px solid #fff;border-radius:22px;
- box-shadow:0 8px 22px #17466b33;
- padding:18px;max-width:900px;
- margin:12px auto;width:calc(100% - 24px);
- text-align:center;color:#103455;
+ position:relative;z-index:3;
+ width:min(760px,95vw);max-height:90dvh;overflow:auto;
+ margin:12px auto;padding:18px;
+ text-align:center;border-radius:22px;
+ background:#ffffffed;color:#103455;
+ border:3px solid #fff;
+ box-shadow:0 8px 25px #001d3c55;
 }
-#intro{margin-top:5vh}
-#intro p{font-size:clamp(16px,3vw,21px);line-height:1.5;font-weight:700}
-.primary{background:linear-gradient(135deg,#ffdc4d,#ff9f32);color:#563500;box-shadow:0 4px 0 #c77b1e}
-.secondary{background:#d7f3ff;color:#12466b;border:2px solid #7bc8e9}
-
-#select{display:none}
-#characters{
- display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
- gap:10px;margin-top:14px;
+.m2panel{
+ background:linear-gradient(145deg,#17245c,#07122f);
+ color:white;border:2px solid #57eaff;
+ box-shadow:0 0 35px #00cfff66;
 }
-.charCard{
- background:#e9f9ff;border:3px solid #b6e7f8;
- border-radius:17px;padding:8px;color:#164466;
+h2{margin:8px 0}
+.primary{
+ background:linear-gradient(135deg,#ffdc4d,#ff9f32);
+ color:#563500;padding:13px 22px;
+ border:0;border-radius:25px;margin:7px;
 }
-.charCard.selected{border-color:#ffb92e;box-shadow:0 5px 0 #eaa22a}
-.charCard svg{width:100%;height:112px;display:block}
-.charCard b{display:block;font-size:14px}
-
-#game{
+.secondary{
+ background:#d7f3ff;color:#12466b;
+ border:2px solid #7bc8e9;padding:11px 18px;
+ border-radius:20px;margin:6px;
+}
+#menu,#characterSelect,#game,#quiz,#missionWin,#finalWin{
  display:none;position:relative;z-index:2;
- width:100%;height:calc(100dvh - 55px);
- margin:0 auto;padding:0 10px;
+}
+#menu{display:block}
+.missionCards{
+ display:grid;grid-template-columns:repeat(3,1fr);
+ gap:10px;margin:18px 0;
+}
+.missionCard{
+ padding:15px 8px;border-radius:16px;
+ border:2px solid #8bcce8;background:#e9f9ff;
+ color:#164466;min-width:0;
+}
+.missionCard:disabled{opacity:.4;cursor:not-allowed}
+.missionCard b{display:block;margin-top:7px}
+.missionCard span{font-size:35px}
+#characterList{
+ display:grid;grid-template-columns:repeat(5,1fr);
+ gap:8px;margin:12px 0;
+}
+.character{
+ background:#e9f9ff;border:3px solid #b6e7f8;
+ border-radius:15px;padding:8px 4px;color:#164466;
+ min-width:0;
+}
+.character.selected{
+ border-color:#ffb92e;box-shadow:0 4px 0 #eaa22a;
+}
+.character svg{width:100%;height:70px}
+.character b{display:block;font-size:12px}
+.ship-list{
+ display:grid;grid-template-columns:repeat(4,1fr);
+ gap:9px;margin:14px 0;
+}
+.ship-choice{
+ border:2px solid #6387d8;border-radius:14px;
+ background:#0b1940;padding:8px 4px;color:white;
+ min-width:0;
+}
+.ship-choice.selected{
+ border:3px solid #ffe76b;background:#263c76;
+}
+.ship-choice svg{width:100%;height:75px}
+.ship-choice b{font-size:11px;display:block}
+#game{
+ height:calc(100dvh - 48px);
+ padding:0 9px;
 }
 .hud{
- display:flex;justify-content:center;gap:8px;
+ display:flex;justify-content:center;gap:7px;
  flex-wrap:wrap;margin:5px auto;
 }
 .badge{
- background:#fff;border:2px solid #b5e9fb;
- border-radius:12px;padding:5px 9px;
- font-weight:900;font-size:12px;color:#164466;
+ background:#ffffffed;border-radius:11px;
+ padding:5px 9px;font-weight:900;
+ font-size:12px;color:#164466;
+ border:2px solid #b5e9fb;
+}
+.m2badge{
+ background:#101d4bdc;color:white;
+ border:1px solid #6aeaff;
 }
 #track{
- height:calc(100dvh - 185px);
- min-height:200px;max-height:650px;
- width:100%;max-width:1250px;
- margin:0 auto;position:relative;overflow:hidden;
- border:5px solid #fff;border-radius:20px;
+ position:relative;overflow:hidden;
+ height:calc(100dvh - 150px);
+ min-height:150px;max-height:650px;
+ width:100%;max-width:1200px;
+ margin:0 auto;border:4px solid white;
+ border-radius:18px;
+}
+.m1track{
  background:linear-gradient(90deg,#d5f5ff,#effcff 50%,#d5f5ff);
- box-shadow:inset 0 0 25px #4b9dc555;
+}
+.m2track{
+ background:radial-gradient(ellipse at center,#263c83,#10143e);
+}
+.m3track{
+ background:linear-gradient(#087fa4,#005477 60%,#00334f);
 }
 #track:before{
  content:"";position:absolute;inset:0;
@@ -85,567 +184,580 @@ h1{margin:0;font-size:clamp(20px,5vw,32px);text-shadow:0 2px #fff}
   90deg,transparent 0 calc(20% - 2px),
   #75b9d6 calc(20% - 2px) calc(20% + 2px)
  );
- opacity:.75;
+ opacity:.5;pointer-events:none;
 }
 #track:after{
  content:"";position:absolute;inset:0;
- background:repeating-linear-gradient(0deg,transparent 0 70px,#ffffff66 71px 74px);
+ background:repeating-linear-gradient(
+  0deg,transparent 0 70px,#ffffff22 71px 74px
+ );
  animation:road 1.5s linear infinite;
  pointer-events:none;
 }
 @keyframes road{to{background-position:0 144px}}
 
-.laneGlow{
- position:absolute;inset:0;display:grid;
- grid-template-columns:repeat(5,1fr);pointer-events:none;
+#player{
+ position:absolute;z-index:4;
+ bottom:12px;left:50%;
+ width:65px;height:70px;
+ transform:translateX(-50%);
+ display:grid;place-items:center;
+ transition:left .12s;
+ filter:drop-shadow(0 0 9px #4eeeff);
 }
-.laneGlow span{border-right:1px dashed #5da6c755}
-
-.actor,.rock{
- position:absolute;z-index:3;transform:translateX(-50%);
- width:48px;height:64px;display:grid;place-items:center;
- filter:drop-shadow(0 4px 2px #24536a55);
+#player svg{width:100%;height:100%}
+#player .emoji{font-size:48px}
+.object{
+ position:absolute;z-index:3;
+ width:55px;height:55px;
+ display:flex;align-items:center;justify-content:center;
+ font-size:40px;
+ transform:translateX(-50%);
 }
-.actor svg,.rock svg{width:100%;height:100%;overflow:visible}
-.rock{width:38px;height:44px}
-.rainbow{filter:drop-shadow(0 0 8px #ffcf35)}
-#player{bottom:13px;left:50%;transition:left .12s}
-
 .controls{
  position:absolute;z-index:8;
- left:0;right:0;bottom:8px;
+ left:0;right:0;bottom:5px;
  display:flex;justify-content:space-between;
- align-items:center;padding:0 4px;
- pointer-events:none;
+ padding:0 5px;pointer-events:none;
 }
 .controls button{
- pointer-events:auto;
- width:62px;height:62px;min-width:62px;
- padding:0;border-radius:50%;
- background:radial-gradient(circle at 35% 28%,#fff,#bdeeff);
- color:#145078;border:4px solid #78c7e8;
- box-shadow:0 5px 0 #398bb4,0 7px 12px #17466b44;
- font-size:13px;font-weight:1000;
+ pointer-events:auto;width:58px;height:58px;
+ border-radius:50%;border:3px solid #83eaff;
+ background:#123a70dd;color:white;
+ font-size:14px;box-shadow:0 0 12px #20cfff88;
  touch-action:manipulation;
 }
-.controls button:active{transform:translateY(3px)}
-.hint{text-align:center;font-size:11px;font-weight:800;color:#164466;margin:5px auto}
+.hint{text-align:center;font-size:11px;font-weight:bold;margin:4px}
 
-#quiz,#missionWin{
- display:none;position:fixed;z-index:10;inset:0;
- background:#06213bcc;align-items:center;
- justify-content:center;padding:16px;
+#quiz,#missionWin,#finalWin{
+ position:fixed;inset:0;z-index:20;
+ background:#001b35dd;
+ align-items:center;justify-content:center;
+ padding:14px;
 }
-#quiz .panel,#missionWin .panel{max-width:520px}
-#answers{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}
-#replayQuestion{margin-top:12px;background:#d7f3ff;color:#12466b;border:2px solid #7bc8e9}
-#answers button{
+#quiz .panel,#missionWin .panel,#finalWin .panel{
+ max-width:540px;
+}
+#answers{
+ display:grid;grid-template-columns:1fr 1fr;
+ gap:9px;margin-top:14px;
+}
+.answer{
+ width:100%;min-height:48px;
+ border-radius:12px;border:2px solid #a5dff2;
  background:#e5f7ff;color:#123e61;
- border:2px solid #a5dff2;min-height:48px;
+ padding:10px;
+}
+.m2panel .answer{
+ background:#14285a;color:white;border-color:#77dfff;
 }
 #feedback{font-weight:900;min-height:28px;margin-top:10px}
-#toast{
- position:absolute;z-index:6;top:44%;left:50%;
- transform:translate(-50%,-50%);
- background:#fff;border-radius:20px;padding:12px 18px;
- font-weight:1000;color:#164466;display:none;
- box-shadow:0 4px 15px #1238;
+#rotate{
+ display:none;position:fixed;inset:0;z-index:50;
+ background:#030719;color:white;
+ align-items:center;justify-content:center;
+ text-align:center;padding:25px;font-size:23px;
 }
-#sound{
- position:absolute;right:12px;top:12px;z-index:5;
- background:#fff;color:#164466;border:2px solid #a5dff2;
-}
-#rotateNotice{
- display:none;position:fixed;inset:0;z-index:30;
- background:linear-gradient(135deg,#0b3559,#167ba5);
- color:white;align-items:center;justify-content:center;
- text-align:center;padding:25px;
- font-size:clamp(20px,5vw,30px);font-weight:900;
-}
-
 @media(orientation:portrait){
- body:has(#game[style*="display: block"]) #rotateNotice{display:flex}
+ #rotate{display:flex}
 }
-
+@media(max-width:650px){
+ .missionCards{grid-template-columns:1fr}
+ .missionCard{padding:9px}
+ .missionCard span{font-size:25px}
+ #characterList{grid-template-columns:repeat(2,1fr)}
+ .character svg{height:55px}
+ .ship-list{grid-template-columns:repeat(2,1fr)}
+ .ship-choice svg{height:60px}
+ .panel{padding:12px}
+}
 @media(orientation:landscape){
- #app{height:100dvh;min-height:100dvh;overflow:hidden}
- header{padding:3px 8px 0}
- header h1{font-size:clamp(17px,3vw,25px)}
- .sub{font-size:10px}
- #game{height:calc(100dvh - 38px);padding:0 8px}
- .hud{margin:3px auto 5px;gap:8px}
- .badge{font-size:11px;padding:4px 8px}
- #track{
-  height:calc(100dvh - 145px);
-  min-height:170px;max-height:none;width:100%;
- }
- .actor{width:43px;height:58px}
- .rock{width:34px;height:40px}
- .controls{bottom:8px;padding:0 5px}
- .controls button{width:58px;height:58px;min-width:58px;font-size:11px}
- .hint{display:none}
- .panel{margin:6px auto;padding:10px}
- #intro{margin-top:2vh}
- #intro p{font-size:clamp(13px,1.8vw,17px)}
- #characters{grid-template-columns:repeat(5,1fr);gap:7px}
- .charCard svg{height:65px}
- .charCard{padding:4px}
-}
-
-@media(max-height:420px) and (orientation:landscape){
- header h1{font-size:17px}
- #game{height:calc(100dvh - 34px)}
- .hud{margin:1px auto 3px}
- .badge{font-size:10px;padding:3px 6px}
- #track{height:calc(100dvh - 105px);min-height:130px}
- .controls{bottom:5px}
- .controls button{width:48px;height:48px;min-width:48px}
- .actor{width:36px;height:49px}
- .rock{width:29px;height:34px}
- .charCard svg{height:55px}
- #intro p{margin:6px 0}
-}
-@media(max-width:480px) and (orientation:portrait){
- .panel{padding:13px}
- #characters{grid-template-columns:repeat(2,1fr)}
+ header{padding:3px}
+ header h1{font-size:clamp(16px,3vw,24px)}
+ #game{height:calc(100dvh - 38px)}
+ #track{height:calc(100dvh - 135px)}
+ .controls button{width:52px;height:52px}
+ .panel{margin:5px auto;padding:10px}
+ .character svg{height:55px}
 }
 </style>
 </head>
 
 <body>
-<div id="rotateNotice">
- 📱<br><br>SILA PUSING TELEFON KE MOD LANDSKAP
- <br><small style="font-size:15px;font-weight:600">Pusing telefon secara melintang untuk bermain.</small>
-</div>
-
 <div id="app">
-<div class="snow"></div>
-<button id="sound" onclick="toggleSound()">🔊 Bunyi</button>
-
-<header>
- <h1>❄️ CABARAN ANAK ALPHA ❄️</h1>
- <div class="sub">MISI 1 • LEMBAH SALJI PURBA • KP2027</div>
-</header>
-
-<section id="intro" class="panel">
- <h2>🌟 Selamat Datang, Anak Pintar! 🌟</h2>
- <p>Assalamualaikum!<br>
- Selamat menempuh alam budak pintar. Jangan terleka dengan alam maya.
- Ambil pengajaran daripada apa yang kamu lalui.<br>
- <b>Selamat menyahut cabaran, anak-anak Alpha!</b></p>
- <p id="voiceStatus" style="font-size:12px;color:#47718a">Dengar pesanan sebelum memulakan misi…</p>
- <button class="primary" onclick="playIntroAndContinue()">🔊 DENGAR UCAPAN & MULA ➜</button>
- <button class="secondary" onclick="startSelection()">Langkau ucapan</button>
-</section>
-
-<section id="select" class="panel">
- <h2>🦕 Pilih Watak Pengembara</h2>
- <p>Pilih satu daripada 5 watak purba. Gerakkan watak ke kiri dan kanan untuk mengelak batu!</p>
- <div id="characters"></div>
- <button class="primary" onclick="beginGame()">MULA MISI 1 🚀</button>
-</section>
-
-<section id="game">
- <div class="hud">
-  <div class="badge" id="who">Watak: —</div>
-  <div class="badge">💎 Permata: <span id="gems">0</span></div>
-  <div class="badge">⭐ Markah: <span id="score">0</span></div>
-  <div class="badge">🏁 Misi: <span id="mission">1</span></div>
+ <div id="world" class="m1">
+  <div id="decoration" class="m1decor"></div>
  </div>
 
- <div id="track">
-  <div class="laneGlow"><span></span><span></span><span></span><span></span><span></span></div>
-  <div id="player" class="actor"></div>
-  <div id="toast"></div>
+ <button id="sound" onclick="toggleSound()">🔊 Bunyi</button>
+
+ <header>
+  <h1>❄️ CABARAN ANAK ALPHA 🚀</h1>
+  <div id="subtitle">LANGGAR DAN JAWAB • KP2027</div>
+ </header>
+
+ <!-- MENU UTAMA -->
+ <section id="menu" class="panel">
+  <h2>🌟 SELAMAT DATANG, ANAK ALPHA! 🌟</h2>
+  <p>Terokai tiga dunia cabaran KP2027. Pilih misi dan buktikan kebolehan anda!</p>
+  <div class="missionCards">
+   <button class="missionCard" onclick="selectMission(1)">
+    <span>❄️</span><b>MISI 1</b>
+    <small>PENYAYANG</small>
+   </button>
+   <button class="missionCard" id="mission2Card" onclick="selectMission(2)">
+    <span>🚀</span><b>MISI 2</b>
+    <small>BERDAYA TAHAN</small>
+   </button>
+   <button class="missionCard" id="mission3Card" onclick="selectMission(3)">
+    <span>🌊</span><b>MISI 3</b>
+    <small>BERUPAYA MEMIMPIN</small>
+   </button>
+  </div>
+  <p>💎 Jumlah Permata: <b id="menuGems">0</b></p>
+  <p>Jawab 5 soalan dengan betul untuk melengkapkan setiap misi.</p>
+ </section>
+
+ <!-- PILIH WATAK -->
+ <section id="characterSelect" class="panel">
+  <h2 id="selectTitle">PILIH WATAK</h2>
+  <p id="selectDescription"></p>
+  <div id="characterList"></div>
+  <div id="shipList" class="ship-list" style="display:none"></div>
+  <button class="primary" onclick="startGame()">MULA MISI 🚀</button>
+  <button class="secondary" onclick="backMenu()">KEMBALI</button>
+ </section>
+
+ <!-- PERMAINAN -->
+ <section id="game">
+  <div class="hud">
+   <div class="badge" id="who">Watak: —</div>
+   <div class="badge" id="gemBadge">💎 Permata: <span id="gems">0</span></div>
+   <div class="badge">⭐ Markah: <span id="score">0</span></div>
+   <div class="badge">🏁 Misi: <span id="mission">1</span></div>
+   <div class="badge">📦 Soalan: <span id="progress">0/5</span></div>
+  </div>
+
+  <div id="track" class="m1track">
+   <div id="player"></div>
+  </div>
+
+  <div class="controls">
+   <button onclick="move(-1)">◀ KIRI</button>
+   <button onclick="move(1)">KANAN ▶</button>
+  </div>
+  <div class="hint" id="hint">Elak batu hitam 🪨 dan langgar batu pelangi 🌈</div>
+ </section>
+
+ <!-- SOALAN -->
+ <div id="quiz">
+  <div class="panel" id="quizPanel">
+   <h2 id="quizTitle">🌈 SOALAN PINTAR</h2>
+   <p id="question"></p>
+   <button class="secondary" id="replay" onclick="readQuestion()">🔊 Dengar soalan</button>
+   <div id="answers"></div>
+   <div id="feedback"></div>
+  </div>
  </div>
 
- <div class="controls">
-  <button aria-label="Gerak kiri" onclick="move(-1)">KIRI</button>
-  <button aria-label="Gerak kanan" onclick="move(1)">KANAN</button>
+ <!-- MISI SELESAI -->
+ <div id="missionWin">
+  <div class="panel" id="winPanel">
+   <h2 id="winTitle">🏆 MISI BERJAYA!</h2>
+   <p id="winMessage"></p>
+   <p>💎 Jumlah permata: <b id="winGems">0</b></p>
+   <button class="primary" id="nextButton" onclick="nextMission()">TERUSKAN ➜</button>
+   <button class="secondary" onclick="backMenu()">MENU UTAMA</button>
+  </div>
  </div>
 
- <div class="hint">Elak 🪨 batu hitam • Langgar 🌈 batu pelangi untuk menjawab soalan</div>
-</section>
-
-<div id="quiz">
- <div class="panel">
-  <h2>🌈 Batu Pelangi — Soalan Pintar!</h2>
-  <p id="question"></p>
-  <button id="replayQuestion" onclick="readCurrentQuestion()">🔊 Dengar soalan dan pilihan jawapan</button>
-  <div id="answers"></div>
-  <div id="feedback"></div>
+ <div id="finalWin">
+  <div class="panel">
+   <h1>🏆 TAHNIAH, WIRA KP2027!</h1>
+   <h2>ANDA TELAH MENAMATKAN KETIGA-TIGA MISI!</h2>
+   <p>Anda telah membuktikan nilai penyayang, berdaya tahan dan berupaya memimpin.</p>
+   <h2>💎 Jumlah Permata: <span id="finalGems">0</span></h2>
+   <button class="primary" onclick="backMenu()">KEMBALI KE MENU</button>
+  </div>
  </div>
-</div>
 
-<div id="missionWin">
- <div class="panel">
-  <h2>🏆 Misi 1 Berjaya!</h2>
-  <p>Hebat! Kamu berjaya mengumpul sekurang-kurangnya 500 permata.</p>
-  <p>🎁 Misi 2 telah dibuka!</p>
-  <button class="primary" onclick="nextMission()">TERUSKAN KE MISI 2 ➜</button>
-  <button class="secondary" onclick="backToSelect()">PILIH WATAK LAIN</button>
+ <div id="rotate">
+  📱<br><br>SILA PUSING TELEFON KE MOD LANDSKAP
+  <br><small style="font-size:14px">Pusing telefon secara melintang untuk bermain.</small>
  </div>
-</div>
 </div>
 
 <script>
-const GEM_KEY='kp2027Gems';
+const GEM_KEY="kp2027Gems";
 
-const characters=[
- {name:'Kura-kura Purba',emoji:'🐢',body:'#48a86c',kind:'turtle'},
- {name:'Arbab Purba',emoji:'🦖',body:'#d58a48',kind:'dino'},
- {name:'Helang Purba',emoji:'🦅',body:'#a66b42',kind:'eagle'},
- {name:'Kuda Terbang Purba',emoji:'🦄',body:'#c18be8',kind:'horse'},
- {name:'Harimau Purba',emoji:'🐅',body:'#e58b35',kind:'tiger'}
-];
+let mission=1,selected=0,lane=2;
+let score=0,gems=Number(localStorage.getItem(GEM_KEY)||0);
+let correctCount=0;
+let running=false,paused=false;
+let objects=[],spawn=0,last=0,raf=0;
+let soundOn=true,audio=null,currentQ=null;
+let questionPool=[],answered=false;
 
+const $=id=>document.getElementById(id);
+
+const missions={
+ 1:{
+  title:"MISI 1 • LEMBAH SALJI PURBA",
+  value:"PENYAYANG",
+  description:"Elak batu hitam 🪨 dan langgar batu pelangi 🌈 untuk menjawab soalan.",
+  objectGood:"🌈",objectBad:"🪨",
+  speed:2.6,spawnRate:48,
+  characters:[
+   {name:"Kura-kura Purba",emoji:"🐢",body:"#48a86c",kind:"turtle"},
+   {name:"Arbab Purba",emoji:"🦖",body:"#d58a48",kind:"dino"},
+   {name:"Helang Purba",emoji:"🦅",body:"#a66b42",kind:"eagle"},
+   {name:"Kuda Terbang Purba",emoji:"🦄",body:"#c18be8",kind:"horse"},
+   {name:"Harimau Purba",emoji:"🐅",body:"#e58b35",kind:"tiger"}
+  ],
+  questions:[
+   {q:"Apakah amalan yang baik sebelum memulakan sesuatu pekerjaan?",a:["Membaca doa","Mengejek kawan","Bergaduh","Membuang masa"],c:0},
+   {q:"Apakah yang perlu kita lakukan apabila ternampak sampah?",a:["Biarkan sahaja","Buang ke tempat sampah","Tendang","Sorok di bawah meja"],c:1},
+   {q:"Jika kawan terjatuh, apakah tindakan terbaik?",a:["Ketawakan","Tinggalkan","Bantu dan panggil guru","Rakam video"],c:2},
+   {q:"Apakah sikap yang menunjukkan kita amanah?",a:["Menipu","Mengambil barang orang","Menepati janji","Menyalahkan orang"],c:2},
+   {q:"Apabila menggunakan internet, kita hendaklah…",a:["Berhemah dan berhati-hati","Kongsi kata laluan","Percaya semua perkara","Leka sepanjang hari"],c:0},
+   {q:"Apakah cara menjaga alam sekitar?",a:["Membazir air","Menanam pokok","Membuang sampah ke sungai","Merosakkan tumbuhan"],c:1},
+   {q:"Apakah tindakan apabila tidak faham pelajaran?",a:["Putus asa","Bertanya dengan sopan","Mengganggu rakan","Meniru sahaja"],c:1}
+  ]
+ },
+ 2:{
+  title:"MISI 2 • ANGKASA LEPAS",
+  value:"BERDAYA TAHAN",
+  description:"Elak bom alien 💣 dan langgar peti harta karun 🎁.",
+  objectGood:"🎁",objectBad:"💣",
+  speed:3,spawnRate:48,
+  characters:[
+   {name:"GALAXY PHANTOM",svg:`<svg viewBox="0 0 120 100"><defs><linearGradient id="a" x2="0" y2="1"><stop stop-color="#e8fbff"/><stop offset="1" stop-color="#3978c9"/></linearGradient></defs><path d="M60 2 L77 35 L116 78 L77 68 L60 91 L43 68 L4 78 L43 35Z" fill="url(#a)" stroke="#75efff" stroke-width="3"/><path d="M60 10 L70 49 L60 66 L50 49Z" fill="#071b47"/><path d="M49 72 L60 96 L71 72" fill="#ffb34e"/><circle cx="60" cy="48" r="7" fill="#a9ffff"/></svg>`},
+   {name:"COSMIC MANTA",svg:`<svg viewBox="0 0 120 100"><path d="M60 8 Q76 24 116 27 Q104 63 72 66 L60 91 L48 66 Q16 63 4 27 Q44 24 60 8Z" fill="#8b69f5" stroke="#c6b5ff" stroke-width="3"/><path d="M60 15 L70 59 L60 78 L50 59Z" fill="#d8ffff"/><path d="M20 35 L45 53 M100 35 L75 53" stroke="#59eaff" stroke-width="5"/><circle cx="60" cy="43" r="7" fill="#fff"/></svg>`},
+   {name:"NOVA STRIKER",svg:`<svg viewBox="0 0 120 100"><path d="M60 4 L76 34 L72 73 L60 91 L48 73 L44 34Z" fill="#e7edf8" stroke="#70eaff" stroke-width="3"/><path d="M45 38 L5 75 L38 66 L50 78Z" fill="#f05b82" stroke="#ffb2c6" stroke-width="3"/><path d="M75 38 L115 75 L82 66 L70 78Z" fill="#f05b82" stroke="#ffb2c6" stroke-width="3"/><path d="M53 75 L60 99 L67 75" fill="#ff9e35"/><path d="M54 25 L60 12 L66 25Z" fill="#55faff"/><circle cx="60" cy="48" r="6" fill="#142d5e"/></svg>`},
+   {name:"ORBITAL X",svg:`<svg viewBox="0 0 120 100"><path d="M60 8 L76 40 L60 90 L44 40Z" fill="#a4b5ca" stroke="#e6f9ff" stroke-width="3"/><path d="M60 18 C5 -5 8 90 60 78 C112 90 115 -5 60 18Z" fill="none" stroke="#5be8ff" stroke-width="9"/><path d="M60 22 L70 52 L60 69 L50 52Z" fill="#ffdd72"/><path d="M51 73 L60 98 L69 73" fill="#ff853e"/></svg>`}
+  ],
+  questions:[
+   {q:"Apakah maksud berdaya tahan?",a:["Tidak mudah berputus asa","Mudah mengalah","Mengelak semua cabaran"],c:0},
+   {q:"Apabila gagal melakukan sesuatu, apakah tindakan terbaik?",a:["Berhenti mencuba","Belajar daripada kesilapan","Menyalahkan orang lain"],c:1},
+   {q:"Menghadapi cabaran memerlukan kita...",a:["Berani dan terus berusaha","Mudah menyerah","Tidak mahu belajar"],c:0},
+   {q:"Jika menghadapi masalah, kita perlu...",a:["Panik","Mencari jalan penyelesaian","Meninggalkan tugas"],c:1},
+   {q:"Apakah sikap orang yang berdaya tahan?",a:["Cepat berputus asa","Suka menyalahkan orang","Tabah menghadapi kesukaran"],c:2},
+   {q:"Jika jawapan kita salah, apakah tindakan terbaik?",a:["Cuba lagi dan belajar","Marah","Berhenti terus"],c:0},
+   {q:"Apabila tugasan sukar, kita harus...",a:["Mengelak","Berusaha sedikit demi sedikit","Tidak peduli"],c:1},
+   {q:"Mengapa kita perlu belajar daripada kegagalan?",a:["Supaya boleh memperbaiki diri","Supaya tidak perlu mencuba","Supaya boleh menyalahkan orang"],c:0}
+  ]
+ },
+ 3:{
+  title:"MISI 3 • LAUTAN KEPIMPINAN",
+  value:"BERUPAYA MEMIMPIN",
+  description:"Elak bom laut 💣 dan cari peti soalan 📦.",
+  objectGood:"📦",objectBad:"💣",
+  speed:3.2,spawnRate:43,
+  characters:[
+   {name:"Sotong Purba",emoji:"🦑"},
+   {name:"Belut Angkasa",emoji:"🐍"},
+   {name:"Jerung Naga",emoji:"🦈"},
+   {name:"Raja Kuda Laut",emoji:"🐴"},
+   {name:"Obor-obor Syurga",emoji:"🪼"}
+  ],
+  questions:[
+   {q:"Apakah ciri seorang pemimpin yang baik?",a:["Suka mengarah sahaja","Bertanggungjawab dan adil","Mementingkan diri"],c:1},
+   {q:"Jika ahli kumpulan menghadapi masalah, apakah tindakan pemimpin?",a:["Membiarkan mereka","Menyalahkan mereka","Membantu mencari penyelesaian"],c:2},
+   {q:"Bagaimanakah cara membuat keputusan yang baik?",a:["Mendengar pandangan ahli","Ikut kehendak sendiri","Tidak berbincang"],c:0},
+   {q:"Apakah tindakan pemimpin apabila melakukan kesilapan?",a:["Menyembunyikannya","Mengaku dan memperbaikinya","Menyalahkan orang lain"],c:1},
+   {q:"Apakah cara terbaik memimpin pasukan?",a:["Bekerjasama dan memberi teladan","Memaksa semua orang","Tidak mendengar pendapat"],c:0}
+  ]
+ }
+};
+
+function saveGems(){
+ localStorage.setItem(GEM_KEY,String(gems));
+}
+function updateMenu(){
+ gems=Number(localStorage.getItem(GEM_KEY)||0);
+ $("menuGems").textContent=gems;
+ $("mission2Card").disabled=localStorage.getItem("kp2027M1Done")!=="yes";
+ $("mission3Card").disabled=localStorage.getItem("kp2027M2Done")!=="yes";
+}
+function hideAll(){
+ ["menu","characterSelect","game","quiz","missionWin","finalWin"].forEach(id=>{
+  $(id).style.display="none";
+ });
+}
+function setWorld(){
+ $("world").className=""+(mission===1?"m1":mission===2?"m2":"m3");
+ $("decoration").className=mission===1?"m1decor":mission===2?"m2decor":"m3decor";
+ $("subtitle").textContent=missions[mission].title+" • KP2027";
+ $("track").className=mission===1?"m1track":mission===2?"m2track":"m3track";
+ $("gemBadge").className=mission===2?"badge m2badge":"badge";
+}
+function backMenu(){
+ stopGame();
+ hideAll();
+ $("menu").style.display="block";
+ $("sound").style.display="block";
+ updateMenu();
+}
+function selectMission(n){
+ if(n===2&&localStorage.getItem("kp2027M1Done")!=="yes"){
+  alert("Selesaikan Misi 1 dahulu!");
+  return;
+ }
+ if(n===3&&localStorage.getItem("kp2027M2Done")!=="yes"){
+  alert("Selesaikan Misi 2 dahulu!");
+  return;
+ }
+ mission=n;selected=0;
+ setWorld();
+ hideAll();
+ $("characterSelect").style.display="block";
+ $("selectTitle").textContent="PILIH WATAK / KAPAL";
+ $("selectDescription").textContent=missions[n].description;
+ $("characterList").style.display=n===2?"none":"grid";
+ $("shipList").style.display=n===2?"grid":"none";
+ buildChoices();
+}
 function svgChar(c){
  let common=`<ellipse cx="50" cy="91" rx="29" ry="5" fill="#315c70" opacity=".25"/>`;
  let art='';
- if(c.kind==='turtle') art=`<ellipse cx="50" cy="59" rx="29" ry="22" fill="${c.body}" stroke="#245d46" stroke-width="3"/><path d="M27 55Q50 20 73 55M50 37V79M28 59H72" fill="none" stroke="#245d46" stroke-width="3"/><circle cx="79" cy="49" r="14" fill="#77c98c" stroke="#245d46" stroke-width="3"/><circle cx="84" cy="45" r="2.5" fill="#172b32"/><path d="M34 75l-5 13m35-13 5 13" stroke="#245d46" stroke-width="8" stroke-linecap="round"/>`;
- if(c.kind==='dino') art=`<path d="M23 70Q12 48 29 38L40 19 51 38 62 18 72 43Q88 45 83 66L72 77H35Z" fill="${c.body}" stroke="#87532e" stroke-width="3"/><path d="M30 69l-13 17m49-13 10 14" stroke="#87532e" stroke-width="8" stroke-linecap="round"/><circle cx="68" cy="48" r="3" fill="#182b34"/><path d="M24 63L9 76" stroke="#87532e" stroke-width="6" stroke-linecap="round"/>`;
- if(c.kind==='eagle') art=`<path d="M49 47Q17 11 5 35Q24 65 47 65Q23 80 13 69Q27 100 51 75Q76 100 89 69Q77 80 54 65Q77 65 95 35Q80 11 53 47Z" fill="${c.body}" stroke="#68442f" stroke-width="3"/><circle cx="53" cy="43" r="15" fill="#e9d2a1"/><path d="M66 44l17 7-17 5" fill="#f5b832" stroke="#a76c17" stroke-width="2"/><circle cx="58" cy="40" r="2.5" fill="#172b32"/>`;
- if(c.kind==='horse') art=`<ellipse cx="49" cy="60" rx="25" ry="19" fill="${c.body}" stroke="#704b91" stroke-width="3"/><path d="M64 53Q66 30 78 29L89 43 78 58" fill="${c.body}" stroke="#704b91" stroke-width="3"/><path d="M29 53Q5 24 16 21Q39 24 48 48M56 49Q81 14 91 25Q87 48 69 57" fill="#fff" stroke="#a77ec5" stroke-width="3"/><path d="M34 74l-4 14m31-14 5 14" stroke="#704b91" stroke-width="6" stroke-linecap="round"/><path d="M82 26l3-10 5 9" fill="#f3b3d6"/><circle cx="81" cy="42" r="2.5" fill="#172b32"/>`;
- if(c.kind==='tiger') art=`<ellipse cx="49" cy="60" rx="29" ry="21" fill="${c.body}" stroke="#9a5422" stroke-width="3"/><circle cx="77" cy="49" r="16" fill="#f2a64e" stroke="#9a5422" stroke-width="3"/><path d="M64 39l-3-13 13 7m8 1 11-8-1 17M30 48l8 7-8 7m15-18 7 9-8 8m12-17 6 9-8 8" stroke="#392c26" stroke-width="5" fill="none"/><path d="M31 75l-5 13m38-13 5 13" stroke="#9a5422" stroke-width="7" stroke-linecap="round"/><circle cx="82" cy="46" r="2.5" fill="#172b32"/>`;
- return `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">${common}${art}</svg>`;
+ if(c.kind==='turtle')art=`<ellipse cx="50" cy="59" rx="29" ry="22" fill="${c.body}" stroke="#245d46" stroke-width="3"/><path d="M27 55Q50 20 73 55M50 37V79M28 59H72" fill="none" stroke="#245d46" stroke-width="3"/><circle cx="79" cy="49" r="14" fill="#77c98c" stroke="#245d46" stroke-width="3"/><circle cx="84" cy="45" r="2.5" fill="#172b32"/><path d="M34 75l-5 13m35-13 5 13" stroke="#245d46" stroke-width="8" stroke-linecap="round"/>`;
+ if(c.kind==='dino')art=`<path d="M23 70Q12 48 29 38L40 19 51 38 62 18 72 43Q88 45 83 66L72 77H35Z" fill="${c.body}" stroke="#87532e" stroke-width="3"/><path d="M30 69l-13 17m49-13 10 14" stroke="#87532e" stroke-width="8" stroke-linecap="round"/><circle cx="68" cy="48" r="3" fill="#182b34"/><path d="M24 63L9 76" stroke="#87532e" stroke-width="6" stroke-linecap="round"/>`;
+ if(c.kind==='eagle')art=`<path d="M49 47Q17 11 5 35Q24 65 47 65Q23 80 13 69Q27 100 51 75Q76 100 89 69Q77 80 54 65Q77 65 95 35Q80 11 53 47Z" fill="${c.body}" stroke="#68442f" stroke-width="3"/><circle cx="53" cy="43" r="15" fill="#e9d2a1"/><path d="M66 44l17 7-17 5" fill="#f5b832" stroke="#a76c17" stroke-width="2"/><circle cx="58" cy="40" r="2.5" fill="#172b32"/>`;
+ if(c.kind==='horse')art=`<ellipse cx="49" cy="60" rx="25" ry="19" fill="${c.body}" stroke="#704b91" stroke-width="3"/><path d="M64 53Q66 30 78 29L89 43 78 58" fill="${c.body}" stroke="#704b91" stroke-width="3"/><path d="M29 53Q5 24 16 21Q39 24 48 48M56 49Q81 14 91 25Q87 48 69 57" fill="#fff" stroke="#a77ec5" stroke-width="3"/><path d="M34 74l-4 14m31-14 5 14" stroke="#704b91" stroke-width="6" stroke-linecap="round"/><circle cx="81" cy="42" r="2.5" fill="#172b32"/>`;
+ if(c.kind==='tiger')art=`<ellipse cx="49" cy="60" rx="29" ry="21" fill="${c.body}" stroke="#9a5422" stroke-width="3"/><circle cx="77" cy="49" r="16" fill="#f2a64e" stroke="#9a5422" stroke-width="3"/><path d="M64 39l-3-13 13 7m8 1 11-8-1 17M30 48l8 7-8 7m15-18 7 9-8 8m12-17 6 9-8 8" stroke="#392c26" stroke-width="5" fill="none"/><path d="M31 75l-5 13m38-13 5 13" stroke="#9a5422" stroke-width="7" stroke-linecap="round"/><circle cx="82" cy="46" r="2.5" fill="#172b32"/>`;
+ return `<svg viewBox="0 0 100 100">${common}${art}</svg>`;
 }
-
-let selected=0,lane=2;
-let gems=Number(localStorage.getItem(GEM_KEY)||0);
-let score=0,mission=1;
-let running=false,paused=false,items=[],last=0,spawn=0,raf=0;
-let soundOn=true,audio=null;
-const $=id=>document.getElementById(id);
-
-function speakIntro(onDone){
- if(!('speechSynthesis'in window)){
-  $('voiceStatus').textContent='Suara automatik tidak disokong pelayar ini.';
-  if(onDone)setTimeout(onDone,900);
-  return;
- }
- const msg=new SpeechSynthesisUtterance(
-  'Assalamualaikum. Selamat datang, anak-anak pintar! Selamat menempuh alam budak pintar. Jangan terleka dengan alam maya. Ambil pengajaran daripada apa yang kamu lalui. Selamat menyahut cabaran anak-anak Alpha!'
- );
- const setVoice=()=>{
-  const voices=speechSynthesis.getVoices();
-  const local=voices.filter(v=>/^ms(-|_)/i.test(v.lang)||/^id(-|_)/i.test(v.lang));
-  const maleHint=/(male|man|lelaki|pria|adam|david|daniel|alex|guy|james|rio|andika|dimas)/i;
-  const preferred=local.find(v=>maleHint.test(v.name))||
-                  voices.find(v=>maleHint.test(v.name))||
-                  local[0]||voices[0];
-  if(preferred){msg.voice=preferred;msg.lang=preferred.lang;}
-  else{msg.lang='ms-MY';}
-  msg.rate=.88;msg.pitch=.82;msg.volume=1;
-  msg.onstart=()=>{$('voiceStatus').textContent='Ucapan sedang dimainkan…';};
-  msg.onend=()=>{$('voiceStatus').textContent='Pesanan selesai. Jom pilih watak!';if(onDone)onDone();};
-  msg.onerror=()=>{$('voiceStatus').textContent='Suara tidak dapat dimainkan. Cuba gunakan Google Chrome.';};
-  speechSynthesis.cancel();
-  setTimeout(()=>speechSynthesis.speak(msg),180);
- };
- if(speechSynthesis.getVoices().length){setVoice();}
- else{
-  let done=false;
-  const ready=()=>{if(done)return;done=true;speechSynthesis.removeEventListener?.('voiceschanged',ready);setVoice();};
-  speechSynthesis.addEventListener?.('voiceschanged',ready);
-  setTimeout(ready,900);
+function buildChoices(){
+ let list=missions[mission].characters;
+ if(mission===2){
+  $("shipList").innerHTML=list.map((c,i)=>
+   `<button class="ship-choice ${i===selected?'selected':''}" onclick="chooseCharacter(${i})">${c.svg}<b>${c.name}</b></button>`
+  ).join("");
+ }else{
+  $("characterList").innerHTML=list.map((c,i)=>
+   `<button class="character ${i===selected?'selected':''}" onclick="chooseCharacter(${i})">${c.kind?svgChar(c):'<span style="font-size:42px">'+c.emoji+'</span>'}<b>${c.name}</b></button>`
+  ).join("");
  }
 }
-
-function playIntroAndContinue(){
- if('speechSynthesis'in window)speakIntro(()=>startSelection());
- else startSelection();
+function chooseCharacter(i){selected=i;buildChoices()}
+function playerArt(){
+ let c=missions[mission].characters[selected];
+ if(mission===1)return svgChar(c);
+ if(mission===2)return c.svg;
+ return `<span class="emoji">${c.emoji}</span>`;
 }
-function startSelection(){
- if('speechSynthesis'in window)speechSynthesis.cancel();
- $('intro').style.display='none';
- $('select').style.display='block';
-}
-function buildCards(){
- $('characters').innerHTML=characters.map((c,i)=>
-  `<button class="charCard ${i===selected?'selected':''}" onclick="choose(${i})">${svgChar(c)}<b>${c.name}</b></button>`
- ).join('');
-}
-function choose(i){selected=i;buildCards();}
-buildCards();
-
-function tone(freq=600,duration=.16,wave='sine',volume=.09){
- if(!soundOn)return;
- try{
-  audio=audio||new(window.AudioContext||window.webkitAudioContext)();
-  if(audio.state==='suspended')audio.resume();
-  const o=audio.createOscillator(),g=audio.createGain();
-  o.type=wave;o.frequency.setValueAtTime(freq,audio.currentTime);
-  g.gain.setValueAtTime(.0001,audio.currentTime);
-  g.gain.exponentialRampToValueAtTime(volume,audio.currentTime+.02);
-  g.gain.exponentialRampToValueAtTime(.0001,audio.currentTime+duration);
-  o.connect(g);g.connect(audio.destination);
-  o.start();o.stop(audio.currentTime+duration+.02);
- }catch(e){}
-}
-
-function startAudio(){
- if(!soundOn)return;
- try{
-  audio=audio||new(window.AudioContext||window.webkitAudioContext)();
-  if(audio.state==='suspended')audio.resume();
-  if(window.musicTimer)clearInterval(window.musicTimer);
-  let notes=[523,659,784,659,587,698,880,698],n=0;
-  window.musicTimer=setInterval(()=>{
-   if(!audio||!soundOn)return;
-   tone(notes[n++%notes.length],.24,'triangle',.045);
-  },360);
- }catch(e){}
-}
-function toggleSound(){
- soundOn=!soundOn;
- $('sound').textContent=soundOn?'🔊 Bunyi':'🔇 Senyap';
- if(!soundOn){clearInterval(window.musicTimer);if(audio)audio.suspend();}
- else{startAudio();}
-}
-
-function beginGame(){
- $('select').style.display='none';
- $('game').style.display='block';
-
- try{
-  if(document.documentElement.requestFullscreen&&!document.fullscreenElement)
-   document.documentElement.requestFullscreen().catch(()=>{});
- }catch(e){}
-
- try{
-  if(screen.orientation&&screen.orientation.lock)
-   screen.orientation.lock('landscape').catch(()=>{});
- }catch(e){}
-
- $('who').textContent='Watak: '+characters[selected].name;
- $('player').innerHTML=svgChar(characters[selected]);
-
- // Baca semula permata yang telah disimpan.
+function startGame(){
+ hideAll();
+ $("game").style.display="block";
+ $("sound").style.display="block";
+ setWorld();
+ stopGame();
+ score=0;correctCount=0;lane=2;objects=[];spawn=0;
  gems=Number(localStorage.getItem(GEM_KEY)||0);
-
- lane=2;
- score=0;
- items=[];
-
- updateHud();
- startAudio();
-
- running=true;
- paused=false;
+ $("who").textContent="Watak: "+missions[mission].characters[selected].name;
+ $("player").innerHTML=playerArt();
+ $("progress").textContent="0/5";
+ $("hint").textContent=missions[mission].description;
+ $("track").innerHTML='<div id="player"></div>';
+ $("player").innerHTML=playerArt();
+ $("track").className=mission===1?"m1track":mission===2?"m2track":"m3track";
+ $("track").appendChild($("player"));
+ updateHUD();
+ running=true;paused=false;
  last=performance.now();
- spawn=0;
-
- cancelAnimationFrame(raf);
+ startMusic();
  raf=requestAnimationFrame(loop);
+ try{
+  if(screen.orientation&&screen.orientation.lock)screen.orientation.lock("landscape").catch(()=>{});
+ }catch(e){}
 }
-
-function updateHud(){
- $('gems').textContent=gems;
- $('score').textContent=score;
- $('mission').textContent=mission;
- $('player').style.left=(lane*20+10)+'%';
+function updateHUD(){
+ $("score").textContent=score;
+ $("gems").textContent=gems;
+ $("mission").textContent=mission;
+ $("progress").textContent=correctCount+"/5";
+ $("player").style.left=(lane*20+10)+"%";
 }
-
 function move(d){
  if(!running||paused)return;
  lane=Math.max(0,Math.min(4,lane+d));
- updateHud();
+ updateHUD();
 }
-
+document.addEventListener("keydown",e=>{
+ if(e.key==="ArrowLeft"||e.key.toLowerCase()==="a")move(-1);
+ if(e.key==="ArrowRight"||e.key.toLowerCase()==="d")move(1);
+});
 let touchX=null;
-$('track').addEventListener('touchstart',e=>{
+$("track").addEventListener("touchstart",e=>{
  touchX=e.touches[0].clientX;
 },{passive:true});
-$('track').addEventListener('touchend',e=>{
+$("track").addEventListener("touchend",e=>{
  if(touchX===null)return;
  let dx=e.changedTouches[0].clientX-touchX;
  if(Math.abs(dx)>18)move(dx>0?1:-1);
  touchX=null;
 },{passive:true});
 
-function rockSvg(rainbow){
- return rainbow?
- `<svg viewBox="0 0 60 60">
- <path d="M8 48Q-2 28 16 19Q13 0 31 8Q48-2 50 20Q68 33 48 49Z" fill="#fff" stroke="#b7dbe8" stroke-width="3"/>
- <path d="M13 40Q27 28 48 39" fill="none" stroke="#ff4242" stroke-width="6"/>
- <path d="M13 33Q28 21 49 32" fill="none" stroke="#ffb52e" stroke-width="6"/>
- <path d="M16 26Q30 14 46 25" fill="none" stroke="#36c66b" stroke-width="6"/>
- <path d="M21 19Q32 12 42 20" fill="none" stroke="#4d8cff" stroke-width="5"/>
- </svg>`:
- `<svg viewBox="0 0 60 60">
- <path d="M5 48L10 23 24 8 39 14 54 34 48 52Z" fill="#242a32" stroke="#080d16" stroke-width="4"/>
- <path d="M17 26l12-10 9 12-10 15Z" fill="#4a525b"/>
- </svg>`;
-}
-
-function spawnRock(){
+function spawnObject(){
+ let good=Math.random()<(mission===1?.28:mission===2?.28:.38);
+ let el=document.createElement("div");
+ el.className="object";
+ el.textContent=good?missions[mission].objectGood:missions[mission].objectBad;
  let l=Math.floor(Math.random()*5);
- let rain=Math.random()<.28;
- let el=document.createElement('div');
- el.className='rock '+(rain?'rainbow':'');
- el.innerHTML=rockSvg(rain);
- $('track').appendChild(el);
- items.push({el,l,y:-65,rain,hit:false,speed:mission===1?2.5:3.1});
+ el.style.left=(l*20+10)+"%";
+ el.style.top="-65px";
+ $("track").appendChild(el);
+ objects.push({el,l,y:-65,good,hit:false});
 }
-
-const questions=[
- {q:'Apakah amalan yang baik sebelum memulakan sesuatu pekerjaan?',a:['Membaca doa','Mengejek kawan','Bergaduh','Membuang masa'],c:0},
- {q:'Apakah yang perlu kita lakukan apabila ternampak sampah?',a:['Biarkan sahaja','Buang ke tempat sampah','Tendang','Sorok di bawah meja'],c:1},
- {q:'Jika kawan terjatuh, apakah tindakan terbaik?',a:['Ketawakan','Tinggalkan','Bantu dan panggil guru','Rakam video'],c:2},
- {q:'Apakah sikap yang menunjukkan kita amanah?',a:['Menipu','Mengambil barang orang','Menepati janji','Menyalahkan orang'],c:2},
- {q:'Apabila menggunakan internet, kita hendaklah…',a:['Berhemah dan berhati-hati','Kongsi kata laluan','Percaya semua perkara','Leka sepanjang hari'],c:0},
- {q:'Apakah cara menjaga alam sekitar?',a:['Membazir air','Menanam pokok','Membuang sampah ke sungai','Merosakkan tumbuhan'],c:1},
- {q:'Apakah tindakan apabila tidak faham pelajaran?',a:['Putus asa','Bertanya dengan sopan','Mengganggu rakan','Meniru sahaja'],c:1}
-];
-
-let currentQ=null;
-
-function showQuiz(){
- paused=true;
- currentQ=questions[Math.floor(Math.random()*questions.length)];
- $('question').textContent=currentQ.q;
- $('feedback').textContent='';
- $('answers').innerHTML=currentQ.a.map((a,i)=>
-  `<button onclick="answer(${i})">${String.fromCharCode(65+i)}. ${a}</button>`
- ).join('');
- $('quiz').style.display='flex';
- readCurrentQuestion();
-}
-
-function readCurrentQuestion(){
- if(!currentQ||!('speechSynthesis'in window))return;
- speechSynthesis.cancel();
- let text=currentQ.q+'. Pilihan jawapan: '+currentQ.a.map((a,i)=>
-  String.fromCharCode(65+i)+', '+a
- ).join('. ');
- let msg=new SpeechSynthesisUtterance(text);
- msg.lang='ms-MY';
- msg.rate=.9;
- msg.pitch=.85;
- speechSynthesis.speak(msg);
-}
-
-function answer(i){
- if(i===currentQ.c){
-  tone(880,.18,'sine',.12);
-  setTimeout(()=>tone(1175,.22,'sine',.1),130);
-
-  gems+=100;
-  score+=100;
-
-  // Simpan permata untuk dikongsi dengan Misi 2.
-  localStorage.setItem(GEM_KEY,String(gems));
-
-  $('feedback').textContent='✅ Betul! +100 permata dan +100 markah. Teruskan!';
-  $('feedback').style.color='#18864c';
-
-  updateHud();
-
-  // Elakkan jawapan diklik berkali-kali.
-  document.querySelectorAll('#answers button').forEach(b=>b.disabled=true);
-
-  setTimeout(()=>{
-   $('quiz').style.display='none';
-   paused=false;
-
-   if(gems>=500&&mission===1){
-    running=false;
-    $('missionWin').style.display='flex';
-   }
-  },950);
-
- }else{
-  tone(180,.25,'sawtooth',.07);
-  $('feedback').textContent='Belum tepat. Cuba lagi!';
-  $('feedback').style.color='#c34b35';
- }
-}
-
-function hit(item){
- if(item.rain){
-  showQuiz();
- }else{
-  tone(130,.22,'square',.08);
-  score=Math.max(0,score-5);
-  $('score').textContent=score;
-  toast('🪨 Aduh! -5 markah');
- }
-}
-
-function toast(t){
- $('toast').textContent=t;
- $('toast').style.display='block';
- setTimeout(()=>$('toast').style.display='none',650);
-}
-
 function loop(now){
  if(!running)return;
-
  let dt=Math.min(2,(now-last)/16.67);
  last=now;
-
  if(!paused){
   spawn+=dt;
-
-  if(spawn>48){
-   spawn=0;
-   spawnRock();
+  if(spawn>missions[mission].spawnRate){
+   spawn=0;spawnObject();
   }
-
-  items.forEach(it=>{
-   it.y+=it.speed*dt;
-   it.el.style.left=(it.l*20+10)+'%';
-   it.el.style.top=it.y+'px';
-
-   if(!it.hit&&it.l===lane&&
-      it.y>($('track').clientHeight-150)&&
-      it.y<($('track').clientHeight-55)){
-    it.hit=true;
-    hit(it);
+  objects.forEach(o=>{
+   o.y+=missions[mission].speed*dt;
+   o.el.style.top=o.y+"px";
+   if(!o.hit&&o.l===lane&&
+    o.y>$("track").clientHeight-145&&
+    o.y<$("track").clientHeight-50){
+    o.hit=true;
+    o.el.remove();
+    if(o.good)openQuiz();
+    else{
+     score=Math.max(0,score-(mission===1?5:mission===2?5:100));
+     updateHUD();
+     tone(130,.2,"square");
+    }
    }
   });
-
-  items=items.filter(it=>{
-   if(it.y>$('track').clientHeight+60){
-    it.el.remove();
-    return false;
-   }
-   return true;
-  });
+  objects=objects.filter(o=>o.el.isConnected&&o.y<$("track").clientHeight+50);
  }
-
  raf=requestAnimationFrame(loop);
 }
-
-// Buka fail Misi 2 yang berasingan.
+function openQuiz(){
+ paused=true;
+ let pool=missions[mission].questions;
+ if(mission===3){
+  currentQ=pool[correctCount];
+ }else{
+  currentQ=pool[Math.floor(Math.random()*pool.length)];
+ }
+ answered=false;
+ $("quizTitle").textContent=mission===1?"🌈 BATU PELANGI":mission===2?"🎁 PETI HARTA KARUN":"📦 CABARAN KEPIMPINAN";
+ $("question").textContent=currentQ.q;
+ $("feedback").textContent="";
+ $("answers").innerHTML=currentQ.a.map((a,i)=>
+  `<button class="answer" onclick="answerQuestion(${i})">${String.fromCharCode(65+i)}. ${a}</button>`
+ ).join("");
+ $("quizPanel").className=mission===2?"panel m2panel":"panel";
+ $("quiz").style.display="flex";
+ readQuestion();
+}
+function readQuestion(){
+ if(!currentQ||!("speechSynthesis"in window))return;
+ speechSynthesis.cancel();
+ let text=currentQ.q+". Pilihan jawapan: "+currentQ.a.map((a,i)=>
+  String.fromCharCode(65+i)+", "+a
+ ).join(". ");
+ let msg=new SpeechSynthesisUtterance(text);
+ msg.lang="ms-MY";msg.rate=.9;
+ speechSynthesis.speak(msg);
+}
+function answerQuestion(i){
+ if(answered)return;
+ if(i===currentQ.c){
+  answered=true;
+  score+=500;gems+=500;correctCount++;
+  saveGems();
+  tone(880,.18);
+  $("feedback").textContent="🎉 BETUL! +500 PERMATA DAN +500 MARKAH!";
+  $("feedback").style.color="#16864c";
+  document.querySelectorAll("#answers button").forEach(b=>b.disabled=true);
+  updateHUD();
+  setTimeout(()=>{
+   $("quiz").style.display="none";
+   if("speechSynthesis"in window)speechSynthesis.cancel();
+   if(correctCount>=5)completeMission();
+   else paused=false;
+  },1100);
+ }else{
+  tone(180,.25,"sawtooth");
+  $("feedback").textContent="❌ Belum tepat! Cuba lagi.";
+  $("feedback").style.color="#c34b35";
+ }
+}
+function completeMission(){
+ running=false;
+ cancelAnimationFrame(raf);
+ $("winGems").textContent=gems;
+ $("missionWin").style.display="flex";
+ $("winTitle").textContent="🏆 MISI "+mission+" BERJAYA!";
+ $("winMessage").textContent="Hebat! Anda berjaya menjawab 5 soalan dengan betul.";
+ if(mission===1){
+  localStorage.setItem("kp2027M1Done","yes");
+  $("nextButton").textContent="BUKA MISI 2 ➜";
+ }else if(mission===2){
+  localStorage.setItem("kp2027M2Done","yes");
+  $("nextButton").textContent="BUKA MISI 3 ➜";
+ }else{
+  localStorage.setItem("kp2027M3Done","yes");
+  $("nextButton").style.display="none";
+  $("winMessage").textContent="Tahniah! Anda telah menamatkan semua cabaran KP2027!";
+  setTimeout(()=>{
+   $("missionWin").style.display="none";
+   $("finalGems").textContent=gems;
+   $("finalWin").style.display="flex";
+  },1800);
+ }
+ updateMenu();
+}
 function nextMission(){
- if('speechSynthesis'in window)speechSynthesis.cancel();
-
- // Pastikan jumlah permata disimpan sebelum berpindah halaman.
- localStorage.setItem(GEM_KEY,String(gems));
-
- running=false;
- cancelAnimationFrame(raf);
-
- window.location.href='misi2.html';
+ if(mission===1)selectMission(2);
+ else if(mission===2)selectMission(3);
 }
-
-// Kembali memilih watak tanpa memadam permata.
-function backToSelect(){
- $('missionWin').style.display='none';
- $('game').style.display='none';
- $('select').style.display='block';
-
- running=false;
+function stopGame(){
+ running=false;paused=false;
  cancelAnimationFrame(raf);
-
- mission=1;
- score=0;
- gems=Number(localStorage.getItem(GEM_KEY)||0);
-
- buildCards();
- updateHud();
+ objects.forEach(o=>o.el.remove());
+ objects=[];
+ if("speechSynthesis"in window)speechSynthesis.cancel();
 }
+function tone(freq=600,duration=.16,wave="sine"){
+ if(!soundOn)return;
+ try{
+  audio=audio||new(window.AudioContext||window.webkitAudioContext)();
+  if(audio.state==="suspended")audio.resume();
+  let o=audio.createOscillator(),g=audio.createGain();
+  o.type=wave;o.frequency.value=freq;
+  g.gain.value=.06;
+  o.connect(g);g.connect(audio.destination);
+  o.start();o.stop(audio.currentTime+duration);
+ }catch(e){}
+}
+let musicTimer=null;
+function startMusic(){
+ if(!soundOn)return;
+ stopMusic();
+ let notes=[523,659,784,659,587,698,880,698],n=0;
+ musicTimer=setInterval(()=>{
+  if(running&&!paused)tone(notes[n++%notes.length],.16,"triangle");
+ },650);
+}
+function stopMusic(){
+ if(musicTimer)clearInterval(musicTimer);
+ musicTimer=null;
+}
+function toggleSound(){
+ soundOn=!soundOn;
+ $("sound").textContent=soundOn?"🔊 Bunyi":"🔇 Senyap";
+ if(!soundOn)stopMusic();
+ else if(running)startMusic();
+}
+updateMenu();
 </script>
 </body>
 </html>
