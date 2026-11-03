@@ -6,282 +6,112 @@
 <title>LANGGAR DAN JAWAB - KP2027</title>
 <style>
 *{box-sizing:border-box}
-body{
-  margin:0;font-family:Arial,sans-serif;
-  color:white;overflow:hidden;background:#071d38;
-  user-select:none;
-}
+body{margin:0;font-family:Arial,sans-serif;color:white;overflow:hidden;background:#071d38;user-select:none}
 button{font:inherit;cursor:pointer;font-weight:bold}
-#app{
-  width:100vw;height:100dvh;position:relative;
-  overflow:hidden;background:#071d38;
-}
-#world{
-  position:absolute;inset:0;overflow:hidden;
-  transition:background .4s;
-}
-#world.m1{ background:linear-gradient(#5bc5ed,#d9f7ff 55%,#8bcbe8); }
-#world.m2{ background:radial-gradient(ellipse at 50% 100%,#263c83 0%,#10143e 40%,#020515 100%); }
-#world.m3{ background:linear-gradient(#087fa4,#005477 60%,#00334f); }
-#world.m4{ background:linear-gradient(#392b85 0%,#a77ee7 36%,#e5baff 65%,#55c9ba 100%); }
-
-#decoration{ position:absolute;inset:0;pointer-events:none; }
-.m1decor{
-  background-image: radial-gradient(#fff 1.5px,transparent 2px), radial-gradient(#fff 2px,transparent 3px);
-  background-size:43px 43px,77px 77px;
-  background-position:0 0,22px 17px;
-  opacity:.7;animation:snowfall 9s linear infinite;
-}
-.m2decor{
-  background-image: radial-gradient(2px 2px at 20px 30px,#fff,transparent), radial-gradient(2px 2px at 100px 120px,#8beaff,transparent), radial-gradient(1px 1px at 200px 70px,#fff,transparent);
-  background-size:450px 300px;
-  animation:stars 12s linear infinite;
-}
-.m3decor{
-  background-image: radial-gradient(ellipse at 20% 30%,#ffffff22 0 2px,transparent 4px), radial-gradient(ellipse at 70% 60%,#ffffff22 0 3px,transparent 5px);
-  background-size:100px 130px;
-  animation:bubbles 8s linear infinite;
-}
-.m4decor{
-  background-image: radial-gradient(circle at 15% 18%,#fff8c8 0 2px,transparent 4px), radial-gradient(circle at 75% 12%,#fff 0 2px,transparent 4px);
-  background-size:300px 200px;
-}
+button:disabled{opacity:.45;cursor:not-allowed}
+#app{width:100vw;height:100dvh;position:relative;overflow:hidden;background:#071d38}
+#world{position:absolute;inset:0;overflow:hidden;transition:background .4s}
+#world.m1{background:linear-gradient(#5bc5ed,#d9f7ff 55%,#8bcbe8)}
+#world.m2{background:radial-gradient(ellipse at 50% 100%,#263c83 0%,#10143e 40%,#020515 100%)}
+#world.m3{background:linear-gradient(#087fa4,#005477 60%,#00334f)}
+#world.m4{background:linear-gradient(#392b85 0%,#a77ee7 36%,#e5baff 65%,#55c9ba)}
+#decoration{position:absolute;inset:0;pointer-events:none}
+.m1decor{background-image:radial-gradient(#fff 1.5px,transparent 2px),radial-gradient(#fff 2px,transparent 3px);background-size:43px 43px,77px 77px;background-position:0 0,22px 17px;opacity:.7;animation:snowfall 9s linear infinite}
+.m2decor{background-image:radial-gradient(2px 2px at 20px 30px,#fff,transparent),radial-gradient(2px 2px at 100px 120px,#8beaff,transparent),radial-gradient(1px 1px at 200px 70px,#fff,transparent);background-size:450px 300px;animation:stars 12s linear infinite}
+.m3decor{background-image:radial-gradient(ellipse at 20% 30%,#ffffff22 0 2px,transparent 4px),radial-gradient(ellipse at 70% 60%,#ffffff22 0 3px,transparent 5px);background-size:100px 130px;animation:bubbles 8s linear infinite}
+.m4decor{background-image:radial-gradient(circle at 15% 18%,#fff8c8 0 2px,transparent 4px),radial-gradient(circle at 75% 12%,#fff 0 2px,transparent 4px);background-size:300px 200px}
 @keyframes snowfall{to{background-position:0 300px,22px 317px}}
 @keyframes stars{to{transform:translateY(300px)}}
 @keyframes bubbles{to{background-position:0 -300px}}
-
-header{
-  position:relative;z-index:2;text-align:center;
-  padding:8px 5px 2px;color:#fff;
-  text-shadow:0 2px 5px #0005;
-}
+header{position:relative;z-index:2;text-align:center;padding:8px 5px 2px;color:#fff;text-shadow:0 2px 5px #0005}
 header h1{margin:0;font-size:clamp(18px,4vw,30px)}
 #subtitle{font-weight:bold;font-size:12px;margin-top:3px}
-
-#sound{
-  position:absolute;right:10px;top:10px;z-index:15;
-  border:2px solid #fff;border-radius:12px;
-  padding:7px 10px;background:#ffffffdd;color:#123;
-}
-.panel{
-  position:relative;z-index:3;
-  width:min(760px,95vw);max-height:90dvh;overflow:auto;
-  margin:12px auto;padding:18px;
-  text-align:center;border-radius:22px;
-  background:#ffffffed;color:#103455;
-  border:3px solid #fff;
-  box-shadow:0 8px 25px #001d3c55;
-}
-.m2panel,.m4panel{
-  background:linear-gradient(145deg,#17245c,#07122f);
-  color:white;border:2px solid #57eaff;
-  box-shadow:0 0 35px #00cfff66;
-}
+#sound{position:absolute;right:10px;top:10px;z-index:15;border:2px solid #fff;border-radius:12px;padding:7px 10px;background:#ffffffdd;color:#123}
+.panel{position:relative;z-index:3;width:min(760px,95vw);max-height:84dvh;overflow:auto;margin:12px auto;padding:18px;text-align:center;border-radius:22px;background:#ffffffed;color:#103455;border:3px solid #fff;box-shadow:0 8px 25px #001d3c55}
+.m2panel,.m4panel{background:linear-gradient(145deg,#17245c,#07122f);color:white;border:2px solid #57eaff;box-shadow:0 0 35px #00cfff66}
 h2{margin:8px 0}
-.primary{
-  background:linear-gradient(135deg,#ffdc4d,#ff9f32);
-  color:#563500;padding:13px 22px;
-  border:0;border-radius:25px;margin:7px;
-}
-.secondary{
-  background:#d7f3ff;color:#12466b;
-  border:2px solid #7bc8e9;padding:11px 18px;
-  border-radius:20px;margin:6px;
-}
-#menu,#characterSelect,#game,#quiz,#missionWin,#finalWin{
-  display:none;position:relative;z-index:2;
-}
+.primary{background:linear-gradient(135deg,#ffdc4d,#ff9f32);color:#563500;padding:13px 22px;border:0;border-radius:25px;margin:7px}
+.secondary{background:#d7f3ff;color:#12466b;border:2px solid #7bc8e9;padding:11px 18px;border-radius:20px;margin:6px}
+#menu,#characterSelect,#game,#quiz,#missionWin,#finalWin{display:none;position:relative;z-index:2}
 #menu{display:block}
-.missionCards{
-  display:grid;grid-template-columns:repeat(2,1fr);
-  gap:10px;margin:18px 0;
-}
-.missionCard{
-  padding:15px 8px;border-radius:16px;
-  border:2px solid #8bcce8;background:#e9f9ff;
-  color:#164466;min-width:0;
-}
-.missionCard:disabled{opacity:.4;cursor:not-allowed}
+.missionCards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:18px 0}
+.missionCard{padding:15px 8px;border-radius:16px;border:2px solid #8bcce8;background:#e9f9ff;color:#164466;min-width:0}
 .missionCard b{display:block;margin-top:7px}
 .missionCard span{font-size:35px}
-
-#characterList{
-  display:grid;grid-template-columns:repeat(5,1fr);
-  gap:8px;margin:12px 0;
-}
-.character{
-  background:#e9f9ff;border:3px solid #b6e7f8;
-  border-radius:15px;padding:8px 4px;color:#164466;
-  min-width:0;
-}
-.character.selected{
-  border-color:#ffb92e;box-shadow:0 4px 0 #eaa22a;
-}
+#characterList{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.character{background:#e9f9ff;border:3px solid #b6e7f8;border-radius:15px;padding:8px 4px;color:#164466;min-width:0}
+.character.selected{border-color:#ffb92e;box-shadow:0 4px 0 #eaa22a}
 .character svg{width:100%;height:70px}
 .character b{display:block;font-size:12px}
-
-.ship-list{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:9px;margin:14px 0;
-}
-.ship-choice{
-  border:2px solid #6387d8;border-radius:14px;
-  background:#0b1940;padding:8px 4px;color:white;
-  min-width:0;
-}
-.ship-choice.selected{
-  border:3px solid #ffe76b;background:#263c76;
-}
+.ship-list{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:14px 0}
+.ship-choice{border:2px solid #6387d8;border-radius:14px;background:#0b1940;padding:8px 4px;color:white;min-width:0}
+.ship-choice.selected{border:3px solid #ffe76b;background:#263c76}
 .ship-choice svg{width:100%;height:75px}
 .ship-choice b{font-size:11px;display:block}
-
-#game{
-  height:calc(100dvh - 48px);
-  padding:0 9px;
-}
-.hud{
-  display:flex;justify-content:center;gap:7px;
-  flex-wrap:wrap;margin:5px auto;
-}
-.badge{
-  background:#ffffffed;border-radius:11px;
-  padding:5px 9px;font-weight:900;
-  font-size:12px;color:#164466;
-  border:2px solid #b5e9fb;
-}
-.m2badge{
-  background:#101d4bdc;color:white;
-  border:1px solid #6aeaff;
-}
-#track{
-  position:relative;overflow:hidden;
-  height:calc(100dvh - 150px);
-  min-height:150px;max-height:650px;
-  width:100%;max-width:1200px;
-  margin:0 auto;border:4px solid white;
-  border-radius:18px;
-}
-.m1track{ background:linear-gradient(90deg,#d5f5ff,#effcff 50%,#d5f5ff); }
-.m2track{ background:radial-gradient(ellipse at center,#263c83,#10143e); }
-.m3track{ background:linear-gradient(#087fa4,#005477 60%,#00334f); }
-.m4track{ background:linear-gradient(90deg,#9c83d9,#f6d9ff 48%,#9c83d9); }
-
-#player{
-  position:absolute;z-index:4;
-  bottom:12px;left:50%;
-  width:65px;height:70px;
-  transform:translateX(-50%);
-  display:grid;place-items:center;
-  transition:left .12s;
-  filter:drop-shadow(0 0 9px #4eeeff);
-}
+#game{height:calc(100dvh - 48px);padding:0 9px}
+.hud{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;margin:5px auto}
+.badge{background:#ffffffed;border-radius:11px;padding:5px 9px;font-weight:900;font-size:12px;color:#164466;border:2px solid #b5e9fb}
+.m2badge{background:#101d4bdc;color:white;border:1px solid #6aeaff}
+#track{position:relative;overflow:hidden;height:calc(100dvh - 175px);min-height:130px;max-height:650px;width:100%;max-width:1200px;margin:0 auto;border:4px solid white;border-radius:18px}
+.m1track{background:linear-gradient(90deg,#d5f5ff,#effcff 50%,#d5f5ff)}
+.m2track{background:radial-gradient(ellipse at center,#263c83,#10143e)}
+.m3track{background:linear-gradient(#087fa4,#005477 60%,#00334f)}
+.m4track{background:linear-gradient(90deg,#9c83d9,#f6d9ff 48%,#9c83d9)}
+#player{position:absolute;z-index:4;bottom:12px;left:50%;width:65px;height:70px;transform:translateX(-50%);display:grid;place-items:center;transition:left .12s;filter:drop-shadow(0 0 9px #4eeeff)}
 #player svg{width:100%;height:100%}
 #player .emoji{font-size:48px}
-
-.object{
-  position:absolute;z-index:3;
-  width:55px;height:55px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:40px;
-  transform:translateX(-50%);
-}
-.controls{
-  position:absolute;z-index:8;
-  left:0;right:0;bottom:5px;
-  display:flex;justify-content:space-between;
-  padding:0 5px;pointer-events:none;
-}
-.controls button{
-  pointer-events:auto;width:58px;height:58px;
-  border-radius:50%;border:3px solid #83eaff;
-  background:#123a70dd;color:white;
-  font-size:14px;box-shadow:0 0 12px #20cfff88;
-  touch-action:manipulation;
-}
+.object{position:absolute;z-index:3;width:55px;height:55px;display:flex;align-items:center;justify-content:center;font-size:40px;transform:translateX(-50%);pointer-events:none}
+.controls{position:absolute;z-index:8;left:0;right:0;bottom:5px;display:flex;justify-content:space-between;padding:0 5px;pointer-events:none}
+.controls button{pointer-events:auto;width:58px;height:58px;border-radius:50%;border:3px solid #83eaff;background:#123a70dd;color:white;font-size:14px;box-shadow:0 0 12px #20cfff88;touch-action:manipulation}
 .hint{text-align:center;font-size:11px;font-weight:bold;margin:4px}
-
-#quiz,#missionWin,#finalWin{
-  position:fixed;inset:0;z-index:20;
-  background:#001b35dd;
-  align-items:center;justify-content:center;
-  padding:14px;
-}
-#answers{
-  display:grid;grid-template-columns:1fr;
-  gap:9px;margin-top:14px;
-}
-.answer{
-  width:100%;min-height:44px;
-  border-radius:12px;border:2px solid #a5dff2;
-  background:#e5f7ff;color:#123e61;
-  padding:10px;text-align:left;
-}
-.m2panel .answer,.m4panel .answer{
-  background:#14285a;color:white;border-color:#77dfff;
-}
+#quiz,#missionWin,#finalWin{position:fixed;inset:0;z-index:20;background:#001b35dd;align-items:center;justify-content:center;padding:14px}
+#answers{display:grid;grid-template-columns:1fr;gap:9px;margin-top:14px}
+.answer{width:100%;min-height:44px;border-radius:12px;border:2px solid #a5dff2;background:#e5f7ff;color:#123e61;padding:10px;text-align:left}
+.m2panel .answer,.m4panel .answer{background:#14285a;color:white;border-color:#77dfff}
 #feedback{font-weight:900;min-height:28px;margin-top:10px}
-
-#rotate{
-  display:none;position:fixed;inset:0;z-index:50;
-  background:#030719;color:white;
-  align-items:center;justify-content:center;
-  text-align:center;padding:25px;font-size:23px;
-}
-@media(orientation:portrait){ #rotate{display:flex} }
+#rotate{display:none;position:fixed;inset:0;z-index:50;background:#030719;color:white;align-items:center;justify-content:center;text-align:center;padding:25px;font-size:23px}
+@media(orientation:portrait){#rotate{display:flex}}
 @media(max-width:650px){
-  .missionCards{grid-template-columns:1fr}
-  #characterList{grid-template-columns:repeat(2,1fr)}
-  .ship-list{grid-template-columns:repeat(2,1fr)}
+ .missionCards{grid-template-columns:1fr 1fr}
+ #characterList{grid-template-columns:repeat(2,1fr)}
+ .ship-list{grid-template-columns:repeat(2,1fr)}
+ .panel{padding:13px;margin:8px auto}
+ header{padding-top:7px}
+}
+@media(max-height:500px){
+ header h1{font-size:18px}
+ .panel{max-height:78dvh;padding:10px}
+ #track{height:calc(100dvh - 145px);min-height:110px}
+ .controls button{width:48px;height:48px}
 }
 </style>
 </head>
-
 <body>
 <div id="app">
- <div id="world" class="m1">
-  <div id="decoration" class="m1decor"></div>
- </div>
-
+ <div id="world" class="m1"><div id="decoration" class="m1decor"></div></div>
  <button id="sound" onclick="toggleSound()">🔊 Bunyi</button>
+ <header><h1>❄️ CABARAN ANAK ALPHA 🚀</h1><div id="subtitle">LANGGAR DAN JAWAB • KP2027</div></header>
 
- <header>
-  <h1>❄️ CABARAN ANAK ALPHA 🚀</h1>
-  <div id="subtitle">LANGGAR DAN JAWAB • KP2027</div>
- </header>
-
- <!-- MENU UTAMA -->
  <section id="menu" class="panel">
   <h2>🌟 SELAMAT DATANG, ANAK ALPHA! 🌟</h2>
   <p>Terokai empat dunia cabaran KP2027. Pilih misi dan buktikan kebolehan anda!</p>
   <div class="missionCards">
-   <button class="missionCard" onclick="selectMission(1)">
-    <span>❄️</span><b>MISI 1</b><small>PENYAYANG</small>
-   </button>
-   <button class="missionCard" id="mission2Card" onclick="selectMission(2)">
-    <span>🚀</span><b>MISI 2</b><small>BERDAYA TAHAN</small>
-   </button>
-   <button class="missionCard" id="mission3Card" onclick="selectMission(3)">
-    <span>🌊</span><b>MISI 3</b><small>MEMIMPIN</small>
-   </button>
-   <button class="missionCard" id="mission4Card" onclick="selectMission(4)">
-    <span>🏰</span><b>MISI 4</b><small>WARGANEGARA AKTIF</small>
-   </button>
+   <button class="missionCard" onclick="selectMission(1)"><span>❄️</span><b>MISI 1</b><small>PENYAYANG</small></button>
+   <button class="missionCard" id="mission2Card" onclick="selectMission(2)"><span>🚀</span><b>MISI 2</b><small>BERDAYA TAHAN</small></button>
+   <button class="missionCard" id="mission3Card" onclick="selectMission(3)"><span>🌊</span><b>MISI 3</b><small>MEMIMPIN</small></button>
+   <button class="missionCard" id="mission4Card" onclick="selectMission(4)"><span>🏰</span><b>MISI 4</b><small>WARGANEGARA AKTIF</small></button>
   </div>
   <p>💎 Jumlah Permata: <b id="menuGems">0</b></p>
   <p>Jawab soalan dengan betul untuk melengkapkan setiap misi.</p>
  </section>
 
- <!-- PILIH WATAK -->
  <section id="characterSelect" class="panel">
-  <h2 id="selectTitle">PILIH WATAK</h2>
-  <p id="selectDescription"></p>
-  <div id="characterList"></div>
-  <div id="shipList" class="ship-list" style="display:none"></div>
+  <h2 id="selectTitle">PILIH WATAK</h2><p id="selectDescription"></p>
+  <div id="characterList"></div><div id="shipList" class="ship-list" style="display:none"></div>
   <button class="primary" onclick="startGame()">MULA MISI 🚀</button>
   <button class="secondary" onclick="backMenu()">KEMBALI</button>
  </section>
 
- <!-- PERMAINAN -->
  <section id="game">
   <div class="hud">
    <div class="badge" id="who">Watak: —</div>
@@ -290,34 +120,22 @@ h2{margin:8px 0}
    <div class="badge">🏁 Misi: <span id="mission">1</span></div>
    <div class="badge">📦 Soalan: <span id="progress">0/5</span></div>
   </div>
-
-  <div id="track" class="m1track">
-   <div id="player"></div>
-  </div>
-
-  <div class="controls">
-   <button onclick="move(-1)">◀ KIRI</button>
-   <button onclick="move(1)">KANAN ▶</button>
-  </div>
+  <div id="track" class="m1track"><div id="player"></div></div>
+  <div class="controls"><button onclick="move(-1)">◀ KIRI</button><button onclick="move(1)">KANAN ▶</button></div>
   <div class="hint" id="hint">Elak halangan dan langgar peti soalan!</div>
  </section>
 
- <!-- SOALAN -->
  <div id="quiz">
   <div class="panel" id="quizPanel">
-   <h2 id="quizTitle">🌈 SOALAN PINTAR</h2>
-   <p id="question"></p>
+   <h2 id="quizTitle">🌈 SOALAN PINTAR</h2><p id="question"></p>
    <button class="secondary" id="replay" onclick="readQuestion()">🔊 Dengar soalan</button>
-   <div id="answers"></div>
-   <div id="feedback"></div>
+   <div id="answers"></div><div id="feedback"></div>
   </div>
  </div>
 
- <!-- MISI SELESAI -->
  <div id="missionWin">
   <div class="panel" id="winPanel">
-   <h2 id="winTitle">🏆 MISI BERJAYA!</h2>
-   <p id="winMessage"></p>
+   <h2 id="winTitle">🏆 MISI BERJAYA!</h2><p id="winMessage"></p>
    <p>💎 Jumlah permata: <b id="winGems">0</b></p>
    <button class="primary" id="nextButton" onclick="nextMission()">TERUSKAN ➜</button>
    <button class="secondary" onclick="backMenu()">MENU UTAMA</button>
@@ -326,396 +144,315 @@ h2{margin:8px 0}
 
  <div id="finalWin">
   <div class="panel">
-   <h1>🏆 TAHNIAH, WIRA KP2027!</h1>
-   <h2>ANDA TELAH MENAMATKAN KESEMUA MISI!</h2>
+   <h1>🏆 TAHNIAH, WIRA KP2027!</h1><h2>ANDA TELAH MENAMATKAN KESEMUA MISI!</h2>
    <p>Anda telah membuktikan nilai penyayang, berdaya tahan, berupaya memimpin, dan warganegara aktif!</p>
    <h2>💎 Jumlah Permata: <span id="finalGems">0</span></h2>
    <button class="primary" onclick="backMenu()">KEMBALI KE MENU</button>
   </div>
  </div>
 
- <div id="rotate">
-  📱<br><br>SILA PUSING TELEFON KE MOD LANDSKAP
-  <br><small style="font-size:14px">Pusing telefon secara melintang untuk bermain.</small>
- </div>
+ <div id="rotate">📱<br><br>SILA PUSING TELEFON KE MOD LANDSKAP<br><small style="font-size:14px">Pusing telefon secara melintang untuk bermain.</small></div>
 </div>
 
 <script>
 const GEM_KEY = "kp2027Gems";
+let mission=1, selected=0, lane=2, score=0;
+let gems=Number(localStorage.getItem(GEM_KEY)||0);
+let correctCount=0, running=false, paused=false;
+let objects=[], spawn=0, last=0, raf=0;
+let soundOn=true, audio=null, currentQ=null, answered=false;
+let musicTimer=null, quizOpening=false;
+const $=id=>document.getElementById(id);
 
-let mission = 1, selected = 0, lane = 2;
-let score = 0, gems = Number(localStorage.getItem(GEM_KEY) || 0);
-let correctCount = 0;
-let running = false, paused = false;
-let objects = [], spawn = 0, last = 0, raf = 0;
-let soundOn = true, audio = null, currentQ = null;
-let answered = false;
-
-const $ = id => document.getElementById(id);
-
-const missions = {
- 1: {
-  title: "MISI 1 • LEMBAH SALJI PURBA",
-  value: "PENYAYANG",
-  description: "Elak batu hitam 🪨 dan langgar batu pelangi 🌈.",
-  target: 5, objectGood: "🌈", objectBad: "🪨",
-  speed: 2.6, spawnRate: 48,
-  characters: [
-   {name:"Kura-kura Purba",emoji:"🐢",body:"#48a86c",kind:"turtle"},
-   {name:"Arbab Purba",emoji:"🦖",body:"#d58a48",kind:"dino"},
-   {name:"Helang Purba",emoji:"🦅",body:"#a66b42",kind:"eagle"},
-   {name:"Kuda Terbang",emoji:"🦄",body:"#c18be8",kind:"horse"},
-   {name:"Harimau Purba",emoji:"🐅",body:"#e58b35",kind:"tiger"}
-  ],
-  questions: [
-   {q:"Apakah amalan yang baik sebelum memulakan sesuatu pekerjaan?",a:["Membaca doa","Mengejek kawan","Bergaduh","Membuang masa"],c:0},
-   {q:"Apakah yang perlu kita lakukan apabila ternampak sampah?",a:["Biarkan sahaja","Buang ke tempat sampah","Tendang","Sorok di bawah meja"],c:1},
-   {q:"Jika kawan terjatuh, apakah tindakan terbaik?",a:["Ketawakan","Tinggalkan","Bantu dan panggil guru","Rakam video"],c:2},
-   {q:"Apakah sikap yang menunjukkan kita amanah?",a:["Menipu","Mengambil barang orang","Menepati janji","Menyalahkan orang"],c:2},
-   {q:"Apabila menggunakan internet, kita hendaklah…",a:["Berhemah dan berhati-hati","Kongsi kata laluan","Percaya semua perkara","Leka sepanjang hari"],c:0}
-  ]
- },
- 2: {
-  title: "MISI 2 • ANGKASA LEPAS",
-  value: "BERDAYA TAHAN",
-  description: "Elak bom alien 💣 dan langgar peti harta karun 🎁.",
-  target: 5, objectGood: "🎁", objectBad: "💣",
-  speed: 3.0, spawnRate: 45,
-  characters: [
-   {name:"GALAXY PHANTOM",svg:`<svg viewBox="0 0 120 100"><defs><linearGradient id="a" x2="0" y2="1"><stop stop-color="#e8fbff"/><stop offset="1" stop-color="#3978c9"/></linearGradient></defs><path d="M60 2 L77 35 L116 78 L77 68 L60 91 L43 68 L4 78 L43 35Z" fill="url(#a)" stroke="#75efff" stroke-width="3"/><path d="M60 10 L70 49 L60 66 L50 49Z" fill="#071b47"/><circle cx="60" cy="48" r="7" fill="#a9ffff"/></svg>`},
-   {name:"COSMIC MANTA",svg:`<svg viewBox="0 0 120 100"><path d="M60 8 Q76 24 116 27 Q104 63 72 66 L60 91 L48 66 Q16 63 4 27 Q44 24 60 8Z" fill="#8b69f5" stroke="#c6b5ff" stroke-width="3"/><circle cx="60" cy="43" r="7" fill="#fff"/></svg>`},
-   {name:"NOVA STRIKER",svg:`<svg viewBox="0 0 120 100"><path d="M60 4 L76 34 L72 73 L60 91 L48 73 L44 34Z" fill="#e7edf8" stroke="#70eaff" stroke-width="3"/><circle cx="60" cy="48" r="6" fill="#142d5e"/></svg>`},
-   {name:"ORBITAL X",svg:`<svg viewBox="0 0 120 100"><path d="M60 8 L76 40 L60 90 L44 40Z" fill="#a4b5ca" stroke="#e6f9ff" stroke-width="3"/><path d="M60 18 C5 -5 8 90 60 78 C112 90 115 -5 60 18Z" fill="none" stroke="#5be8ff" stroke-width="9"/></svg>`}
-  ],
-  questions: [
-   {q:"Apakah maksud berdaya tahan?",a:["Tidak mudah berputus asa","Mudah mengalah","Mengelak semua cabaran"],c:0},
-   {q:"Apabila gagal melakukan sesuatu, apakah tindakan terbaik?",a:["Berhenti mencuba","Belajar daripada kesilapan","Menyalahkan orang lain"],c:1},
-   {q:"Menghadapi cabaran memerlukan kita...",a:["Berani dan terus berusaha","Mudah menyerah","Tidak mahu belajar"],c:0},
-   {q:"Jika menghadapi masalah, kita perlu...",a:["Panik","Mencari jalan penyelesaian","Meninggalkan tugas"],c:1},
-   {q:"Apakah sikap orang yang berdaya tahan?",a:["Cepat berputus asa","Suka menyalahkan orang","Tabah menghadapi kesukaran"],c:2}
-  ]
- },
- 3: {
-  title: "MISI 3 • LAUTAN KEPIMPINAN",
-  value: "BERUPAYA MEMIMPIN",
-  description: "Elak bom laut 💣 dan cari peti soalan 📦.",
-  target: 5, objectGood: "📦", objectBad: "💣",
-  speed: 3.2, spawnRate: 42,
-  characters: [
-   {name:"Sotong Purba",emoji:"🦑"},
-   {name:"Belut Angkasa",emoji:"🐍"},
-   {name:"Jerung Naga",emoji:"🦈"},
-   {name:"Raja Kuda Laut",emoji:"🐴"},
-   {name:"Obor-obor Syurga",emoji:"🪼"}
-  ],
-  questions: [
-   {q:"Apakah ciri seorang pemimpin yang baik?",a:["Suka mengarah sahaja","Bertanggungjawab dan adil","Mementingkan diri"],c:1},
-   {q:"Jika ahli kumpulan menghadapi masalah, apakah tindakan pemimpin?",a:["Membiarkan mereka","Menyalahkan mereka","Membantu mencari penyelesaian"],c:2},
-   {q:"Bagaimanakah cara membuat keputusan yang baik?",a:["Mendengar pandangan ahli","Ikut kehendak sendiri","Tidak berbincang"],c:0},
-   {q:"Apakah tindakan pemimpin apabila melakukan kesilapan?",a:["Menyembunyikannya","Mengaku dan memperbaikinya","Menyalahkan orang lain"],c:1},
-   {q:"Apakah cara terbaik memimpin pasukan?",a:["Bekerjasama dan memberi teladan","Memaksa semua orang","Tidak mendengar pendapat"],c:0}
-  ]
- },
- 4: {
-  title: "MISI 4 • ALAM SYURGA PAHLAWAN",
-  value: "WARGANEGARA AKTIF",
-  description: "Elak halangan ⚔️ dan kutip peti harta karun 🧰.",
-  target: 5, objectGood: "🧰", objectBad: "⚔️",
-  speed: 3.4, spawnRate: 40,
-  characters: [
-   {name:"Hang Tuah",emoji:"🧔🏻"},
-   {name:"Hang Jebat",emoji:"🧔🏽"},
-   {name:"Hang Kasturi",emoji:"🧔🏼"},
-   {name:"Hang Lekir",emoji:"🧔🏾"},
-   {name:"Hang Lekiu",emoji:"🧔🏻‍♂️"}
-  ],
-  questions: [
-   {q:"Apakah maksud menjadi warganegara yang aktif?",a:["Mengambil bahagian dalam aktiviti masyarakat","Mementingkan diri sendiri","Tidak peduli keadaan sekeliling"],c:0},
-   {q:"Apakah tindakan yang menunjukkan semangat kejiranan?",a:["Membantu jiran yang memerlukan","Mengejek jiran","Mengabaikan jiran"],c:0},
-   {q:"Mengapa kita perlu menjaga kebersihan kawasan awam?",a:["Supaya persekitaran bersih dan selesa","Supaya orang lain bekerja","Kerana mahu dipuji sahaja"],c:0},
-   {q:"Apakah tindakan yang betul apabila melihat sampah di taman?",a:["Mengutip dan membuang ke tong sampah","Membiarkannya","Menambah sampah"],c:0},
-   {q:"Bagaimanakah kita menunjukkan hormat kepada kepelbagaian kaum?",a:["Menghormati budaya dan kepercayaan orang lain","Menghina adat orang lain","Memaksa semua orang sama"],c:0}
-  ]
- }
+const missions={
+1:{
+ title:"MISI 1 • LEMBAH SALJI PURBA",value:"PENYAYANG",
+ description:"Elak batu hitam 🪨 dan langgar batu pelangi 🌈.",
+ target:5,objectGood:"🌈",objectBad:"🪨",speed:2.6,spawnRate:48,
+ characters:[
+  {name:"Kura-kura Purba",emoji:"🐢",body:"#48a86c",kind:"turtle"},
+  {name:"Arbab Purba",emoji:"🦖",body:"#d58a48",kind:"dino"},
+  {name:"Helang Purba",emoji:"🦅",body:"#a66b42",kind:"eagle"},
+  {name:"Kuda Terbang",emoji:"🦄",body:"#c18be8",kind:"horse"},
+  {name:"Harimau Purba",emoji:"🐅",body:"#e58b35",kind:"tiger"}
+ ],
+ questions:[
+  {q:"Apakah amalan yang baik sebelum memulakan sesuatu pekerjaan?",a:["Membaca doa","Mengejek kawan","Bergaduh","Membuang masa"],c:0},
+  {q:"Apakah yang perlu kita lakukan apabila ternampak sampah?",a:["Biarkan sahaja","Buang ke tempat sampah","Tendang","Sorok di bawah meja"],c:1},
+  {q:"Jika kawan terjatuh, apakah tindakan terbaik?",a:["Ketawakan","Tinggalkan","Bantu dan panggil guru","Rakam video"],c:2},
+  {q:"Apakah sikap yang menunjukkan kita amanah?",a:["Menipu","Mengambil barang orang","Menepati janji","Menyalahkan orang"],c:2},
+  {q:"Apabila menggunakan internet, kita hendaklah…",a:["Berhemah dan berhati-hati","Kongsi kata laluan","Percaya semua perkara","Leka sepanjang hari"],c:0}
+ ]
+},
+2:{
+ title:"MISI 2 • ANGKASA LEPAS",value:"BERDAYA TAHAN",
+ description:"Elak bom alien 💣 dan langgar peti harta karun 🎁.",
+ target:5,objectGood:"🎁",objectBad:"💣",speed:3.0,spawnRate:45,
+ characters:[
+  {name:"GALAXY PHANTOM",svg:`<svg viewBox="0 0 120 100"><defs><linearGradient id="a" x2="0" y2="1"><stop stop-color="#e8fbff"/><stop offset="1" stop-color="#3978c9"/></linearGradient></defs><path d="M60 2 L77 35 L116 78 L77 68 L60 91 L43 68 L4 78 L43 35Z" fill="url(#a)" stroke="#75efff" stroke-width="3"/><path d="M60 10 L70 49 L60 66 L50 49Z" fill="#071b47"/><circle cx="60" cy="48" r="7" fill="#a9ffff"/></svg>`},
+  {name:"COSMIC MANTA",svg:`<svg viewBox="0 0 120 100"><path d="M60 8 Q76 24 116 27 Q104 63 72 66 L60 91 L48 66 Q16 63 4 27 Q44 24 60 8Z" fill="#8b69f5" stroke="#c6b5ff" stroke-width="3"/><circle cx="60" cy="43" r="7" fill="#fff"/></svg>`},
+  {name:"NOVA STRIKER",svg:`<svg viewBox="0 0 120 100"><path d="M60 4 L76 34 L72 73 L60 91 L48 73 L44 34Z" fill="#e7edf8" stroke="#70eaff" stroke-width="3"/><circle cx="60" cy="48" r="6" fill="#142d5e"/></svg>`},
+  {name:"ORBITAL X",svg:`<svg viewBox="0 0 120 100"><path d="M60 8 L76 40 L60 90 L44 40Z" fill="#a4b5ca" stroke="#e6f9ff" stroke-width="3"/><path d="M60 18 C5 -5 8 90 60 78 C112 90 115 -5 60 18Z" fill="none" stroke="#5be8ff" stroke-width="9"/></svg>`}
+ ],
+ questions:[
+  {q:"Apakah maksud berdaya tahan?",a:["Tidak mudah berputus asa","Mudah mengalah","Mengelak semua cabaran"],c:0},
+  {q:"Apabila gagal melakukan sesuatu, apakah tindakan terbaik?",a:["Berhenti mencuba","Belajar daripada kesilapan","Menyalahkan orang lain"],c:1},
+  {q:"Menghadapi cabaran memerlukan kita...",a:["Berani dan terus berusaha","Mudah menyerah","Tidak mahu belajar"],c:0},
+  {q:"Jika menghadapi masalah, kita perlu...",a:["Panik","Mencari jalan penyelesaian","Meninggalkan tugas"],c:1},
+  {q:"Apakah sikap orang yang berdaya tahan?",a:["Cepat berputus asa","Suka menyalahkan orang","Tabah menghadapi kesukaran"],c:2}
+ ]
+},
+3:{
+ title:"MISI 3 • LAUTAN KEPIMPINAN",value:"BERUPAYA MEMIMPIN",
+ description:"Elak bom laut 💣 dan cari peti soalan 📦.",
+ target:5,objectGood:"📦",objectBad:"💣",speed:3.2,spawnRate:42,
+ characters:[
+  {name:"Sotong Purba",emoji:"🦑"},{name:"Belut Angkasa",emoji:"🐍"},
+  {name:"Jerung Naga",emoji:"🦈"},{name:"Raja Kuda Laut",emoji:"🐴"},
+  {name:"Obor-obor Syurga",emoji:"🪼"}
+ ],
+ questions:[
+  {q:"Apakah ciri seorang pemimpin yang baik?",a:["Suka mengarah sahaja","Bertanggungjawab dan adil","Mementingkan diri"],c:1},
+  {q:"Jika ahli kumpulan menghadapi masalah, apakah tindakan pemimpin?",a:["Membiarkan mereka","Menyalahkan mereka","Membantu mencari penyelesaian"],c:2},
+  {q:"Bagaimanakah cara membuat keputusan yang baik?",a:["Mendengar pandangan ahli","Ikut kehendak sendiri","Tidak berbincang"],c:0},
+  {q:"Apakah tindakan pemimpin apabila melakukan kesilapan?",a:["Menyembunyikannya","Mengaku dan memperbaikinya","Menyalahkan orang lain"],c:1},
+  {q:"Apakah cara terbaik memimpin pasukan?",a:["Bekerjasama dan memberi teladan","Memaksa semua orang","Tidak mendengar pendapat"],c:0}
+ ]
+},
+4:{
+ title:"MISI 4 • ALAM SYURGA PAHLAWAN",value:"WARGANEGARA AKTIF",
+ description:"Elak halangan ⚔️ dan kutip peti harta karun 🧰.",
+ target:5,objectGood:"🧰",objectBad:"⚔️",speed:3.4,spawnRate:40,
+ characters:[
+  {name:"Hang Tuah",emoji:"🧔🏻"},{name:"Hang Jebat",emoji:"🧔🏽"},
+  {name:"Hang Kasturi",emoji:"🧔🏼"},{name:"Hang Lekir",emoji:"🧔🏾"},
+  {name:"Hang Lekiu",emoji:"🧔🏻‍♂️"}
+ ],
+ questions:[
+  {q:"Apakah maksud menjadi warganegara yang aktif?",a:["Mengambil bahagian dalam aktiviti masyarakat","Mementingkan diri sendiri","Tidak peduli keadaan sekeliling"],c:0},
+  {q:"Apakah tindakan yang menunjukkan semangat kejiranan?",a:["Membantu jiran yang memerlukan","Mengejek jiran","Mengabaikan jiran"],c:0},
+  {q:"Mengapa kita perlu menjaga kebersihan kawasan awam?",a:["Supaya persekitaran bersih dan selesa","Supaya orang lain bekerja","Kerana mahu dipuji sahaja"],c:0},
+  {q:"Apakah tindakan yang betul apabila melihat sampah di taman?",a:["Mengutip dan membuang ke tong sampah","Membiarkannya","Menambah sampah"],c:0},
+  {q:"Bagaimanakah kita menunjukkan hormat kepada kepelbagaian kaum?",a:["Menghormati budaya dan kepercayaan orang lain","Menghina adat orang lain","Memaksa semua orang sama"],c:0}
+ ]
+}
 };
 
-function saveGems(){
- localStorage.setItem(GEM_KEY, String(gems));
-}
-
+function saveGems(){localStorage.setItem(GEM_KEY,String(gems))}
 function updateMenu(){
- gems = Number(localStorage.getItem(GEM_KEY) || 0);
- $("menuGems").textContent = gems;
- $("mission2Card").disabled = localStorage.getItem("kp2027M1Done") !== "yes";
- $("mission3Card").disabled = localStorage.getItem("kp2027M2Done") !== "yes";
- $("mission4Card").disabled = localStorage.getItem("kp2027M3Done") !== "yes";
+ gems=Number(localStorage.getItem(GEM_KEY)||0);
+ $("menuGems").textContent=gems;
+ $("mission2Card").disabled=localStorage.getItem("kp2027M1Done")!=="yes";
+ $("mission3Card").disabled=localStorage.getItem("kp2027M2Done")!=="yes";
+ $("mission4Card").disabled=localStorage.getItem("kp2027M3Done")!=="yes";
 }
-
 function hideAll(){
- ["menu","characterSelect","game","quiz","missionWin","finalWin"].forEach(id => {
-  $(id).style.display = "none";
- });
+ ["menu","characterSelect","game","quiz","missionWin","finalWin"].forEach(id=>$(id).style.display="none");
 }
-
 function setWorld(){
- $("world").className = "m" + mission;
- $("decoration").className = "m" + mission + "decor";
- $("subtitle").textContent = missions[mission].title + " • KP2027";
- $("track").className = "m" + mission + "track";
- $("gemBadge").className = (mission === 2 || mission === 4) ? "badge m2badge" : "badge";
+ $("world").className="m"+mission;
+ $("decoration").className="m"+mission+"decor";
+ $("subtitle").textContent=missions[mission].title+" • KP2027";
+ $("track").className="m"+mission+"track";
+ $("gemBadge").className=(mission===2||mission===4)?"badge m2badge":"badge";
 }
-
 function backMenu(){
- stopGame();
- hideAll();
- $("menu").style.display = "block";
- $("sound").style.display = "block";
+ stopGame();hideAll();
+ $("menu").style.display="block";
+ $("sound").style.display="block";
  updateMenu();
 }
-
 function selectMission(n){
- if(n > 1 && localStorage.getItem("kp2027M" + (n-1) + "Done") !== "yes"){
-  alert("Selesaikan Misi " + (n-1) + " dahulu!");
-  return;
+ if(n>1&&localStorage.getItem("kp2027M"+(n-1)+"Done")!=="yes"){
+  alert("Selesaikan Misi "+(n-1)+" dahulu!");return;
  }
- mission = n; selected = 0;
- setWorld();
- hideAll();
- $("characterSelect").style.display = "block";
- $("selectTitle").textContent = "PILIH WATAK / KAPAL";
- $("selectDescription").textContent = missions[n].description;
- $("characterList").style.display = n === 2 ? "none" : "grid";
- $("shipList").style.display = n === 2 ? "grid" : "none";
+ stopGame();
+ mission=n;selected=0;setWorld();hideAll();
+ $("characterSelect").style.display="block";
+ $("selectTitle").textContent="PILIH WATAK / KAPAL";
+ $("selectDescription").textContent=missions[n].description;
+ $("characterList").style.display=n===2?"none":"grid";
+ $("shipList").style.display=n===2?"grid":"none";
  buildChoices();
 }
-
 function svgChar(c){
- let common = `<ellipse cx="50" cy="91" rx="29" ry="5" fill="#315c70" opacity=".25"/>`;
- let art = `<circle cx="50" cy="50" r="30" fill="${c.body || '#48a86c'}"/>`;
+ let common=`<ellipse cx="50" cy="91" rx="29" ry="5" fill="#315c70" opacity=".25"/>`;
+ let art=`<circle cx="50" cy="50" r="30" fill="${c.body||"#48a86c"}"/>`;
  return `<svg viewBox="0 0 100 100">${common}${art}</svg>`;
 }
-
 function buildChoices(){
- let list = missions[mission].characters;
- if(mission === 2){
-  $("shipList").innerHTML = list.map((c,i) =>
-   `<button class="ship-choice ${i===selected?'selected':''}" onclick="chooseCharacter(${i})">${c.svg}<b>${c.name}</b></button>`
+ let list=missions[mission].characters;
+ if(mission===2){
+  $("shipList").innerHTML=list.map((c,i)=>
+   `<button class="ship-choice ${i===selected?"selected":""}" onclick="chooseCharacter(${i})">${c.svg}<b>${c.name}</b></button>`
   ).join("");
- } else {
-  $("characterList").innerHTML = list.map((c,i) =>
-   `<button class="character ${i===selected?'selected':''}" onclick="chooseCharacter(${i})">${c.kind ? svgChar(c) : '<span style="font-size:42px">'+c.emoji+'</span>'}<b>${c.name}</b></button>`
+ }else{
+  $("characterList").innerHTML=list.map((c,i)=>
+   `<button class="character ${i===selected?"selected":""}" onclick="chooseCharacter(${i})">${c.kind?svgChar(c):'<span style="font-size:42px">'+c.emoji+'</span>'}<b>${c.name}</b></button>`
   ).join("");
  }
 }
-
-function chooseCharacter(i){ selected = i; buildChoices(); }
-
+function chooseCharacter(i){selected=i;buildChoices()}
 function playerArt(){
- let c = missions[mission].characters[selected];
- if(mission === 1 && c.kind) return svgChar(c);
- if(mission === 2) return c.svg;
+ let c=missions[mission].characters[selected];
+ if(mission===1&&c.kind)return svgChar(c);
+ if(mission===2)return c.svg;
  return `<span class="emoji">${c.emoji}</span>`;
 }
-
 function startGame(){
- hideAll();
- $("game").style.display = "block";
- $("sound").style.display = "block";
+ stopGame();hideAll();
+ $("game").style.display="block";$("sound").style.display="block";
  setWorld();
- stopGame();
- score = 0; correctCount = 0; lane = 2; objects = []; spawn = 0;
- gems = Number(localStorage.getItem(GEM_KEY) || 0);
- $("who").textContent = "Watak: " + missions[mission].characters[selected].name;
- $("progress").textContent = "0/" + missions[mission].target;
- $("hint").textContent = missions[mission].description;
- $("track").innerHTML = '<div id="player"></div>';
- $("player").innerHTML = playerArt();
+ score=0;correctCount=0;lane=2;objects=[];spawn=0;quizOpening=false;
+ gems=Number(localStorage.getItem(GEM_KEY)||0);
+ $("who").textContent="Watak: "+missions[mission].characters[selected].name;
+ $("hint").textContent=missions[mission].description;
+ $("track").innerHTML='<div id="player"></div>';
+ $("player").innerHTML=playerArt();
  updateHUD();
- running = true; paused = false;
- last = performance.now();
- startMusic();
- raf = requestAnimationFrame(loop);
+ running=true;paused=false;last=performance.now();
+ startMusic();raf=requestAnimationFrame(loop);
 }
-
 function updateHUD(){
- $("score").textContent = score;
- $("gems").textContent = gems;
- $("mission").textContent = mission;
- $("progress").textContent = correctCount + "/" + missions[mission].target;
- $("player").style.left = (lane * 20 + 10) + "%";
+ $("score").textContent=score;$("gems").textContent=gems;
+ $("mission").textContent=mission;
+ $("progress").textContent=correctCount+"/"+missions[mission].target;
+ $("player").style.left=(lane*20+10)+"%";
 }
-
 function move(d){
- if(!running || paused) return;
- lane = Math.max(0, Math.min(4, lane + d));
- updateHUD();
+ if(!running||paused)return;
+ lane=Math.max(0,Math.min(4,lane+d));updateHUD();
 }
-
-document.addEventListener("keydown", e => {
- if(e.key === "ArrowLeft" || e.key.toLowerCase() === "a") move(-1);
- if(e.key === "ArrowRight" || e.key.toLowerCase() === "d") move(1);
+document.addEventListener("keydown",e=>{
+ if(e.key==="ArrowLeft"||e.key.toLowerCase()==="a")move(-1);
+ if(e.key==="ArrowRight"||e.key.toLowerCase()==="d")move(1);
 });
-
 function spawnObject(){
- let good = Math.random() < 0.35;
- let el = document.createElement("div");
- el.className = "object";
- el.textContent = good ? missions[mission].objectGood : missions[mission].objectBad;
- let l = Math.floor(Math.random() * 5);
- el.style.left = (l * 20 + 10) + "%";
- el.style.top = "-65px";
+ let good=Math.random()<0.35;
+ let el=document.createElement("div");
+ el.className="object";
+ el.textContent=good?missions[mission].objectGood:missions[mission].objectBad;
+ let l=Math.floor(Math.random()*5);
+ el.style.left=(l*20+10)+"%";el.style.top="-65px";
  $("track").appendChild(el);
- objects.push({el, l, y: -65, good, hit: false});
+ objects.push({el,l,y:-65,good,hit:false});
 }
-
 function loop(now){
- if(!running) return;
- let dt = Math.min(2, (now - last) / 16.67);
- last = now;
+ if(!running)return;
+ let dt=Math.min(2,(now-last)/16.67);last=now;
  if(!paused){
-  spawn += dt;
-  if(spawn > missions[mission].spawnRate){
-   spawn = 0; spawnObject();
-  }
-  objects.forEach(o => {
-   o.y += missions[mission].speed * dt;
-   o.el.style.top = o.y + "px";
-   if(!o.hit && o.l === lane && o.y > $("track").clientHeight - 145 && o.y < $("track").clientHeight - 50){
-    o.hit = true;
-    o.el.remove();
-    if(o.good) openQuiz();
-    else {
-     score = Math.max(0, score - 50);
-     updateHUD();
-     tone(130, .2, "square");
-    }
+  spawn+=dt;
+  if(spawn>missions[mission].spawnRate){spawn=0;spawnObject()}
+  for(let o of objects){
+   if(paused)break;
+   o.y+=missions[mission].speed*dt;
+   o.el.style.top=o.y+"px";
+   if(!o.hit&&o.l===lane&&o.y>$("track").clientHeight-145&&o.y<$("track").clientHeight-50){
+    o.hit=true;o.el.remove();
+    if(o.good){openQuiz();break}
+    score=Math.max(0,score-50);updateHUD();tone(130,.2,"square");
    }
-  });
-  objects = objects.filter(o => o.el.isConnected && o.y < $("track").clientHeight + 50);
+  }
+  objects=objects.filter(o=>o.el.isConnected&&o.y<$("track").clientHeight+50);
  }
- raf = requestAnimationFrame(loop);
+ raf=requestAnimationFrame(loop);
 }
-
 function openQuiz(){
- paused = true;
- let pool = missions[mission].questions;
- currentQ = pool[correctCount % pool.length];
- answered = false;
- $("quizTitle").textContent = missions[mission].title;
- $("question").textContent = currentQ.q;
- $("feedback").textContent = "";
- $("answers").innerHTML = currentQ.a.map((a, i) =>
+ if(quizOpening||paused)return;
+ quizOpening=true;paused=true;stopMusic();
+ let pool=missions[mission].questions;
+ currentQ=pool[correctCount%pool.length];answered=false;
+ $("quizTitle").textContent=missions[mission].title;
+ $("question").textContent=currentQ.q;$("feedback").textContent="";
+ $("answers").innerHTML=currentQ.a.map((a,i)=>
   `<button class="answer" onclick="answerQuestion(${i})">${String.fromCharCode(65+i)}. ${a}</button>`
  ).join("");
- $("quizPanel").className = (mission === 2 || mission === 4) ? "panel m2panel" : "panel";
- $("quiz").style.display = "flex";
- readQuestion();
+ $("quizPanel").className=(mission===2||mission===4)?"panel m2panel":"panel";
+ $("quiz").style.display="flex";readQuestion();
 }
-
 function readQuestion(){
- if(!currentQ || !("speechSynthesis" in window)) return;
+ if(!currentQ||!("speechSynthesis" in window))return;
  speechSynthesis.cancel();
- let text = currentQ.q;
- let msg = new SpeechSynthesisUtterance(text);
- msg.lang = "ms-MY"; msg.rate = .9;
- speechSynthesis.speak(msg);
+ let msg=new SpeechSynthesisUtterance(currentQ.q);
+ msg.lang="ms-MY";msg.rate=.9;speechSynthesis.speak(msg);
 }
-
 function answerQuestion(i){
- if(answered) return;
- if(i === currentQ.c){
-  answered = true;
-  score += 500; gems += 500; correctCount++;
-  saveGems();
-  tone(880, .18);
-  $("feedback").textContent = "🎉 BETUL! +500 PERMATA!";
-  $("feedback").style.color = "#16864c";
-  document.querySelectorAll("#answers button").forEach(b => b.disabled = true);
+ if(answered||!currentQ)return;
+ if(i===currentQ.c){
+  answered=true;score+=500;gems+=500;correctCount++;saveGems();
+  tone(880,.18);
+  $("feedback").textContent="🎉 BETUL! +500 PERMATA!";
+  $("feedback").style.color="#16864c";
+  document.querySelectorAll("#answers button").forEach(b=>b.disabled=true);
   updateHUD();
-  setTimeout(() => {
-   $("quiz").style.display = "none";
-   if("speechSynthesis" in window) speechSynthesis.cancel();
-   if(correctCount >= missions[mission].target) completeMission();
-   else paused = false;
-  }, 1100);
- } else {
-  tone(180, .25, "sawtooth");
-  $("feedback").textContent = "❌ Belum tepat! Cuba lagi.";
-  $("feedback").style.color = "#c34b35";
+  setTimeout(()=>{
+   $("quiz").style.display="none";
+   if("speechSynthesis" in window)speechSynthesis.cancel();
+   quizOpening=false;
+   if(correctCount>=missions[mission].target)completeMission();
+   else{paused=false;startMusic()}
+  },1100);
+ }else{
+  tone(180,.25,"sawtooth");
+  $("feedback").textContent="❌ Belum tepat! Cuba lagi.";
+  $("feedback").style.color="#c34b35";
  }
 }
-
 function completeMission(){
- running = false;
- cancelAnimationFrame(raf);
- $("winGems").textContent = gems;
- $("missionWin").style.display = "flex";
- $("winTitle").textContent = "🏆 MISI " + mission + " BERJAYA!";
- $("winMessage").textContent = "Hebat! Anda berjaya melengkapkan Misi " + mission + ".";
- 
- localStorage.setItem("kp2027M" + mission + "Done", "yes");
- 
- if(mission < 4){
-  $("nextButton").textContent = "BUKA MISI " + (mission + 1) + " ➜";
-  $("nextButton").style.display = "inline-block";
- } else {
-  $("nextButton").style.display = "none";
-  setTimeout(() => {
-   $("missionWin").style.display = "none";
-   $("finalGems").textContent = gems;
-   $("finalWin").style.display = "flex";
-  }, 1500);
+ running=false;paused=false;cancelAnimationFrame(raf);stopMusic();
+ if("speechSynthesis" in window)speechSynthesis.cancel();
+ $("winGems").textContent=gems;$("missionWin").style.display="flex";
+ $("winTitle").textContent="🏆 MISI "+mission+" BERJAYA!";
+ $("winMessage").textContent="Hebat! Anda berjaya melengkapkan Misi "+mission+".";
+ localStorage.setItem("kp2027M"+mission+"Done","yes");
+ if(mission<4){
+  $("nextButton").textContent="BUKA MISI "+(mission+1)+" ➜";
+  $("nextButton").style.display="inline-block";
+ }else{
+  $("nextButton").style.display="none";
+  setTimeout(()=>{
+   $("missionWin").style.display="none";
+   $("finalGems").textContent=gems;
+   $("finalWin").style.display="flex";
+  },1500);
  }
  updateMenu();
 }
-
-function nextMission(){
- if(mission < 4) selectMission(mission + 1);
-}
-
+function nextMission(){if(mission<4)selectMission(mission+1)}
 function stopGame(){
- running = false; paused = false;
- cancelAnimationFrame(raf);
- objects.forEach(o => o.el.remove());
- objects = [];
- if("speechSynthesis" in window) speechSynthesis.cancel();
+ running=false;paused=false;cancelAnimationFrame(raf);stopMusic();
+ objects.forEach(o=>o.el.remove());objects=[];
+ quizOpening=false;
+ if("speechSynthesis" in window)speechSynthesis.cancel();
 }
-
-function tone(freq=600, duration=.16, wave="sine"){
- if(!soundOn) return;
+function tone(freq=600,duration=.16,wave="sine"){
+ if(!soundOn)return;
  try{
-  audio = audio || new (window.AudioContext || window.webkitAudioContext)();
-  if(audio.state === "suspended") audio.resume();
-  let o = audio.createOscillator(), g = audio.createGain();
-  o.type = wave; o.frequency.value = freq;
-  g.gain.value = .06;
-  o.connect(g); g.connect(audio.destination);
-  o.start(); o.stop(audio.currentTime + duration);
+  audio=audio||(new(window.AudioContext||window.webkitAudioContext)());
+  if(audio.state==="suspended")audio.resume();
+  let o=audio.createOscillator(),g=audio.createGain();
+  o.type=wave;o.frequency.value=freq;g.gain.value=.06;
+  o.connect(g);g.connect(audio.destination);
+  o.start();o.stop(audio.currentTime+duration);
  }catch(e){}
 }
-
-let musicTimer = null;
 function startMusic(){
- if(!soundOn) return;
+ if(!soundOn||!running||paused)return;
  stopMusic();
- let notes = [523, 659, 784, 659, 587, 698, 880, 698], n = 0;
- musicTimer = setInterval(() => {
-  if(running && !paused) tone(notes[n++ % notes.length], .16, "triangle");
- }, 650);
+ let notes=[523,659,784,659,587,698,880,698],n=0;
+ musicTimer=setInterval(()=>{
+  if(running&&!paused)tone(notes[n++%notes.length],.16,"triangle");
+ },650);
 }
-
 function stopMusic(){
- if(musicTimer) clearInterval(musicTimer);
- musicTimer = null;
+ if(musicTimer){clearInterval(musicTimer);musicTimer=null}
 }
-
 function toggleSound(){
- soundOn = !soundOn;
- $("sound").textContent = soundOn ? "🔊 Bunyi" : "🔇 Senyap";
- if(!soundOn) stopMusic();
- else if(running) startMusic();
+ soundOn=!soundOn;
+ $("sound").textContent=soundOn?"🔊 Bunyi":"🔇 Senyap";
+ if(!soundOn)stopMusic();
+ else if(running&&!paused)startMusic();
 }
-
 updateMenu();
 </script>
 </body>
