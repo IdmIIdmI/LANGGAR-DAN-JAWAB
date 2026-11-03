@@ -1,0 +1,344 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LANGGAR DAN JAWAB - MISI 3</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;font-family:Arial,sans-serif;color:white;text-align:center;
+ background:linear-gradient(#003b70,#006994,#00a6b2);
+ min-height:100vh;
+}
+h1{margin:12px 5px 4px;font-size:27px}
+h2{margin:8px}
+p{margin:7px}
+.panel{
+ background:#003b70dd;border:2px solid #65eaff;border-radius:16px;
+ padding:12px;margin:10px auto;max-width:650px;
+}
+button{
+ border:0;border-radius:12px;padding:12px 16px;margin:5px;
+ font-size:16px;font-weight:bold;cursor:pointer;
+ background:#ffdf57;color:#07345b;
+}
+button:disabled{opacity:.5}
+#game{
+ position:relative;overflow:hidden;margin:12px auto;
+ width:min(96vw,600px);height:480px;
+ border:4px solid #8af5ff;border-radius:18px;
+ background:linear-gradient(#087fa4,#005477 60%,#00334f);
+}
+#game:before{
+ content:"";position:absolute;inset:0;
+ background:repeating-linear-gradient(110deg,transparent 0 45px,#ffffff12 46px 49px);
+ pointer-events:none;
+}
+.lane{
+ position:absolute;top:0;bottom:0;width:20%;
+ border-right:2px dashed #b9faff55;
+}
+.lane:nth-child(1){left:0}
+.lane:nth-child(2){left:20%}
+.lane:nth-child(3){left:40%}
+.lane:nth-child(4){left:60%}
+.lane:nth-child(5){left:80%;border:0}
+#player{
+ position:absolute;bottom:35px;left:40%;width:20%;
+ font-size:48px;z-index:4;transition:left .15s;
+}
+.object{
+ position:absolute;top:-55px;width:20%;font-size:38px;
+ z-index:3;transition:top .08s linear;
+}
+#hud{
+ display:flex;justify-content:space-around;flex-wrap:wrap;
+ gap:8px;font-weight:bold;padding:8px;
+}
+#questionBox{
+ display:none;position:fixed;z-index:10;inset:0;
+ background:#001b35dd;align-items:center;justify-content:center;
+ padding:15px;
+}
+#questionCard{
+ background:#e8fbff;color:#00334f;border-radius:18px;
+ padding:20px;max-width:480px;width:100%;
+}
+.answer{
+ display:block;width:100%;margin:8px 0;
+ background:#087fa4;color:white;
+}
+#message{font-weight:bold;min-height:24px}
+.small{font-size:13px}
+</style>
+</head>
+<body>
+
+<h1>🌊 LANGGAR DAN JAWAB 🌊</h1>
+<h2>KP2027 – CABARAN ANAK ALPHA</h2>
+
+<div class="panel">
+ <h2>🐉 MISI 3: LAUTAN KEPIMPINAN</h2>
+ <h3>Nilai: BERUPAYA MEMIMPIN</h3>
+ <p>Elakkan bom laut 💣 dan cari peti soalan 📦!</p>
+ <p>Jawab 5 soalan dengan betul untuk menamatkan misi.</p>
+ <div id="hud">
+  <span>💎 Gems: <span id="gems">0</span></span>
+  <span>⭐ Markah: <span id="score">0</span></span>
+  <span>📦 Soalan: <span id="progress">0/5</span></span>
+ </div>
+</div>
+
+<div class="panel" id="startPanel">
+ <h3>PILIH WATAK LAUTAN</h3>
+ <div id="characters">
+  <button onclick="choose(0)">🦑 Sotong Purba</button>
+  <button onclick="choose(1)">🐍 Belut Angkasa</button>
+  <button onclick="choose(2)">🦈 Jerung Naga</button>
+  <button onclick="choose(3)">🐴 Raja Kuda Laut</button>
+  <button onclick="choose(4)">🪼 Obor-obor Syurga</button>
+ </div>
+ <p id="selected">Pilih satu watak dahulu.</p>
+ <button onclick="startGame()">MULA MISI 3 🚀</button>
+</div>
+
+<div id="game">
+ <div class="lane"></div><div class="lane"></div>
+ <div class="lane"></div><div class="lane"></div>
+ <div class="lane"></div>
+ <div id="player">🦑</div>
+</div>
+
+<div class="panel">
+ <div id="message">Pilih watak dan tekan MULA MISI 3.</div>
+ <p>Gerakkan watak menggunakan butang kiri dan kanan.</p>
+ <button onclick="move(-1)">⬅️ KIRI</button>
+ <button onclick="move(1)">KANAN ➡️</button>
+ <button onclick="restart()">🔄 MULA SEMULA</button>
+ <p class="small">Tip: Sentuh peti soalan 📦 untuk menjawab. Elakkan bom 💣!</p>
+</div>
+
+<div id="questionBox">
+ <div id="questionCard">
+  <h2>📦 CABARAN KEPIMPINAN</h2>
+  <p id="questionText"></p>
+  <div id="answers"></div>
+  <p id="feedback"></p>
+ </div>
+</div>
+
+<script>
+const characters=[
+ {name:"Sotong Purba",emoji:"🦑"},
+ {name:"Belut Angkasa",emoji:"🐍"},
+ {name:"Jerung Naga",emoji:"🦈"},
+ {name:"Raja Kuda Laut",emoji:"🐴"},
+ {name:"Obor-obor Syurga",emoji:"🪼"}
+];
+
+const questions=[
+ {
+  q:"Apakah ciri seorang pemimpin yang baik?",
+  a:["Suka mengarah sahaja","Bertanggungjawab dan adil","Mementingkan diri"],
+  correct:1
+ },
+ {
+  q:"Jika ahli kumpulan menghadapi masalah, apakah tindakan pemimpin?",
+  a:["Membiarkan mereka","Menyalahkan mereka","Membantu mencari penyelesaian"],
+  correct:2
+ },
+ {
+  q:"Bagaimanakah cara membuat keputusan yang baik?",
+  a:["Mendengar pandangan ahli","Ikut kehendak sendiri","Tidak berbincang"],
+  correct:0
+ },
+ {
+  q:"Apakah tindakan pemimpin apabila melakukan kesilapan?",
+  a:["Menyembunyikannya","Mengaku dan memperbaikinya","Menyalahkan orang lain"],
+  correct:1
+ },
+ {
+  q:"Apakah cara terbaik memimpin pasukan?",
+  a:["Bekerjasama dan memberi teladan","Memaksa semua orang","Tidak mendengar pendapat"],
+  correct:0
+ }
+];
+
+let lane=2,character=0,score=0,correctCount=0;
+let running=false,paused=false,objects=[],timer=null;
+let spawnTimer=null,objectId=0;
+
+let gems=Number(localStorage.getItem("kp2027Gems")||0);
+document.getElementById("gems").textContent=gems;
+
+function choose(i){
+ character=i;
+ document.getElementById("selected").textContent=
+ "Watak dipilih: "+characters[i].name+" "+characters[i].emoji;
+ document.getElementById("player").textContent=characters[i].emoji;
+}
+
+function startGame(){
+ if(running)return;
+ if(document.getElementById("selected").textContent.includes("Pilih satu")){
+  alert("Sila pilih watak dahulu!");
+  return;
+ }
+ clearGame();
+ lane=2;score=0;correctCount=0;
+ running=true;paused=false;
+ document.getElementById("player").style.left="40%";
+ updateHUD();
+ document.getElementById("startPanel").style.display="none";
+ document.getElementById("message").textContent="Misi bermula! Cari peti soalan!";
+ spawnTimer=setInterval(spawnObject,1150);
+ timer=setInterval(gameLoop,45);
+}
+
+function spawnObject(){
+ if(!running||paused)return;
+ let laneNo=Math.floor(Math.random()*5);
+ let isChest=Math.random()<0.38;
+ let el=document.createElement("div");
+ el.className="object";
+ el.textContent=isChest?"📦":"💣";
+ el.dataset.lane=laneNo;
+ el.dataset.type=isChest?"chest":"bomb";
+ el.style.left=(laneNo*20)+"%";
+ el.style.top="-55px";
+ el.id="obj"+(++objectId);
+ document.getElementById("game").appendChild(el);
+ objects.push(el);
+}
+
+function gameLoop(){
+ if(!running||paused)return;
+ objects.forEach(el=>{
+  let top=parseFloat(el.style.top);
+  top+=5;
+  el.style.top=top+"px";
+  if(top>340 && top<410 && Number(el.dataset.lane)===lane){
+   if(el.dataset.type==="chest"){
+    paused=true;
+    clearInterval(spawnTimer);
+    el.remove();
+    objects=objects.filter(o=>o!==el);
+    askQuestion();
+   }else{
+    score=Math.max(0,score-100);
+    document.getElementById("message").textContent="💥 Terkena bom! Markah -100.";
+    el.remove();
+    objects=objects.filter(o=>o!==el);
+    updateHUD();
+   }
+  }else if(top>490){
+   el.remove();
+   objects=objects.filter(o=>o!==el);
+  }
+ });
+}
+
+function move(direction){
+ if(!running||paused)return;
+ lane=Math.max(0,Math.min(4,lane+direction));
+ document.getElementById("player").style.left=(lane*20)+"%";
+}
+
+function askQuestion(){
+ if(correctCount>=5)return;
+ let q=questions[correctCount];
+ document.getElementById("questionText").textContent=q.q;
+ let box=document.getElementById("answers");
+ box.innerHTML="";
+ document.getElementById("feedback").textContent="";
+ q.a.forEach((answer,i)=>{
+  let btn=document.createElement("button");
+  btn.className="answer";
+  btn.textContent=String.fromCharCode(65+i)+". "+answer;
+  btn.onclick=()=>answerQuestion(i);
+  box.appendChild(btn);
+ });
+ document.getElementById("questionBox").style.display="flex";
+}
+
+function answerQuestion(choice){
+ let q=questions[correctCount];
+ let buttons=document.querySelectorAll(".answer");
+ buttons.forEach(b=>b.disabled=true);
+ if(choice===q.correct){
+  gems+=500;
+  score+=500;
+  correctCount++;
+  localStorage.setItem("kp2027Gems",gems);
+  document.getElementById("feedback").textContent="🎉 BETUL! +500 GEMS, +500 MARKAH!";
+  updateHUD();
+  setTimeout(()=>{
+   document.getElementById("questionBox").style.display="none";
+   if(correctCount>=5){
+    winGame();
+   }else{
+    paused=false;
+    spawnTimer=setInterval(spawnObject,1150);
+    document.getElementById("message").textContent="Bagus! Teruskan mencari peti soalan!";
+   }
+  },1200);
+ }else{
+  score=Math.max(0,score-100);
+  document.getElementById("feedback").textContent="❌ Belum tepat! Cuba lagi.";
+  updateHUD();
+  setTimeout(()=>{
+   document.getElementById("questionBox").style.display="none";
+   paused=false;
+   spawnTimer=setInterval(spawnObject,1150);
+  },1200);
+ }
+}
+
+function updateHUD(){
+ document.getElementById("gems").textContent=gems;
+ document.getElementById("score").textContent=score;
+ document.getElementById("progress").textContent=correctCount+"/5";
+}
+
+function winGame(){
+ running=false;
+ clearInterval(timer);
+ clearInterval(spawnTimer);
+ document.getElementById("message").textContent=
+ "🏆 TAHNIAH! MISI 3 SELESAI! Anda berjaya menjadi pemimpin yang hebat!";
+ document.getElementById("startPanel").style.display="block";
+ document.getElementById("selected").textContent=
+ "Misi 3 selesai! Watak: "+characters[character].name;
+ document.getElementById("game").style.opacity=".6";
+}
+
+function clearGame(){
+ clearInterval(timer);
+ clearInterval(spawnTimer);
+ objects.forEach(el=>el.remove());
+ objects=[];
+ document.getElementById("game").style.opacity="1";
+}
+
+function restart(){
+ running=false;
+ paused=false;
+ clearGame();
+ lane=2;score=0;correctCount=0;
+ document.getElementById("questionBox").style.display="none";
+ document.getElementById("startPanel").style.display="block";
+ document.getElementById("message").textContent="Pilih watak dan mula semula.";
+ document.getElementById("player").style.left="40%";
+ document.getElementById("player").textContent=characters[character].emoji;
+ updateHUD();
+}
+
+document.addEventListener("keydown",e=>{
+ if(e.key==="ArrowLeft"||e.key.toLowerCase()==="a")move(-1);
+ if(e.key==="ArrowRight"||e.key.toLowerCase()==="d")move(1);
+});
+</script>
+</body>
+</html>
