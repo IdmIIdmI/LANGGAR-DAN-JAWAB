@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Misi Angkasa - Berdaya Tahan KP2027</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#030719;color:white;
+ font-family:Arial,sans-serif;overflow:hidden;
+}
+button{cursor:pointer;font-weight:bold}
+#game{
+ width:100vw;height:100dvh;position:relative;
+ overflow:hidden;
+ background:radial-gradient(ellipse at 50% 100%,#263c83 0%,#10143e 40%,#020515 100%);
+}
+#stars{
+ position:absolute;inset:0;
+ background-image:
+ radial-gradient(2px 2px at 20px 30px,#fff,transparent),
+ radial-gradient(2px 2px at 100px 120px,#8beaff,transparent),
+ radial-gradient(1px 1px at 200px 70px,#fff,transparent),
+ radial-gradient(2px 2px at 300px 200px,#fff,transparent),
+ radial-gradient(1px 1px at 400px 40px,#a9baff,transparent);
+ background-size:450px 300px;
+ animation:stars 12s linear infinite;
+}
+@keyframes stars{to{transform:translateY(300px)}}
+
+#hud{
+ position:absolute;top:8px;left:10px;right:10px;
+ display:flex;justify-content:space-between;gap:6px;
+ z-index:5;font-size:clamp(11px,2vw,17px);
+}
+.badge{
+ background:#101d4bdc;border:1px solid #6aeaff;
+ border-radius:12px;padding:8px 12px;
+ box-shadow:0 0 12px #1bcfff66;
+}
+#track{
+ position:absolute;inset:55px 0 65px;
+ overflow:hidden;
+}
+#player{
+ position:absolute;bottom:15px;left:50%;
+ width:100px;height:90px;
+ transform:translateX(-50%);
+ z-index:4;
+ filter:drop-shadow(0 0 12px #4eeeff);
+}
+.object{
+ position:absolute;width:60px;height:60px;
+ display:flex;align-items:center;justify-content:center;
+ font-size:43px;z-index:3;
+}
+#controls{
+ position:absolute;bottom:9px;left:0;right:0;
+ display:flex;justify-content:space-between;
+ padding:0 15px;z-index:10;pointer-events:none;
+}
+.control{
+ pointer-events:auto;width:62px;height:62px;
+ border-radius:50%;border:2px solid #83f4ff;
+ background:#123a70dd;color:white;font-size:28px;
+ box-shadow:0 0 15px #20cfff88;
+}
+#menu,#quiz,#gameover{
+ position:absolute;inset:0;z-index:20;
+ display:flex;align-items:center;justify-content:center;
+ background:#020719ed;padding:15px;text-align:center;
+}
+.panel{
+ width:min(700px,96vw);max-height:94dvh;overflow:auto;
+ background:linear-gradient(145deg,#17245c,#07122f);
+ border:2px solid #57eaff;border-radius:22px;
+ padding:20px;box-shadow:0 0 35px #00cfff66;
+}
+h1{font-size:clamp(24px,5vw,42px);color:#70f5ff;margin:5px}
+h2{color:#ffe77c}
+.subtitle{color:#c6d9ff}
+.ship-list{
+ display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
+ margin:18px 0;
+}
+.ship-choice{
+ border:1px solid #6387d8;border-radius:14px;
+ background:#0b1940;padding:10px 5px;color:white;
+ min-width:0;
+}
+.ship-choice.selected{
+ border:3px solid #ffe76b;
+ background:#263c76;
+}
+.ship-choice svg{width:100%;height:85px}
+.ship-choice b{font-size:12px;display:block}
+.mainbtn{
+ background:linear-gradient(90deg,#00c9ff,#477bff);
+ border:0;border-radius:30px;color:white;
+ padding:13px 28px;font-size:17px;margin:8px;
+}
+.answer{
+ display:block;width:100%;padding:12px;margin:8px 0;
+ border-radius:12px;border:1px solid #77dfff;
+ background:#14285a;color:white;font-size:16px;
+}
+.answer:active{background:#2878ad}
+#rotate{
+ display:none;position:absolute;inset:0;z-index:50;
+ background:#030719;color:white;
+ align-items:center;justify-content:center;text-align:center;
+ font-size:24px;padding:30px;
+}
+@media(orientation:portrait){
+ #rotate{display:flex}
+}
+@media(max-width:600px){
+ .ship-list{grid-template-columns:repeat(2,1fr)}
+ .ship-choice svg{height:65px}
+ .panel{padding:12px}
+}
+</style>
+</head>
+
+<body>
+<div id="game">
+ <div id="stars"></div>
+
+ <div id="hud">
+  <div class="badge">⭐ Markah: <span id="score">0</span></div>
+  <div class="badge">💎 Permata: <span id="gems">0</span></div>
+  <div class="badge">🚀 Misi: <span id="mission">1</span></div>
+ </div>
+
+ <div id="track">
+  <div id="player"></div>
+ </div>
+
+ <div id="controls">
+  <button class="control" id="left">◀</button>
+  <button class="control" id="right">▶</button>
+ </div>
+
+ <div id="menu">
+  <div class="panel">
+   <h1>🚀 MISI ANGKASA</h1>
+   <h2>BERDAYA TAHAN</h2>
+   <p class="subtitle">Cabaran Anak Alpha • KP2027</p>
+   <p>Pilih kapal angkasa anda!</p>
+   <div class="ship-list" id="shipList"></div>
+   <button class="mainbtn" onclick="startGame()">MULA MISI 🚀</button>
+   <p>Elak bom alien 💣 dan langgar peti harta karun 🎁</p>
+  </div>
+ </div>
+
+ <div id="quiz" style="display:none">
+  <div class="panel">
+   <h1>🎁 PETI HARTA KARUN</h1>
+   <h2>UJI DAYA TAHAN ANDA!</h2>
+   <p id="question"></p>
+   <div id="answers"></div>
+   <p id="feedback"></p>
+  </div>
+ </div>
+
+ <div id="gameover" style="display:none">
+  <div class="panel">
+   <h1>🌌 MISI TAMAT</h1>
+   <h2>Teruskan perjuangan!</h2>
+   <p>Markah: <span id="finalScore">0</span></p>
+   <button class="mainbtn" onclick="startGame()">MAIN SEMULA</button>
+  </div>
+ </div>
+
+ <div id="rotate">📱<br><br>Sila pusing telefon ke kedudukan LANDSKAP untuk bermain.</div>
+</div>
+
+<script>
+const ships = [
+{
+ name:"GALAXY PHANTOM",
+ svg:`<svg viewBox="0 0 120 100">
+ <defs><linearGradient id="a" x2="0" y2="1"><stop stop-color="#e8fbff"/><stop offset="1" stop-color="#3978c9"/></linearGradient></defs>
+ <path d="M60 2 L77 35 L116 78 L77 68 L60 91 L43 68 L4 78 L43 35Z" fill="url(#a)" stroke="#75efff" stroke-width="3"/>
+ <path d="M60 10 L70 49 L60 66 L50 49Z" fill="#071b47"/>
+ <path d="M49 72 L60 96 L71 72" fill="#ffb34e"/>
+ <circle cx="60" cy="48" r="7" fill="#a9ffff"/>
+ </svg>`
+},
+{
+ name:"COSMIC MANTA",
+ svg:`<svg viewBox="0 0 120 100">
+ <path d="M60 8 Q76 24 116 27 Q104 63 72 66 L60 91 L48 66 Q16 63 4 27 Q44 24 60 8Z" fill="#8b69f5" stroke="#c6b5ff" stroke-width="3"/>
+ <path d="M60 15 L70 59 L60 78 L50 59Z" fill="#d8ffff"/>
+ <path d="M20 35 L45 53 M100 35 L75 53" stroke="#59eaff" stroke-width="5"/>
+ <circle cx="60" cy="43" r="7" fill="#fff"/>
+ </svg>`
+},
+{
+ name:"NOVA STRIKER",
+ svg:`<svg viewBox="0 0 120 100">
+ <path d="M60 4 L76 34 L72 73 L60 91 L48 73 L44 34Z" fill="#e7edf8" stroke="#70eaff" stroke-width="3"/>
+ <path d="M45 38 L5 75 L38 66 L50 78Z" fill="#f05b82" stroke="#ffb2c6" stroke-width="3"/>
+ <path d="M75 38 L115 75 L82 66 L70 78Z" fill="#f05b82" stroke="#ffb2c6" stroke-width="3"/>
+ <path d="M53 75 L60 99 L67 75" fill="#ff9e35"/>
+ <path d="M54 25 L60 12 L66 25Z" fill="#55faff"/>
+ <circle cx="60" cy="48" r="6" fill="#142d5e"/>
+ </svg>`
+},
+{
+ name:"ORBITAL X",
+ svg:`<svg viewBox="0 0 120 100">
+ <path d="M60 8 L76 40 L60 90 L44 40Z" fill="#a4b5ca" stroke="#e6f9ff" stroke-width="3"/>
+ <path d="M60 18 C5 -5 8 90 60 78 C112 90 115 -5 60 18Z" fill="none" stroke="#5be8ff" stroke-width="9"/>
+ <path d="M60 22 L70 52 L60 69 L50 52Z" fill="#ffdd72"/>
+ <path d="M51 73 L60 98 L69 73" fill="#ff853e"/>
+ </svg>`
+}
+];
+
+let selected=0,score=0,gems=Number(localStorage.getItem("spaceGems")||0);
+let mission=1,lane=2,objects=[],running=false,paused=false;
+let speed=3,spawnTimer=0,animation;
+let questions=[
+ {q:"Apakah maksud berdaya tahan?",a:["Tidak mudah berputus asa","Mudah mengalah","Mengelak semua cabaran"],c:0},
+ {q:"Apabila gagal melakukan sesuatu, apakah tindakan terbaik?",a:["Berhenti mencuba","Belajar daripada kesilapan","Menyalahkan orang lain"],c:1},
+ {q:"Menghadapi cabaran memerlukan kita...",a:["Berani dan terus berusaha","Mudah menyerah","Tidak mahu belajar"],c:0},
+ {q:"Jika menghadapi masalah, kita perlu...",a:["Panik","Mencari jalan penyelesaian","Meninggalkan tugas"],c:1},
+ {q:"Apakah sikap orang yang berdaya tahan?",a:["Cepat berputus asa","Suka menyalahkan orang","Tabah menghadapi kesukaran"],c:2},
+ {q:"Jika jawapan kita salah, apakah tindakan terbaik?",a:["Cuba lagi dan belajar","Marah","Berhenti terus"],c:0},
+ {q:"Apabila tugasan sukar, kita harus...",a:["Mengelak","Berusaha sedikit demi sedikit","Tidak peduli"],c:1},
+ {q:"Mengapa kita perlu belajar daripada kegagalan?",a:["Supaya boleh memperbaiki diri","Supaya tidak perlu mencuba","Supaya boleh menyalahkan orang"],c:0}
+];
+
+function updateHUD(){
+ document.getElementById("score").textContent=score;
+ document.getElementById("gems").textContent=gems;
+ document.getElementById("mission").textContent=mission;
+}
+function renderShips(){
+ document.getElementById("shipList").innerHTML=ships.map((s,i)=>`
+ <button class="ship-choice ${i===selected?'selected':''}" onclick="chooseShip(${i})">
+ ${s.svg}<b>${s.name}</b>
+ </button>`).join("");
+}
+function chooseShip(i){
+ selected=i;renderShips();
+}
+function showPlayer(){
+ document.getElementById("player").innerHTML=ships[selected].svg;
+}
+function startGame(){
+ document.getElementById("menu").style.display="none";
+ document.getElementById("gameover").style.display="none";
+ document.getElementById("quiz").style.display="none";
+ score=0;lane=2;speed=3;objects=[];
+ running=true;paused=false;
+ document.getElementById("track").innerHTML='<div id="player"></div>';
+ showPlayer();movePlayer();updateHUD();
+ cancelAnimationFrame(animation);
+ loop();
+}
+function movePlayer(){
+ let p=document.getElementById("player");
+ if(p)p.style.left=(10+lane*20)+"%";
+}
+function changeLane(d){
+ if(!running||paused)return;
+ lane=Math.max(0,Math.min(4,lane+d));
+ movePlayer();
+}
+document.getElementById("left").addEventListener("pointerdown",e=>{e.preventDefault();changeLane(-1)});
+document.getElementById("right").addEventListener("pointerdown",e=>{e.preventDefault();changeLane(1)});
+document.addEventListener("keydown",e=>{
+ if(e.key==="ArrowLeft")changeLane(-1);
+ if(e.key==="ArrowRight")changeLane(1);
+});
+
+function spawnObject(){
+ let type=Math.random()<0.72?"bomb":"chest";
+ let el=document.createElement("div");
+ el.className="object";
+ el.textContent=type==="bomb"?"💣":"🎁";
+ let l=Math.floor(Math.random()*5);
+ el.style.left=(10+l*20)+"%";
+ el.style.top="-70px";
+ document.getElementById("track").appendChild(el);
+ objects.push({el,lane:l,y:-70,type,hit:false});
+}
+function loop(){
+ if(!running)return;
+ if(!paused){
+  spawnTimer++;
+  if(spawnTimer>48){spawnObject();spawnTimer=0}
+  objects.forEach(o=>{
+   o.y+=speed;
+   o.el.style.top=o.y+"px";
+   if(!o.hit&&o.lane===lane&&o.y>document.getElementById("track").clientHeight-190&&o.y<document.getElementById("track").clientHeight-95){
+    o.hit=true;
+    if(o.type==="bomb"){
+     score=Math.max(0,score-5);
+     o.el.textContent="💥";
+     setTimeout(()=>o.el.remove(),250);
+     playTone(100,0.15);
+    }else{
+     o.el.remove();
+     openQuiz();
+    }
+    updateHUD();
+   }
+  });
+  objects=objects.filter(o=>o.y<document.getElementById("track").clientHeight+50&&o.el.isConnected);
+ }
+ animation=requestAnimationFrame(loop);
+}
+function openQuiz(){
+ paused=true;
+ let q=questions[Math.floor(Math.random()*questions.length)];
+ document.getElementById("question").textContent=q.q;
+ document.getElementById("feedback").textContent="";
+ document.getElementById("answers").innerHTML=q.a.map((a,i)=>
+ `<button class="answer" onclick="answer(${i},${q.c})">${a}</button>`).join("");
+ document.getElementById("quiz").style.display="flex";
+ if("speechSynthesis" in window){
+  speechSynthesis.cancel();
+  let utter=new SpeechSynthesisUtterance(q.q);
+  utter.lang="ms-MY";utter.rate=0.9;speechSynthesis.speak(utter);
+ }
+}
+function answer(i,c){
+ let f=document.getElementById("feedback");
+ if(i===c){
+  score+=100;gems+=100;
+  localStorage.setItem("spaceGems",gems);
+  updateHUD();
+  f.textContent="🎉 TEPAT! +100 MARKAH DAN +100 PERMATA!";
+  f.style.color="#83ffb5";
+  playTone(700,0.2);
+  document.querySelectorAll(".answer").forEach(b=>b.disabled=true);
+  setTimeout(()=>{
+   document.getElementById("quiz").style.display="none";
+   paused=false;
+   if(gems>=500&&mission===1){
+    mission=2;speed=4;
+    updateHUD();
+    alert("🚀 TAHNIAH! MISI 2 DIBUKA! Cabaran semakin hebat!");
+   }
+  },1300);
+ }else{
+  f.textContent="Belum tepat! Cuba lagi. Jangan mudah berputus asa!";
+  f.style.color="#ffb4b4";
+  playTone(150,0.2);
+ }
+}
+function playTone(freq,duration){
+ try{
+  let ctx=new(window.AudioContext||window.webkitAudioContext)();
+  let osc=ctx.createOscillator(),gain=ctx.createGain();
+  osc.frequency.value=freq;osc.connect(gain);
+  gain.connect(ctx.destination);gain.gain.value=0.07;
+  osc.start();osc.stop(ctx.currentTime+duration);
+ }catch(e){}
+}
+function endGame(){
+ running=false;
+ document.getElementById("finalScore").textContent=score;
+ document.getElementById("gameover").style.display="flex";
+}
+renderShips();
+updateHUD();
+</script>
+</body>
+</html>
