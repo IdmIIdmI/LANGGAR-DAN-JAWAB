@@ -160,6 +160,108 @@ header h1{font-size:clamp(21px,4.2vw,34px);letter-spacing:1px;text-shadow:0 3px 
  .character svg,.character span{height:60px}
 }
 
+
+/* ===== ORIENTASI DWI-MOD: POTRET + LANDSKAP ===== */
+/* Kandungan, watak, misi, soalan dan mekanik permainan dikekalkan.
+   Hanya susun atur berubah mengikut orientasi skrin. */
+#rotate{display:none !important}
+
+@media (orientation:portrait){
+  html,body,#app{width:100%;height:100%;height:100dvh}
+  body{overflow:hidden}
+  header{padding:7px 58px 3px 8px;min-height:48px}
+  header h1{font-size:clamp(18px,5.2vw,25px);line-height:1.12}
+  #subtitle{font-size:10px;letter-spacing:.8px}
+  #sound{top:7px;right:7px;padding:6px 8px;font-size:11px}
+
+  .panel{
+    width:min(94vw,520px);
+    max-height:calc(100dvh - 68px);
+    margin:7px auto;
+    padding:12px;
+    border-radius:19px;
+  }
+  .panel h2{font-size:clamp(19px,5vw,25px);margin:5px 0}
+  #menu p,#characterSelect p{font-size:13px;line-height:1.35;margin:8px 0}
+  .missionCards{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:11px 0}
+  .missionCard{padding:10px 5px;border-radius:14px}
+  .missionCard span{font-size:clamp(32px,9vw,46px)}
+  .missionCard b{font-size:13px;margin-top:4px}
+  .missionCard small{font-size:10px}
+
+  #characterList{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .character{min-height:102px;padding:7px 4px}
+  .character svg,.character span{height:68px}
+  .character span{font-size:52px}
+  .ship-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .ship-choice svg{height:70px}
+
+  #game{
+    height:calc(100dvh - 55px);
+    min-height:0;
+    padding:0 7px 4px;
+    gap:0;
+  }
+  .hud{
+    flex:0 0 auto;
+    margin:2px auto 5px;
+    gap:5px;
+    padding:1px 1px 5px;
+  }
+  .badge{font-size:10px;padding:5px 7px;border-radius:9px}
+  #track{
+    flex:1 1 0;
+    min-height:0;
+    max-height:none;
+    width:100%;
+    border-width:3px;
+    border-radius:16px;
+  }
+  #player{width:58px;height:68px;bottom:7px}
+  #player .emoji{font-size:43px}
+  .object{width:58px;height:58px;border-radius:14px}
+  .object-icon{font-size:35px}
+  .object-label{font-size:8px}
+  .controls{
+    flex:0 0 auto;
+    margin:6px auto 0;
+    padding:0 2px;
+    gap:12px;
+  }
+  .controls button{
+    width:min(42vw,175px);
+    height:45px;
+    border-radius:13px;
+    font-size:12px;
+  }
+  .hint{font-size:10px;margin:4px 0 0}
+
+  #quiz,#missionWin,#finalWin{padding:9px}
+  #quizPanel{width:min(94vw,520px);max-height:88dvh;padding:14px}
+  #question{font-size:17px;line-height:1.35}
+  #answers{grid-template-columns:1fr;gap:8px;margin-top:10px}
+  .answer{min-height:45px;padding:9px;font-size:14px}
+  #feedback{font-size:15px;min-height:24px}
+}
+
+@media (orientation:portrait) and (max-height:700px){
+  header{min-height:43px;padding-top:5px}
+  #game{height:calc(100dvh - 49px)}
+  .panel{max-height:calc(100dvh - 58px);padding:10px}
+  .missionCards{margin:8px 0;gap:7px}
+  .missionCard{padding:8px 4px}
+  .character{min-height:88px}
+  .character svg,.character span{height:58px}
+  .ship-choice svg{height:58px}
+  .controls{margin-top:4px}
+  .controls button{height:41px}
+  .hint{margin-top:2px}
+}
+
+@media (orientation:landscape){
+  #rotate{display:none !important}
+}
+
 </style>
 </head>
 <body>
